@@ -1,17 +1,44 @@
 import React, { Component } from 'react';
+
+import AdvantageIcon from './AdvantageIcon';
+import InitiativeForm from './InitiativeForm';
+
 import { ListGroup, ListGroupItem } from 'react-bootstrap';
 
-const character = {
-  first: 'Marni',
-  last: 'Moonfoot',
-  initiative: 20,
-};
-
 export default class Initiative extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { creatures: [] };
+  }
+  componentWillMount() {
+    if (localStorage.hasOwnProperty('creatures_dnd')) {
+      let creatures = localStorage.getItem('creatures_dnd');
+      console.log('creatures:', creatures);
+
+      try {
+        creatures = JSON.parse(creatures);
+        this.setState({ creatures });
+      } catch (e) {
+        console.error('Error:', e);
+      }
+    }
+  }
   render() {
-    const characters = [character].map(c => (
-      <ListGroupItem header={`${c.first} ${c.last}`}>Initiative: {c.initiative}</ListGroupItem>
-    ));
-    return <ListGroup>{characters}</ListGroup>;
+    let creatures;
+    if (this.state.creatures.length) {
+      creatures = this.state.creatures.map((c, i) => (
+        <ListGroupItem key={i} header={`${c.name}`}>
+          Initiative Modifier: {c.modifier >= 0 ? `+${c.modifier}` : `${c.modifier}`}&nbsp;
+          {c.advantage && <AdvantageIcon />}
+        </ListGroupItem>
+      ));
+    }
+
+    return (
+      <div>
+        <InitiativeForm />
+        {creatures && <ListGroup>{creatures}</ListGroup>}
+      </div>
+    );
   }
 }
