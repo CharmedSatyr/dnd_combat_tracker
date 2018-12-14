@@ -15,6 +15,12 @@ export const removeCreature = id => {
   }
 }
 
+export const rollInitiative = () => {
+  return {
+    type: c.ROLL_INITIATIVE,
+  }
+}
+
 export const setStateFromLocal = localCreatures => {
   return {
     type: c.SET_STATE_FROM_LOCAL,

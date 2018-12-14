@@ -6,6 +6,7 @@ import * as ca from '../actions'
 
 import AdvantageIcon from './AdvantageIcon'
 import RemoveIcon from './RemoveIcon'
+import RollButton from './RollButton'
 import InitiativeForm from './InitiativeForm'
 
 import { ListGroup, ListGroupItem } from 'react-bootstrap'
@@ -29,21 +30,24 @@ class Initiative extends Component {
     const { creatures, removeCreature } = this.props
     let items
     if (creatures.length) {
-      items = creatures.map((c, i) => (
-        <ListGroupItem key={c.id} header={`${c.name}`}>
-          <RemoveIcon id={c.id} removeCreature={removeCreature} />
-          ID: {c.id}
-          <br />
-          Initiative Modifier: {c.modifier >= 0 ? `+${c.modifier}` : `${c.modifier}`}
-          {c.advantage && <AdvantageIcon />}
-        </ListGroupItem>
-      ))
+      items = creatures
+        .map((c, i) => (
+          <ListGroupItem key={c.id} header={`${c.name}`}>
+            <RemoveIcon id={c.id} removeCreature={removeCreature} />
+            Modifier: {c.modifier >= 0 ? `+${c.modifier}` : `${c.modifier}`}
+            {c.advantage && <AdvantageIcon />}
+            <br />
+            Initiative: {c.initiative}
+          </ListGroupItem>
+        ))
+        .sort((a, b) => a.initiative - b.initiative)
     }
 
     return (
       <div>
         <InitiativeForm addCreature={this.props.addCreature} />
         {items && <ListGroup>{items}</ListGroup>}
+        <RollButton rollFunction={this.props.rollInitiative} />
       </div>
     )
   }
@@ -59,6 +63,7 @@ const mapDispatchToProps = dispatch => {
   return {
     addCreature: creature => dispatch(ca.addCreature(creature)),
     removeCreature: id => dispatch(ca.removeCreature(id)),
+    rollInitiative: () => dispatch(ca.rollInitiative()),
     setStateFromLocal: localCreatures => dispatch(ca.setStateFromLocal(localCreatures)),
   }
 }
