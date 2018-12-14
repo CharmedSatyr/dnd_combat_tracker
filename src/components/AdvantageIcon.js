@@ -1,12 +1,12 @@
-import React from 'react';
+import React from 'react'
 
-import { Glyphicon } from 'react-bootstrap';
+import { Glyphicon } from 'react-bootstrap'
 
 const AdvantageIcon = () => (
   <span>
     <Glyphicon title="Rolls with advantage" glyph="text-background" style={{ color: '#5cb85c' }} />
     &nbsp;
   </span>
-);
+)
 
-export default AdvantageIcon;
+export default AdvantageIcon

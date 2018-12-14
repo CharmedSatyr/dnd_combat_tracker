@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import Initiative from './Initiative';
+import React, { Component } from 'react'
+import Initiative from './Initiative'
 
 class App extends Component {
   render() {
@@ -16,8 +16,8 @@ class App extends Component {
       >
         <Initiative />
       </div>
-    );
+    )
   }
 }
 
-export default App;
+export default App
