@@ -8,10 +8,10 @@ export const addCreature = creature => {
   }
 }
 
-export const removeCreature = creature => {
+export const removeCreature = id => {
   return {
     type: c.REMOVE_CREATURE,
-    id: creature.id,
+    id,
   }
 }
 
