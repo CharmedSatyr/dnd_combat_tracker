@@ -5,6 +5,7 @@ import * as c from '../constants'
 import * as ca from '../actions'
 
 import AdvantageIcon from './AdvantageIcon'
+import RemoveIcon from './RemoveIcon'
 import InitiativeForm from './InitiativeForm'
 
 import { ListGroup, ListGroupItem } from 'react-bootstrap'
@@ -25,12 +26,15 @@ class Initiative extends Component {
     this.setStateFromLocal()
   }
   render() {
-    const { creatures } = this.props
+    const { creatures, removeCreature } = this.props
     let items
     if (creatures.length) {
       items = creatures.map((c, i) => (
-        <ListGroupItem key={i} header={`${c.name}`}>
-          Initiative Modifier: {c.modifier >= 0 ? `+${c.modifier}` : `${c.modifier}`}&nbsp;
+        <ListGroupItem key={c.id} header={`${c.name}`}>
+          <RemoveIcon id={c.id} removeCreature={removeCreature} />
+          ID: {c.id}
+          <br />
+          Initiative Modifier: {c.modifier >= 0 ? `+${c.modifier}` : `${c.modifier}`}
           {c.advantage && <AdvantageIcon />}
         </ListGroupItem>
       ))
@@ -54,6 +58,7 @@ const mapStateToProps = (state, props) => {
 const mapDispatchToProps = dispatch => {
   return {
     addCreature: creature => dispatch(ca.addCreature(creature)),
+    removeCreature: id => dispatch(ca.removeCreature(id)),
     setStateFromLocal: localCreatures => dispatch(ca.setStateFromLocal(localCreatures)),
   }
 }

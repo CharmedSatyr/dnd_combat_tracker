@@ -32,7 +32,7 @@ export default class InitiativeForm extends Component {
       }
     } else {
       creatures = []
-      creatures.push(this.state)
+      creatures.push(creature)
       creatures = JSON.stringify(creatures)
       localStorage.setItem(c.LOCAL_CREATURES, creatures)
     }
@@ -49,8 +49,18 @@ export default class InitiativeForm extends Component {
   addCreature(e) {
     e.preventDefault()
     if (this.state.name && this.state.modifier) {
-      this.props.addCreature(this.state)
-      this.saveLocal(this.state)
+      const id = Math.random()
+        .toString()
+        .slice(2)
+      console.log('id:', id)
+      const creature = {
+        name: this.state.name,
+        modifier: this.state.modifier,
+        advantage: this.state.advantage,
+        id,
+      }
+      this.props.addCreature(creature)
+      this.saveLocal(creature)
       this.setState({ name: undefined, modifier: undefined, advantage: false, validation: null })
     } else {
       this.setState({ validation: 'error' })

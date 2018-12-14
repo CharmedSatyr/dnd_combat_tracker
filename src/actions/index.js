@@ -8,6 +8,13 @@ export const addCreature = creature => {
   }
 }
 
+export const removeCreature = creature => {
+  return {
+    type: c.REMOVE_CREATURE,
+    id: creature.id,
+  }
+}
+
 export const setStateFromLocal = localCreatures => {
   return {
     type: c.SET_STATE_FROM_LOCAL,
