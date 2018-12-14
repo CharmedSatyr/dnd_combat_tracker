@@ -4,19 +4,28 @@ import * as c from '../constants'
 
 import { ControlLabel, Button, Form, FormControl, FormGroup, InputGroup } from 'react-bootstrap'
 
+const defaultState = {
+  name: '',
+  modifier: '',
+  advantage: false,
+  nameValidation: null,
+  modValidation: null,
+}
+
 export default class InitiativeForm extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      name: undefined,
-      modifier: undefined,
+      name: '',
+      modifier: '',
       advantage: false,
-      validation: null,
+      nameValidation: null,
+      modValidation: null,
     }
     this.getName = this.getName.bind(this)
     this.getModifier = this.getModifier.bind(this)
     this.getAdvantage = this.getAdvantage.bind(this)
-    this.addCreature = this.addCreature.bind(this)
+    this.getValidationState = this.getValidationState.bind(this)
   }
   saveLocal(creature) {
     let creatures
@@ -46,31 +55,43 @@ export default class InitiativeForm extends Component {
   getModifier(e) {
     this.setState({ modifier: e.target.value })
   }
-  addCreature(e) {
+  getValidationState(e) {
     e.preventDefault()
-    if (this.state.name && this.state.modifier) {
-      const id = Math.random()
-        .toString()
-        .slice(2)
-      console.log('id:', id)
-      const creature = {
-        name: this.state.name,
-        modifier: this.state.modifier,
-        advantage: this.state.advantage,
-        id,
-      }
-      this.props.addCreature(creature)
-      this.saveLocal(creature)
-      this.setState({ name: undefined, modifier: undefined, advantage: false, validation: null })
+    if (this.state.name) {
+      this.setState({ nameValidation: 'success' })
     } else {
-      this.setState({ validation: 'error' })
+      this.setState({ nameValidation: 'error' })
     }
+
+    if (this.state.modifier) {
+      this.setState({ modValidation: 'success' })
+    } else {
+      this.setState({ modValidation: 'error' })
+    }
+
+    if (this.state.name && this.state.modifier) {
+      this.addCreature()
+    }
+  }
+  addCreature() {
+    const id = Math.random()
+      .toString()
+      .slice(2)
+    const creature = {
+      name: this.state.name,
+      modifier: this.state.modifier,
+      advantage: this.state.advantage,
+      id,
+    }
+    this.props.addCreature(creature)
+    this.saveLocal(creature)
+    this.setState(defaultState)
   }
   render() {
     return (
       <Form>
         {/* Creature Name */}
-        <FormGroup controlId="name" validationState={this.state.validation}>
+        <FormGroup controlId="name" validationState={this.state.nameValidation}>
           <ControlLabel>Creature Name</ControlLabel>
           <FormControl
             onChange={this.getName}
@@ -82,7 +103,7 @@ export default class InitiativeForm extends Component {
         </FormGroup>
 
         {/* Initiative Modifier */}
-        <FormGroup controlId="initiative" validationState={this.state.validation}>
+        <FormGroup controlId="initiative" validationState={this.state.modValidation}>
           <ControlLabel>Initiative Modifier</ControlLabel>
           <InputGroup>
             <FormControl
@@ -109,7 +130,7 @@ export default class InitiativeForm extends Component {
         {/* Button */}
         <FormGroup>
           <Button
-            onClick={this.addCreature}
+            onClick={this.getValidationState}
             style={{ width: '100%' }}
             type="submit"
             className="btn btn-success"
