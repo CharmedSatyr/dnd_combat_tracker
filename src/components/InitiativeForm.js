@@ -135,7 +135,7 @@ export default class InitiativeForm extends Component {
             type="submit"
             className="btn btn-success"
           >
-            Add
+            Add Creature
           </Button>
         </FormGroup>
       </Form>
