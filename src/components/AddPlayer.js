@@ -74,7 +74,7 @@ export default class AddPlayer extends Component {
       name: this.state.name,
       modifier: this.state.modifier,
       advantage: this.state.advantage,
-      id,
+      id: `player-${id}`,
     }
     this.props.addCreature(creature)
     this.saveLocal(creature)
