@@ -22,7 +22,9 @@ const PlayerListGroupItem = ({ player, removeCreature }) => {
         {player.advantage && <AdvantageIcon />}
       </div>
       <div style={{ fontSize: '200%' }}>
-        <strong>{player.initiative || <HourglassIcon />}</strong>
+        <strong>
+          {typeof player.initiative === 'number' ? player.initiative : <HourglassIcon />}
+        </strong>
       </div>
     </div>
   )
