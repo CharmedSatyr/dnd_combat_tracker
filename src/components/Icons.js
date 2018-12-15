@@ -13,6 +13,14 @@ export const AdvantageIcon = () => (
 
 export const HourglassIcon = () => <Glyphicon glyph="hourglass" style={{ color: '#555' }} />
 
+export const MonsterIcon = () => (
+  <span>
+    &nbsp;
+    <Glyphicon glyph="screenshot" style={{ color: '#555' }} />
+    &nbsp;
+  </span>
+)
+
 export const PlayerIcon = () => (
   <span>
     &nbsp;
