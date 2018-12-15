@@ -4,12 +4,11 @@ import { connect } from 'react-redux'
 import * as c from '../constants'
 import * as ca from '../actions'
 
-import AdvantageIcon from './AdvantageIcon'
-import RemoveIcon from './RemoveIcon'
 import RollButton from './RollButton'
-import InitiativeForm from './InitiativeForm'
+import AddPlayer from './AddPlayer'
+import PlayerListGroupItem from './PlayerListGroupItem'
 
-import { ListGroup, ListGroupItem } from 'react-bootstrap'
+import { ListGroup } from 'react-bootstrap'
 
 class Initiative extends Component {
   setStateFromLocal() {
@@ -29,23 +28,19 @@ class Initiative extends Component {
   render() {
     const { creatures, removeCreature } = this.props
     let items
-    if (creatures.length) {
+    if (creatures) {
       items = creatures
+        .sort((a, b) => (b.advantage ? 1 : -1)) // Sort display by Advantage
+        .sort((a, b) => b.modifier - a.modifier) // Then by modifier
+        .sort((a, b) => b.initiative - a.initiative) // Then by Initiative
         .map((c, i) => (
-          <ListGroupItem key={c.id} header={`${c.name}`}>
-            <RemoveIcon id={c.id} removeCreature={removeCreature} />
-            Modifier: {c.modifier >= 0 ? `+${c.modifier}` : `${c.modifier}`}
-            {c.advantage && <AdvantageIcon />}
-            <br />
-            Initiative: {c.initiative}
-          </ListGroupItem>
+          <PlayerListGroupItem key={c.id} player={c} removeCreature={removeCreature} />
         ))
-        .sort((a, b) => a.initiative - b.initiative)
     }
 
     return (
       <div>
-        <InitiativeForm addCreature={this.props.addCreature} />
+        <AddPlayer addCreature={this.props.addCreature} />
         {items && <ListGroup>{items}</ListGroup>}
         <RollButton rollFunction={this.props.rollInitiative} />
       </div>
