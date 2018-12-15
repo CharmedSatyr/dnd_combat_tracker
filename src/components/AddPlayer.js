@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import AdvantageIcon from './AdvantageIcon'
+import { AdvantageIcon } from './Icons'
 import * as c from '../constants'
 
 import { ControlLabel, Button, Form, FormControl, FormGroup, InputGroup } from 'react-bootstrap'
@@ -12,16 +12,10 @@ const defaultState = {
   modValidation: null,
 }
 
-export default class InitiativeForm extends Component {
+export default class AddPlayer extends Component {
   constructor(props) {
     super(props)
-    this.state = {
-      name: '',
-      modifier: '',
-      advantage: false,
-      nameValidation: null,
-      modValidation: null,
-    }
+    this.state = { ...defaultState }
     this.getName = this.getName.bind(this)
     this.getModifier = this.getModifier.bind(this)
     this.getAdvantage = this.getAdvantage.bind(this)
@@ -40,8 +34,7 @@ export default class InitiativeForm extends Component {
         console.error('Error:', e)
       }
     } else {
-      creatures = []
-      creatures.push(creature)
+      creatures = [creature]
       creatures = JSON.stringify(creatures)
       localStorage.setItem(c.LOCAL_CREATURES, creatures)
     }
@@ -90,9 +83,9 @@ export default class InitiativeForm extends Component {
   render() {
     return (
       <Form>
-        {/* Creature Name */}
+        {/* Player Name */}
         <FormGroup controlId="name" validationState={this.state.nameValidation}>
-          <ControlLabel>Creature Name</ControlLabel>
+          <ControlLabel>Player Name</ControlLabel>
           <FormControl
             onChange={this.getName}
             placeholder="Marni Moonfoot"
@@ -135,7 +128,7 @@ export default class InitiativeForm extends Component {
             type="submit"
             className="btn btn-success"
           >
-            Add Creature
+            Add Player
           </Button>
         </FormGroup>
       </Form>
