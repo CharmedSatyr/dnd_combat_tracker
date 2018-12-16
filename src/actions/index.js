@@ -1,29 +1,23 @@
 // Creature Actions
 import * as c from '../constants/index'
 
-export const addCreature = creature => {
-  return {
-    type: c.ADD_CREATURE,
-    creature,
-  }
-}
+export const addMonsters = monsters => ({
+  type: c.ADD_MONSTERS,
+  monsters,
+})
 
-export const removeCreature = id => {
-  return {
-    type: c.REMOVE_CREATURE,
-    id,
-  }
-}
+export const addCreature = creature => ({ type: c.ADD_CREATURE, creature })
 
-export const rollInitiative = () => {
-  return {
-    type: c.ROLL_INITIATIVE,
-  }
-}
+export const removeCreature = id => ({
+  type: c.REMOVE_CREATURE,
+  id,
+})
 
-export const setStateFromLocal = localCreatures => {
-  return {
-    type: c.SET_STATE_FROM_LOCAL,
-    localCreatures,
-  }
-}
+export const rollInitiative = () => ({
+  type: c.ROLL_INITIATIVE,
+})
+
+export const setStateFromLocal = localCreatures => ({
+  type: c.SET_STATE_FROM_LOCAL,
+  localCreatures,
+})
