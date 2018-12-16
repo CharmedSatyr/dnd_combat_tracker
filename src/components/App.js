@@ -1,6 +1,6 @@
 import React from 'react'
 import Initiative from './Initiative'
-import AddCreatures from './AddCreatures'
+import AddCreature from './AddCreature'
 
 import { Grid, PageHeader, Row } from 'react-bootstrap'
 
@@ -8,7 +8,7 @@ const App = () => (
   <Grid>
     <PageHeader>D&amp;D Initiative Tracker</PageHeader>
     <Row className="show-grid">
-      <AddCreatures />
+      <AddCreature />
       <Initiative />
     </Row>
   </Grid>
