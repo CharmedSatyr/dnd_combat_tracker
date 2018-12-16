@@ -1,4 +1,4 @@
-// Creatures
+// Creature Reducer
 import * as c from '../constants'
 
 export default (state = [], payload) => {
@@ -6,6 +6,8 @@ export default (state = [], payload) => {
   switch (payload.type) {
     case c.ADD_CREATURE:
       return [...state, payload.creature]
+    case c.ADD_MONSTERS:
+      return [...state, ...payload.monsters]
     case c.REMOVE_CREATURE:
       updated = [...state.filter(creature => creature.id !== payload.id)]
       return updated
