@@ -1,6 +1,6 @@
 import React from 'react'
 import Initiative from './Initiative'
-import AddCreature from './AddCreature'
+import AddCreature from './AddCreature/'
 
 import { Grid, PageHeader, Row } from 'react-bootstrap'
 

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { AdvantageIcon } from './Icons'
-import * as c from '../constants'
+import { AdvantageIcon } from '../Icons'
+import * as c from '../../constants'
 
 import { ControlLabel, Button, Form, FormControl, FormGroup, InputGroup } from 'react-bootstrap'
 

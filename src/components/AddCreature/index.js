@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import * as ca from '../actions'
+import * as ca from '../../actions'
 
 import AddPlayer from './AddPlayer'
 import AddMonster from './AddMonster'
