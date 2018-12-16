@@ -2,7 +2,16 @@ import React, { Component } from 'react'
 import { AdvantageIcon } from '../Icons'
 import * as c from '../../constants'
 
-import { ControlLabel, Button, Form, FormControl, FormGroup, InputGroup } from 'react-bootstrap'
+import {
+  ControlLabel,
+  Button,
+  Form,
+  FormControl,
+  FormGroup,
+  HelpBlock,
+  InputGroup,
+  Label,
+} from 'react-bootstrap'
 
 const defaultState = {
   name: '',
@@ -11,11 +20,15 @@ const defaultState = {
   ac: '',
   hp: '',
   xp: '',
+  tag: '',
+  numLow: '',
+  numHigh: '',
   acValidation: null,
   hpValidation: null,
   modValidation: null,
   nameValidation: null,
   xpValidation: null,
+  numValidation: null,
 }
 
 export default class AddMonster extends Component {
@@ -28,48 +41,60 @@ export default class AddMonster extends Component {
     this.getAC = this.getAC.bind(this)
     this.getHP = this.getHP.bind(this)
     this.getXP = this.getXP.bind(this)
+    this.getTag = this.getTag.bind(this)
+    this.getNumHigh = this.getNumHigh.bind(this)
+    this.getNumLow = this.getNumLow.bind(this)
     this.getValidationState = this.getValidationState.bind(this)
   }
-  saveLocal(creature) {
-    let creatures
+  saveLocal(newCreatures) {
+    let existingCreatures = []
     if (localStorage.hasOwnProperty(c.LOCAL_CREATURES)) {
-      creatures = localStorage.getItem(c.LOCAL_CREATURES)
-      try {
-        creatures = JSON.parse(creatures)
-        creatures.push(creature)
-        creatures = JSON.stringify(creatures)
-        localStorage.setItem(c.LOCAL_CREATURES, creatures)
-      } catch (e) {
-        console.error('Error:', e)
-      }
-    } else {
-      creatures = [creature]
-      creatures = JSON.stringify(creatures)
-      localStorage.setItem(c.LOCAL_CREATURES, creatures)
+      existingCreatures = localStorage.getItem(c.LOCAL_CREATURES)
+      existingCreatures = JSON.parse(existingCreatures)
     }
+    existingCreatures = [...existingCreatures, ...newCreatures]
+    existingCreatures = JSON.stringify(existingCreatures)
+    localStorage.setItem(c.LOCAL_CREATURES, existingCreatures)
   }
   getAdvantage() {
     this.setState({ advantage: this.refs.adv_checkbox.checked })
   }
   getModifier(e) {
+    e.preventDefault()
     this.setState({ modifier: e.target.value })
   }
   getName(e) {
+    e.preventDefault()
     this.setState({ name: e.target.value })
   }
   getAC(e) {
+    e.preventDefault()
     this.setState({ ac: e.target.value })
   }
   getHP(e) {
+    e.preventDefault()
     this.setState({ hp: e.target.value })
   }
   getXP(e) {
+    e.preventDefault()
     this.setState({ xp: e.target.value })
+  }
+  getNumHigh(e) {
+    e.preventDefault()
+    this.setState({ numHigh: e.target.value })
+  }
+  getNumLow(e) {
+    e.preventDefault()
+    this.setState({ numLow: e.target.value })
+  }
+  getTag(e) {
+    e.preventDefault()
+    this.setState({ tag: e.target.value })
   }
   getValidationState(e) {
     e.preventDefault()
 
-    const { name, modifier, hp, ac, xp } = this.state
+    const { name, modifier, hp, ac, xp, numHigh, numLow } = this.state
 
     if (name) {
       this.setState({ nameValidation: 'success' })
@@ -101,25 +126,54 @@ export default class AddMonster extends Component {
       this.setState({ acValidation: 'error' })
     }
 
-    if (name && modifier && ac && hp && xp) {
-      this.addCreature()
+    let validNum
+    if (
+      (!numHigh && !numLow) ||
+      (numHigh && numLow && numLow < numHigh && numLow > 0 && numHigh - numLow <= 10)
+    ) {
+      validNum = true
+      this.setState({ numValidation: 'success' })
+    } else {
+      this.setState({ numValidation: 'error' })
+    }
+
+    if (name && modifier && ac && hp && xp && validNum) {
+      this.addMonsters()
     }
   }
-  addCreature() {
-    const id = Math.random()
-      .toString()
-      .slice(2)
-    const creature = {
-      name: this.state.name,
-      modifier: this.state.modifier,
-      advantage: this.state.advantage,
-      ac: this.state.ac,
-      hp: this.state.hp,
-      xp: this.state.xp,
-      id: `monster-${id}`,
+  addMonsters() {
+    const { name, modifier, advantage, ac, hp, xp, tag, numHigh, numLow } = this.state
+    const monsters = []
+
+    for (let i = numLow || 0; i <= (numHigh || 0); i++) {
+      const rand = Math.random()
+        .toString()
+        .slice(2)
+
+      let label
+      if (tag && numHigh && numLow) {
+        label = `${tag} ${i}`
+      } else if (tag) {
+        label = `${tag}`
+      } else if (numHigh && numLow) {
+        label = `${i}`
+      }
+
+      const monster = {
+        name,
+        modifier,
+        advantage,
+        ac,
+        hp,
+        xp,
+        tag: label,
+        id: `monster-${rand}`,
+      }
+      monsters.push(monster)
     }
-    this.props.addCreature(creature)
-    this.saveLocal(creature)
+
+    this.props.addMonsters(monsters)
+    this.saveLocal(monsters)
     this.setState(defaultState)
   }
   render() {
@@ -136,7 +190,6 @@ export default class AddMonster extends Component {
           />
           <FormControl.Feedback />
         </FormGroup>
-
         {/* Initiative Modifier */}
         <FormGroup controlId="initiative" validationState={this.state.modValidation}>
           <ControlLabel>Initiative Modifier</ControlLabel>
@@ -147,6 +200,7 @@ export default class AddMonster extends Component {
               type="number"
               value={this.state.modifier}
             />
+
             {/* Advantage */}
             <InputGroup.Addon>
               <AdvantageIcon />
@@ -165,40 +219,72 @@ export default class AddMonster extends Component {
         {/* Hit Points */}
         <FormGroup controlId="hit-points" validationState={this.state.hpValidation}>
           <ControlLabel>Hit Points</ControlLabel>
-          <InputGroup>
-            <FormControl
-              onChange={this.getHP}
-              placeholder="180"
-              type="number"
-              value={this.state.hp}
-            />
-          </InputGroup>
+          <FormControl
+            onChange={this.getHP}
+            placeholder="180"
+            type="number"
+            value={this.state.hp}
+          />
         </FormGroup>
 
         {/* Armor Class */}
         <FormGroup controlId="armor-class" validationState={this.state.acValidation}>
           <ControlLabel>Armor Class</ControlLabel>
-          <InputGroup>
-            <FormControl
-              onChange={this.getAC}
-              placeholder="18"
-              type="number"
-              value={this.state.ac}
-            />
-          </InputGroup>
+          <FormControl onChange={this.getAC} placeholder="18" type="number" value={this.state.ac} />
         </FormGroup>
 
         {/* Experience */}
         <FormGroup controlId="experience" validationState={this.state.xpValidation}>
           <ControlLabel>Experience</ControlLabel>
-          <InputGroup>
+          <FormControl
+            onChange={this.getXP}
+            placeholder="10000"
+            type="number"
+            value={this.state.xp}
+          />
+        </FormGroup>
+        <hr />
+        {/* Tag */}
+        <FormGroup controlId="tag" validationState={null}>
+          <ControlLabel>
+            Tag&nbsp;
+            <Label>Optional</Label>
+          </ControlLabel>
+          <FormControl
+            onChange={this.getTag}
+            placeholder="Red"
+            type="text"
+            value={this.state.tag}
+          />
+          <FormControl.Feedback />
+          <HelpBlock>Creature groups share stats and initiative</HelpBlock>
+        </FormGroup>
+
+        {/* Number Range */}
+        <FormGroup controlId="numLow" validationState={this.state.numValidation}>
+          <ControlLabel>
+            Number Range&nbsp;<Label>Optional</Label>
+          </ControlLabel>
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <FormControl
-              onChange={this.getXP}
-              placeholder="10000"
+              onChange={this.getNumLow}
+              placeholder="1"
+              style={{ width: '45%' }}
               type="number"
-              value={this.state.xp}
+              value={this.state.numLow}
             />
-          </InputGroup>
+            <div style={{ marginTop: 5 }}>
+              <strong>&ndash;</strong>
+            </div>
+            <FormControl
+              onChange={this.getNumHigh}
+              placeholder="10"
+              style={{ width: '45%' }}
+              type="number"
+              value={this.state.numHigh}
+            />
+          </div>
+          <HelpBlock>Include up to 10 numbered creatures within a group</HelpBlock>
         </FormGroup>
 
         {/* Button */}
