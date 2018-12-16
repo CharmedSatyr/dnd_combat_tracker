@@ -7,14 +7,14 @@ import AddMonster from './AddMonster'
 
 import { Col, Tab, Tabs } from 'react-bootstrap'
 
-const AddCreatures = ({ addCreature }) => (
+const AddCreature = ({ addCreature, addMonsters }) => (
   <Col xs={12} md={4} className="well">
-    <Tabs defaultActiveKey={1} id="add-creature-tabs">
+    <Tabs defaultActiveKey={2} id="add-creature-tabs">
       <Tab eventKey={1} title="Add Player">
         <AddPlayer addCreature={addCreature} />
       </Tab>
       <Tab eventKey={2} title="Add Monster">
-        <AddMonster addCreature={addCreature} />
+        <AddMonster addMonsters={addMonsters} />
       </Tab>
     </Tabs>
   </Col>
@@ -22,9 +22,10 @@ const AddCreatures = ({ addCreature }) => (
 
 const mapDispatchToProps = dispatch => ({
   addCreature: creature => dispatch(ca.addCreature(creature)),
+  addMonsters: monsters => dispatch(ca.addMonsters(monsters)),
 })
 
 export default connect(
   null,
   mapDispatchToProps
-)(AddCreatures)
+)(AddCreature)
