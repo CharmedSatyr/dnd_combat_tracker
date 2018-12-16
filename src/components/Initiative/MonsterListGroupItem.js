@@ -1,5 +1,7 @@
 import React from 'react'
 
+import { Label } from 'react-bootstrap'
+
 import { AdvantageIcon, HourglassIcon, MonsterIcon, RemoveIcon } from '../Icons'
 
 const MonsterListGroupItem = ({ monster, removeCreature }) => {
@@ -15,7 +17,8 @@ const MonsterListGroupItem = ({ monster, removeCreature }) => {
         <div>
           <RemoveIcon id={monster.id} removeCreature={removeCreature} />
           <MonsterIcon />
-          <strong>{monster.name}</strong>
+          <strong>{monster.name}</strong>&nbsp;
+          <Label>{monster.tag}</Label>
           <br />
           <span style={{ color: '#555' }}>Modifier:&nbsp;</span>
           <strong>{monster.modifier >= 0 ? `+${monster.modifier}` : `${monster.modifier}`}</strong>
