@@ -30,6 +30,15 @@ class Initiative extends Component {
     let items
     if (creatures) {
       items = creatures
+        .sort((a, b) => (a.name > b.name ? -1 : 1)) // Sort alphabetically by name
+        .sort(
+          (a, b) =>
+            a.tag &&
+            b.tag &&
+            a.tag.split(' ')[a.tag.split(' ').length - 1] -
+              b.tag.split(' ')[b.tag.split(' ').length - 1]
+        ) // Then by tag number (for Monsters)
+        .sort((a, b) => (a.tag < b.tag ? -1 : 1)) // Then alphabetically by tag
         .sort((a, b) => (b.advantage ? 1 : -1)) // Sort display by Advantage
         .sort((a, b) => b.modifier - a.modifier) // Then by modifier
         .sort((a, b) => b.initiative - a.initiative) // Then by Initiative
