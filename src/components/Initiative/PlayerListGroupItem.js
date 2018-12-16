@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { AdvantageIcon, HourglassIcon, PlayerIcon, RemoveIcon } from './Icons'
+import { AdvantageIcon, HourglassIcon, PlayerIcon, RemoveIcon } from '../Icons'
 
 const PlayerListGroupItem = ({ player, removeCreature }) => {
   return (

@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import * as c from '../constants'
-import * as ca from '../actions'
+import * as c from '../../constants'
+import * as ca from '../../actions'
 
 import RollButton from './RollButton'
 import PlayerListGroupItem from './PlayerListGroupItem'
