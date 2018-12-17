@@ -26,23 +26,23 @@ export default (state = [], payload) => {
 
       const roll = state => {
         let creatures = [...state]
-        const tags = {}
+        const groupIDs = {}
         // Loop through creatures once
         creatures.forEach(cr => {
           // If it has a group
-          if (cr.tag) {
+          if (cr.groupID) {
             // check tags obj for group's initiative
-            if (tags.hasOwnProperty(cr.tag) && tags[cr.tag]) {
-              cr.initiative = tags[cr.tag]
+            if (groupIDs.hasOwnProperty(cr.groupID) && groupIDs[cr.groupID]) {
+              cr.initiative = groupIDs[cr.groupID]
               // otherwise roll it!
               // with advantage
             } else if (cr.advantage) {
-              tags[cr.tag] = d20A(cr.modifier)
-              cr.initiative = tags[cr.tag]
+              groupIDs[cr.groupID] = d20A(cr.modifier)
+              cr.initiative = groupIDs[cr.groupID]
               // or without advantage
             } else {
-              tags[cr.tag] = d20(cr.modifier)
-              cr.initiative = tags[cr.tag]
+              groupIDs[cr.groupID] = d20(cr.modifier)
+              cr.initiative = groupIDs[cr.groupID]
             }
             // If no group, if it has advantage, roll w/
           } else if (cr.advantage) {
