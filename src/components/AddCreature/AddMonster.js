@@ -150,15 +150,6 @@ export default class AddMonster extends Component {
         .toString()
         .slice(2)
 
-      let label
-      if (tag && numHigh && numLow) {
-        label = `${tag} ${i}`
-      } else if (tag) {
-        label = `${tag}`
-      } else if (numHigh && numLow) {
-        label = `${i}`
-      }
-
       const monster = {
         name,
         modifier,
@@ -166,7 +157,8 @@ export default class AddMonster extends Component {
         ac,
         hp,
         xp,
-        tag: label,
+        tag,
+        number: i,
         id: `monster-${rand}`,
       }
       monsters.push(monster)
