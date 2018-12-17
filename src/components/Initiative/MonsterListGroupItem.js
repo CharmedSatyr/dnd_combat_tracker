@@ -4,6 +4,16 @@ import { Label } from 'react-bootstrap'
 
 import { AdvantageIcon, HourglassIcon, MonsterIcon, RemoveIcon } from '../Icons'
 
+const setLabel = (tag, number) => {
+  if (tag && number) {
+    return `${tag} ${number}`
+  } else if (tag) {
+    return tag
+  } else if (number) {
+    return number
+  }
+}
+
 const MonsterListGroupItem = ({ monster, removeCreature }) => {
   return (
     <div className="list-group-item">
@@ -18,7 +28,7 @@ const MonsterListGroupItem = ({ monster, removeCreature }) => {
           <RemoveIcon id={monster.id} removeCreature={removeCreature} />
           <MonsterIcon />
           <strong>{monster.name}</strong>&nbsp;
-          <Label>{monster.tag}</Label>
+          <Label>{setLabel(monster.tag, monster.number)}</Label>
           <br />
           <span style={{ color: '#555' }}>Modifier:&nbsp;</span>
           <strong>{monster.modifier >= 0 ? `+${monster.modifier}` : `${monster.modifier}`}</strong>
