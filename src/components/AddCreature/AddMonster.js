@@ -31,6 +31,11 @@ const defaultState = {
   numValidation: null,
 }
 
+const randNum = () =>
+  Math.random()
+    .toString()
+    .slice(2)
+
 export default class AddMonster extends Component {
   constructor(props) {
     super(props)
@@ -145,10 +150,10 @@ export default class AddMonster extends Component {
     const { name, modifier, advantage, ac, hp, xp, tag, numHigh, numLow } = this.state
     const monsters = []
 
+    const groupID = randNum()
+
     for (let i = numLow || 0; i <= (numHigh || 0); i++) {
-      const rand = Math.random()
-        .toString()
-        .slice(2)
+      const id = randNum()
 
       const monster = {
         name,
@@ -159,7 +164,8 @@ export default class AddMonster extends Component {
         xp,
         tag,
         number: i,
-        id: `monster-${rand}`,
+        id: `monster-${id}`,
+        groupID,
       }
       monsters.push(monster)
     }
@@ -249,7 +255,10 @@ export default class AddMonster extends Component {
             value={this.state.tag}
           />
           <FormControl.Feedback />
-          <HelpBlock>Creature groups share stats and initiative</HelpBlock>
+          <HelpBlock>
+            Creatures created together share stats and initiative. You can use the same tag for
+            multiple creature groups.
+          </HelpBlock>
         </FormGroup>
 
         {/* Number Range */}
