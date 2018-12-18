@@ -27,35 +27,22 @@ class Initiative extends Component {
   }
   render() {
     const { creatures, removeCreature } = this.props
-    let items
+    let creatureList
     if (creatures) {
-      items = creatures
-        .sort((a, b) => (a.name > b.name ? -1 : 1)) // Sort alphabetically by name
-        .sort(
-          (a, b) =>
-            a.tag &&
-            b.tag &&
-            a.tag.split(' ')[a.tag.split(' ').length - 1] -
-              b.tag.split(' ')[b.tag.split(' ').length - 1]
-        ) // Then by tag number (for Monsters)
-        .sort((a, b) => (a.tag < b.tag ? -1 : 1)) // Then alphabetically by tag
-        .sort((a, b) => (b.advantage ? 1 : -1)) // Sort display by Advantage
-        .sort((a, b) => b.modifier - a.modifier) // Then by modifier
-        .sort((a, b) => b.initiative - a.initiative) // Then by Initiative
-        .map((c, i) => {
-          const player = c.id.split('-')[0] === 'player'
-          return player ? (
-            <PlayerListGroupItem key={c.id} player={c} removeCreature={removeCreature} />
-          ) : (
-            <MonsterListGroupItem key={c.id} monster={c} removeCreature={removeCreature} />
-          )
-        })
+      creatureList = creatures.map((c, i) => {
+        const player = c.id.split('-')[0] === 'player'
+        return player ? (
+          <PlayerListGroupItem key={c.id} player={c} removeCreature={removeCreature} />
+        ) : (
+          <MonsterListGroupItem key={c.id} monster={c} removeCreature={removeCreature} />
+        )
+      })
     }
 
     return (
-      items.length > 0 && (
+      creatureList.length > 0 && (
         <Col xs={12} md={4} className="well">
-          {items && <ListGroup>{items}</ListGroup>}
+          {creatureList && <ListGroup>{creatureList}</ListGroup>}
           <RollButton rollFunction={this.props.rollInitiative} />
         </Col>
       )
