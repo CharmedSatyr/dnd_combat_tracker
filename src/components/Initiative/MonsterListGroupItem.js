@@ -15,9 +15,8 @@ const setLabel = (tag, number) => {
 }
 
 const initiativeLength = initiative => {
-  console.log('il:', initiative.length)
   const il = initiative.toString()
-  return il.length === 1 ? '0' + il : il
+  return il.length === 1 ? <span>&nbsp;{il}</span> : il
 }
 
 const MonsterListGroupItem = ({ monster, removeCreature }) => {
