@@ -14,45 +14,70 @@ const setLabel = (tag, number) => {
   }
 }
 
+const initiativeLength = initiative => {
+  console.log('il:', initiative.length)
+  const il = initiative.toString()
+  return il.length === 1 ? '0' + il : il
+}
+
 const MonsterListGroupItem = ({ monster, removeCreature }) => {
   return (
-    <div className="list-group-item">
+    <div
+      className="list-group-item"
+      style={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+      }}
+    >
+      {/* LEFT */}
       <div
         style={{
           alignItems: 'center',
           display: 'flex',
-          justifyContent: 'space-between',
+          flexDirection: 'column',
+          justifyContent: 'center',
         }}
       >
-        <div>
-          <RemoveIcon id={monster.id} removeCreature={removeCreature} />
-          <MonsterIcon />
-          <strong>{monster.name}</strong>&nbsp;
-          <Label>{setLabel(monster.tag, monster.number)}</Label>
-          <br />
+        <Label bsStyle="info">{monster.order}</Label>
+        <RemoveIcon id={monster.id} removeCreature={removeCreature} />
+      </div>
+      {/* CENTER */}
+      <div style={{ width: '65%' }}>
+        <MonsterIcon />
+        <strong>{monster.name}</strong>&nbsp;
+        <Label>{setLabel(monster.tag, monster.number)}</Label>
+        <br />
+        <span>
           <span style={{ color: '#555' }}>Modifier:&nbsp;</span>
           <strong>{monster.modifier >= 0 ? `+${monster.modifier}` : `${monster.modifier}`}</strong>
           {monster.advantage && <AdvantageIcon />}
-        </div>
-        <div style={{ fontSize: '200%' }}>
-          <strong>
-            {typeof monster.initiative === 'number' ? monster.initiative : <HourglassIcon />}
-          </strong>
+        </span>
+        {/* LOW CENTER */}
+        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+          <span>
+            <span style={{ color: '#555' }}>AC:&nbsp;</span>
+            <strong>{monster.ac}</strong>
+          </span>{' '}
+          <span>
+            <span style={{ color: '#555' }}>HP:&nbsp;</span>
+            <strong>{monster.hp}</strong>
+          </span>{' '}
+          <span>
+            <span style={{ color: '#555' }}>XP:&nbsp;</span>
+            <strong>{monster.xp}</strong>
+          </span>
         </div>
       </div>
-      <div style={{ alignItems: 'center', display: 'flex', justifyContent: 'space-between' }}>
-        <span>
-          <span style={{ color: '#555' }}>AC:&nbsp;</span>
-          <strong>{monster.ac}</strong>
-        </span>
-        <span>
-          <span style={{ color: '#555' }}>HP:&nbsp;</span>
-          <strong>{monster.hp}</strong>
-        </span>
-        <span>
-          <span style={{ color: '#555' }}>XP:&nbsp;</span>
-          <strong>{monster.xp}</strong>
-        </span>
+      {/* RIGHT */}
+      <div style={{ fontSize: '200%', width: 'auto' }}>
+        <strong>
+          {typeof monster.initiative === 'number' ? (
+            initiativeLength(monster.initiative)
+          ) : (
+            <HourglassIcon />
+          )}
+        </strong>
       </div>
     </div>
   )
