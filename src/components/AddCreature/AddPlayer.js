@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { AdvantageIcon } from '../Icons'
-import * as c from '../../constants'
+
+import { saveLocal, setID } from './addCreature.functions'
+import MonsterHunting5E from './MonsterHunting5E'
 
 import { ControlLabel, Button, Form, FormControl, FormGroup, InputGroup } from 'react-bootstrap'
 
@@ -20,24 +22,6 @@ export default class AddPlayer extends Component {
     this.getModifier = this.getModifier.bind(this)
     this.getAdvantage = this.getAdvantage.bind(this)
     this.getValidationState = this.getValidationState.bind(this)
-  }
-  saveLocal(creature) {
-    let creatures
-    if (localStorage.hasOwnProperty(c.LOCAL_CREATURES)) {
-      creatures = localStorage.getItem(c.LOCAL_CREATURES)
-      try {
-        creatures = JSON.parse(creatures)
-        creatures.push(creature)
-        creatures = JSON.stringify(creatures)
-        localStorage.setItem(c.LOCAL_CREATURES, creatures)
-      } catch (e) {
-        console.error('Error:', e)
-      }
-    } else {
-      creatures = [creature]
-      creatures = JSON.stringify(creatures)
-      localStorage.setItem(c.LOCAL_CREATURES, creatures)
-    }
   }
   getAdvantage() {
     this.setState({ advantage: this.refs.adv_checkbox.checked })
@@ -67,17 +51,14 @@ export default class AddPlayer extends Component {
     }
   }
   addCreature() {
-    const id = Math.random()
-      .toString()
-      .slice(2)
     const creature = {
       name: this.state.name,
       modifier: this.state.modifier,
       advantage: this.state.advantage,
-      id: `player-${id}`,
+      id: `player-${setID()}`,
     }
     this.props.addCreature(creature)
-    this.saveLocal(creature)
+    saveLocal(creature)
     this.setState(defaultState)
   }
   render() {
@@ -131,6 +112,9 @@ export default class AddPlayer extends Component {
             Add Player
           </Button>
         </FormGroup>
+
+        {/* Auto-Add Monster Hunting 5E Players */}
+        <MonsterHunting5E addCreature={this.props.addCreature} />
       </Form>
     )
   }
