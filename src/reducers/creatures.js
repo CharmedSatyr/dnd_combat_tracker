@@ -50,7 +50,7 @@ export default (state = [], payload) => {
             // If advantage, roll w/
             if (cr.advantage) {
               groupIDs[shortID] = d20A(cr.modifier)
-              cr.initiative = groupIDs[cr.shortID]
+              cr.initiative = groupIDs[shortID]
               // if it doesn't, don't
             } else {
               groupIDs[shortID] = d20(cr.modifier)
