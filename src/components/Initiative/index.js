@@ -1,29 +1,39 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
+import * as a from '../../actions'
 import * as c from '../../constants'
-import * as ca from '../../actions'
 
 import RollButton from './RollButton'
+import RemoveButtons from './RemoveButtons'
 import PlayerListGroupItem from './PlayerListGroupItem'
 import MonsterListGroupItem from './MonsterListGroupItem'
+
+import { setStateFromLocal } from './initiative.functions'
 
 import { Col, ListGroup } from 'react-bootstrap'
 
 class Initiative extends Component {
-  setStateFromLocal() {
+  constructor(props) {
+    super(props)
+    this.removeLocal = this.removeLocal.bind(this)
+  }
+  componentDidMount() {
+    setStateFromLocal(this.props.setStateFromLocal)
+  }
+  removeLocal(id) {
+    let creatures
     if (localStorage.hasOwnProperty(c.LOCAL_CREATURES)) {
+      creatures = localStorage.getItem(c.LOCAL_CREATURES)
       try {
-        let localCreatures = localStorage.getItem(c.LOCAL_CREATURES)
-        localCreatures = JSON.parse(localCreatures)
-        this.props.setStateFromLocal(localCreatures)
+        creatures = JSON.parse(creatures)
+        creatures = creatures.filter(c => c.id !== id)
+        creatures = JSON.stringify(creatures)
+        localStorage.setItem(c.LOCAL_CREATURES, creatures)
       } catch (e) {
         console.error('Error:', e)
       }
     }
-  }
-  componentDidMount() {
-    this.setStateFromLocal()
   }
   render() {
     const { creatures, removeCreature } = this.props
@@ -43,7 +53,14 @@ class Initiative extends Component {
       creatureList.length > 0 && (
         <Col xs={12} md={4} className="well">
           {creatureList && <ListGroup>{creatureList}</ListGroup>}
+
           <RollButton rollFunction={this.props.rollInitiative} />
+          <hr />
+          <RemoveButtons
+            creatures={creatures}
+            removeCreature={removeCreature}
+            removeLocal={this.removeLocal}
+          />
         </Col>
       )
     )
@@ -53,9 +70,9 @@ class Initiative extends Component {
 const mapStateToProps = (state, props) => ({ creatures: state.creatures })
 
 const mapDispatchToProps = dispatch => ({
-  removeCreature: id => dispatch(ca.removeCreature(id)),
-  rollInitiative: () => dispatch(ca.rollInitiative()),
-  setStateFromLocal: localCreatures => dispatch(ca.setStateFromLocal(localCreatures)),
+  removeCreature: id => dispatch(a.removeCreature(id)),
+  rollInitiative: () => dispatch(a.rollInitiative()),
+  setStateFromLocal: localCreatures => dispatch(a.setStateFromLocal(localCreatures)),
 })
 
 export default connect(
