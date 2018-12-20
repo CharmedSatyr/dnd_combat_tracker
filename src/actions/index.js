@@ -1,12 +1,12 @@
 // Creature Actions
 import * as c from '../constants/index'
 
+export const addCreature = creature => ({ type: c.ADD_CREATURE, creature })
+
 export const addMonsters = monsters => ({
   type: c.ADD_MONSTERS,
   monsters,
 })
-
-export const addCreature = creature => ({ type: c.ADD_CREATURE, creature })
 
 export const removeCreature = id => ({
   type: c.REMOVE_CREATURE,
