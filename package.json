@@ -30,6 +30,7 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "prop-types": "^15.6.2",
     "redux-logger": "^3.0.6"
   }
 }
