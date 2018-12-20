@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { AdvantageIcon } from '../Icons'
-import * as c from '../../constants'
+import { saveLocal } from '../localStorage.functions'
+import { setID } from './addCreature.functions'
 
 import {
   ControlLabel,
@@ -31,11 +32,6 @@ const defaultState = {
   numValidation: null,
 }
 
-const randNum = () =>
-  Math.random()
-    .toString()
-    .slice(2)
-
 export default class AddMonster extends Component {
   constructor(props) {
     super(props)
@@ -50,16 +46,6 @@ export default class AddMonster extends Component {
     this.getNumHigh = this.getNumHigh.bind(this)
     this.getNumLow = this.getNumLow.bind(this)
     this.getValidationState = this.getValidationState.bind(this)
-  }
-  saveLocal(newCreatures) {
-    let existingCreatures = []
-    if (localStorage.hasOwnProperty(c.LOCAL_CREATURES)) {
-      existingCreatures = localStorage.getItem(c.LOCAL_CREATURES)
-      existingCreatures = JSON.parse(existingCreatures)
-    }
-    existingCreatures = [...existingCreatures, ...newCreatures]
-    existingCreatures = JSON.stringify(existingCreatures)
-    localStorage.setItem(c.LOCAL_CREATURES, existingCreatures)
   }
   getAdvantage() {
     this.setState({ advantage: this.refs.adv_checkbox.checked })
@@ -150,11 +136,9 @@ export default class AddMonster extends Component {
     const { name, modifier, advantage, ac, hp, xp, tag, numHigh, numLow } = this.state
     const monsters = []
 
-    const groupID = randNum()
+    const groupID = setID()
 
     for (let i = numLow || 0; i <= (numHigh || 0); i++) {
-      const id = randNum()
-
       const monster = {
         name,
         modifier,
@@ -164,14 +148,14 @@ export default class AddMonster extends Component {
         xp,
         tag,
         number: i,
-        id: `monster-${id}`,
+        id: `monster-${setID()}`,
         groupID,
       }
       monsters.push(monster)
     }
 
-    this.props.addMonsters(monsters)
-    this.saveLocal(monsters)
+    this.props.addCreatures(monsters)
+    saveLocal(monsters)
     this.setState(defaultState)
   }
   render() {

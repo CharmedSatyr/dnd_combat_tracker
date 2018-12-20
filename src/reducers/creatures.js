@@ -4,10 +4,8 @@ import * as c from '../constants'
 export default (state = [], payload) => {
   let updated
   switch (payload.type) {
-    case c.ADD_CREATURE:
-      return [...state, payload.creature]
-    case c.ADD_MONSTERS:
-      return [...state, ...payload.monsters]
+    case c.ADD_CREATURES:
+      return [...state, ...payload.creatures]
     case c.REMOVE_CREATURE:
       updated = [...state.filter(creature => creature.id !== payload.id)]
       return updated

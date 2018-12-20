@@ -49,17 +49,20 @@ export default class AddPlayer extends Component {
     }
 
     if (this.state.name && this.state.modifier) {
-      this.addCreature()
+      this.addCreatures()
     }
   }
-  addCreature() {
+  addCreatures() {
+    const { advantage, modifier, name } = this.state
+    const creatures = []
     const creature = {
-      name: this.state.name,
-      modifier: this.state.modifier,
-      advantage: this.state.advantage,
+      name,
+      modifier,
+      advantage,
       id: `player-${setID()}`,
     }
-    this.props.addCreature(creature)
+    creatures.push(creature)
+    this.props.addCreatures(creatures)
     saveLocal(creature)
     this.setState(defaultState)
   }
@@ -116,7 +119,7 @@ export default class AddPlayer extends Component {
         </FormGroup>
 
         {/* Auto-Add Monster Hunting 5E Players */}
-        <MonsterHunting5E addCreature={this.props.addCreature} />
+        <MonsterHunting5E addCreatures={this.props.addCreatures} />
       </Form>
     )
   }

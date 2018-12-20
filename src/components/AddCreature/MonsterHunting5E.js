@@ -1,56 +1,18 @@
 import React, { Component } from 'react'
 
-import { saveLocal, setID } from './addCreature.functions'
+import { saveLocal } from './addCreature.functions'
 import { FormGroup, Button } from 'react-bootstrap'
+import witchers from '../../constants/witchers'
 
 export default class MonsterHunting5E extends Component {
   constructor(props) {
     super(props)
-    this.addDefaultPlayers = this.addDefaultPlayers.bind(this)
+    this.addWitchers = this.addWitchers.bind(this)
   }
-  addDefaultPlayers(e) {
+  addWitchers(e) {
     e.preventDefault()
-
-    const marni = {
-      name: 'Marni Moonfoot',
-      modifier: 5,
-      advantage: false,
-      id: `player-${setID()}`,
-    }
-    const brunhild = {
-      name: 'Brunhild',
-      modifier: 4,
-      advantage: false,
-      id: `player-${setID()}`,
-    }
-    const keph = {
-      name: 'Keph Thrassden',
-      modifier: 6,
-      advantage: true,
-      id: `player-${setID()}`,
-    }
-    const shadow = {
-      name: 'Shadow',
-      modifier: 9,
-      advantage: false,
-      id: `player-${setID()}`,
-    }
-    const rokas = {
-      name: 'Rokas Rothenel',
-      modifier: 5,
-      advantage: true,
-      id: `player-${setID()}`,
-    }
-    const hishiro = {
-      name: 'Hishiro Gozen',
-      modifier: 1,
-      advantage: false,
-      id: `player-${setID()}`,
-    }
-
-    const defaultPlayers = [marni, brunhild, keph, hishiro, shadow, rokas]
-    defaultPlayers.forEach(d => {
-      this.props.addCreature(d)
+    this.props.addCreatures(witchers)
+    witchers.forEach(d => {
       saveLocal(d)
     })
   }
@@ -58,7 +20,7 @@ export default class MonsterHunting5E extends Component {
     return (
       <FormGroup>
         <Button
-          onClick={this.addDefaultPlayers}
+          onClick={this.addWitchers}
           style={{ width: '100%' }}
           type="submit"
           className="btn btn-primary"
