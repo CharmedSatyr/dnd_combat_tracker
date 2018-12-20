@@ -1,4 +1,4 @@
-import { setID } from '../components/AddCreature/addCreature.functions'
+import { setID } from '../components/component.functions'
 
 const brunhild = {
   name: 'Brunhild',

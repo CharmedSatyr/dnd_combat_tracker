@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { AdvantageIcon } from '../Icons'
 import { saveLocal } from '../localStorage.functions'
-import { setID } from './addCreature.functions'
+import { setID } from '../component.functions'
 
 import {
   ControlLabel,

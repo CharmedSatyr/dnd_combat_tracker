@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-
-import { saveLocal } from './addCreature.functions'
 import { FormGroup, Button } from 'react-bootstrap'
+
 import witchers from '../../constants/witchers'
+import { saveLocal } from '../component.functions'
 
 export default class MonsterHunting5E extends Component {
   constructor(props) {

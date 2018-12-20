@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { AdvantageIcon } from '../Icons'
 
-import { saveLocal, setID } from './addCreature.functions'
+import { saveLocal, setID } from '../component.functions'
 import MonsterHunting5E from './MonsterHunting5E'
 
 import { ControlLabel, Button, Form, FormControl, FormGroup, InputGroup } from 'react-bootstrap'
