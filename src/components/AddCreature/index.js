@@ -1,11 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import * as ca from '../../actions'
+import { Col, Tab, Tabs } from 'react-bootstrap'
+
+import * as a from '../../actions'
 
 import AddPlayer from './AddPlayer'
 import AddMonster from './AddMonster'
-
-import { Col, Tab, Tabs } from 'react-bootstrap'
 
 const AddCreature = ({ addCreatures }) => (
   <Col xs={12} md={4} className="well">
@@ -21,7 +21,7 @@ const AddCreature = ({ addCreatures }) => (
 )
 
 const mapDispatchToProps = dispatch => ({
-  addCreatures: creatures => dispatch(ca.addCreatures(creatures)),
+  addCreatures: creatures => dispatch(a.addCreatures(creatures)),
 })
 
 export default connect(
