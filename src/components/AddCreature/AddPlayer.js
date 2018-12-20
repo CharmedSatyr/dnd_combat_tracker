@@ -27,9 +27,11 @@ export default class AddPlayer extends Component {
     this.setState({ advantage: this.refs.adv_checkbox.checked })
   }
   getName(e) {
+    e.preventDefault()
     this.setState({ name: e.target.value })
   }
   getModifier(e) {
+    e.preventDefault()
     this.setState({ modifier: e.target.value })
   }
   getValidationState(e) {
@@ -101,7 +103,7 @@ export default class AddPlayer extends Component {
           </InputGroup>
         </FormGroup>
 
-        {/* Button */}
+        {/* Add Player Button */}
         <FormGroup>
           <Button
             onClick={this.getValidationState}
