@@ -18,37 +18,33 @@ export default class AddPlayer extends Component {
   constructor(props) {
     super(props)
     this.state = { ...defaultState }
-    this.getName = this.getName.bind(this)
-    this.getModifier = this.getModifier.bind(this)
-    this.getAdvantage = this.getAdvantage.bind(this)
+    this.getStats = this.getStats.bind(this)
     this.getValidationState = this.getValidationState.bind(this)
   }
-  getAdvantage() {
-    this.setState({ advantage: this.refs.adv_checkbox.checked })
-  }
-  getName(e) {
-    e.preventDefault()
-    this.setState({ name: e.target.value })
-  }
-  getModifier(e) {
-    e.preventDefault()
-    this.setState({ modifier: e.target.value })
+  getStats(e) {
+    switch (e.currentTarget.id) {
+      case 'name':
+        this.setState({ name: e.target.value })
+        break
+      case 'modifier':
+        this.setState({ modifier: e.target.value })
+        break
+      case 'advantage':
+        this.setState({ advantage: !this.state.advantage })
+        break
+      default:
+        break
+    }
   }
   getValidationState(e) {
     e.preventDefault()
-    if (this.state.name) {
-      this.setState({ nameValidation: 'success' })
-    } else {
-      this.setState({ nameValidation: 'error' })
-    }
+    const { name, modifier } = this.state
+    this.setState({
+      name: name ? 'success' : 'error',
+      modValidation: modifier ? 'success' : 'error',
+    })
 
-    if (this.state.modifier) {
-      this.setState({ modValidation: 'success' })
-    } else {
-      this.setState({ modValidation: 'error' })
-    }
-
-    if (this.state.name && this.state.modifier) {
+    if (name && modifier) {
       this.addCreatures()
     }
   }
@@ -73,7 +69,7 @@ export default class AddPlayer extends Component {
         <FormGroup controlId="name" validationState={this.state.nameValidation}>
           <ControlLabel>Player Name</ControlLabel>
           <FormControl
-            onChange={this.getName}
+            onChange={this.getStats}
             placeholder="Marni Moonfoot"
             type="text"
             value={this.state.name}
@@ -82,11 +78,12 @@ export default class AddPlayer extends Component {
         </FormGroup>
 
         {/* Initiative Modifier */}
-        <FormGroup controlId="initiative" validationState={this.state.modValidation}>
+        <FormGroup validationState={this.state.modValidation}>
           <ControlLabel>Initiative Modifier</ControlLabel>
           <InputGroup>
             <FormControl
-              onChange={this.getModifier}
+              id="modifier"
+              onChange={this.getStats}
               placeholder="5"
               type="number"
               value={this.state.modifier}
@@ -96,8 +93,8 @@ export default class AddPlayer extends Component {
               <AdvantageIcon />
               <input
                 aria-label="Roll initiative with advantage"
-                onChange={this.getAdvantage}
-                ref="adv_checkbox"
+                onChange={this.getStats}
+                id="advantage"
                 title="Rolls with advantage"
                 type="checkbox"
                 checked={this.state.advantage}
