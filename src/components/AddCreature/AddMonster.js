@@ -36,97 +36,65 @@ export default class AddMonster extends Component {
   constructor(props) {
     super(props)
     this.state = { ...defaultState }
-    this.getName = this.getName.bind(this)
-    this.getModifier = this.getModifier.bind(this)
-    this.getAdvantage = this.getAdvantage.bind(this)
-    this.getAC = this.getAC.bind(this)
-    this.getHP = this.getHP.bind(this)
-    this.getXP = this.getXP.bind(this)
-    this.getTag = this.getTag.bind(this)
-    this.getNumHigh = this.getNumHigh.bind(this)
-    this.getNumLow = this.getNumLow.bind(this)
+    this.getStats = this.getStats.bind(this)
     this.getValidationState = this.getValidationState.bind(this)
   }
-  getAdvantage() {
-    this.setState({ advantage: this.refs.adv_checkbox.checked })
-  }
-  getModifier(e) {
-    e.preventDefault()
-    this.setState({ modifier: e.target.value })
-  }
-  getName(e) {
-    e.preventDefault()
-    this.setState({ name: e.target.value })
-  }
-  getAC(e) {
-    e.preventDefault()
-    this.setState({ ac: e.target.value })
-  }
-  getHP(e) {
-    e.preventDefault()
-    this.setState({ hp: e.target.value })
-  }
-  getXP(e) {
-    e.preventDefault()
-    this.setState({ xp: e.target.value })
-  }
-  getNumHigh(e) {
-    e.preventDefault()
-    this.setState({ numHigh: e.target.value })
-  }
-  getNumLow(e) {
-    e.preventDefault()
-    this.setState({ numLow: e.target.value })
-  }
-  getTag(e) {
-    e.preventDefault()
-    this.setState({ tag: e.target.value })
+  getStats(e) {
+    switch (e.currentTarget.id) {
+      case 'name':
+        this.setState({ name: e.target.value })
+        break
+      case 'advantage':
+        this.setState({ advantage: !this.state.advantage })
+        break
+      case 'modifier':
+        this.setState({ modifier: e.target.value })
+        break
+      case 'hit-points':
+        this.setState({ hp: e.target.value })
+        break
+      case 'armor-class':
+        this.setState({ ac: e.target.value })
+        break
+      case 'experience':
+        this.setState({ xp: e.target.value })
+        break
+      case 'tag':
+        this.setState({ tag: e.target.value })
+        break
+      case 'numLow':
+        this.setState({ numLow: e.target.value })
+        break
+      case 'numHigh':
+        this.setState({ numHigh: e.target.value })
+        break
+      default:
+        break
+    }
   }
   getValidationState(e) {
     e.preventDefault()
-
     const { name, modifier, hp, ac, xp, numHigh, numLow } = this.state
 
-    if (name) {
-      this.setState({ nameValidation: 'success' })
-    } else {
-      this.setState({ nameValidation: 'error' })
-    }
-
-    if (modifier) {
-      this.setState({ modValidation: 'success' })
-    } else {
-      this.setState({ modValidation: 'error' })
-    }
-
-    if (hp) {
-      this.setState({ hpValidation: 'success' })
-    } else {
-      this.setState({ hpValidation: 'error' })
-    }
-
-    if (xp) {
-      this.setState({ xpValidation: 'success' })
-    } else {
-      this.setState({ xpValidation: 'error' })
-    }
-
-    if (ac) {
-      this.setState({ acValidation: 'success' })
-    } else {
-      this.setState({ acValidation: 'error' })
-    }
-
-    let validNum
+    // If there is no number range, OR both numbers are filled in and are valid
+    let validNum = false
     if (
       (!numHigh && !numLow) ||
       (numHigh && numLow && numLow < numHigh && numLow > 0 && numHigh - numLow <= 10)
     ) {
+      // Valid num
       validNum = true
-      this.setState({ numValidation: 'success' })
-    } else {
-      this.setState({ numValidation: 'error' })
     }
+
+    // Required inputs
+    this.setState({
+      nameValidation: name ? 'success' : 'error',
+      modValidation: modifier ? 'success' : 'error',
+      hpValidation: hp ? 'success' : 'error',
+      acValidation: ac ? 'success' : 'error',
+      xpValidation: xp ? 'success' : 'error',
+      numValidation: validNum ? 'success' : 'warning',
+    })
 
     if (name && modifier && ac && hp && xp && validNum) {
       this.addMonsters()
@@ -135,9 +103,7 @@ export default class AddMonster extends Component {
   addMonsters() {
     const { name, modifier, advantage, ac, hp, xp, tag, numHigh, numLow } = this.state
     const monsters = []
-
     const groupID = setID()
-
     for (let i = numLow || 0; i <= (numHigh || 0); i++) {
       const monster = {
         name,
@@ -153,7 +119,6 @@ export default class AddMonster extends Component {
       }
       monsters.push(monster)
     }
-
     this.props.addCreatures(monsters)
     saveLocal(monsters)
     this.setState(defaultState)
@@ -165,7 +130,7 @@ export default class AddMonster extends Component {
         <FormGroup controlId="name" validationState={this.state.nameValidation}>
           <ControlLabel>Monster Name</ControlLabel>
           <FormControl
-            onChange={this.getName}
+            onChange={this.getStats}
             placeholder="Beholder"
             type="text"
             value={this.state.name}
@@ -173,11 +138,12 @@ export default class AddMonster extends Component {
           <FormControl.Feedback />
         </FormGroup>
         {/* Initiative Modifier */}
-        <FormGroup controlId="initiative" validationState={this.state.modValidation}>
+        <FormGroup validationState={this.state.modValidation}>
           <ControlLabel>Initiative Modifier</ControlLabel>
           <InputGroup>
             <FormControl
-              onChange={this.getModifier}
+              id="modifier"
+              onChange={this.getStats}
               placeholder="2"
               type="number"
               value={this.state.modifier}
@@ -188,8 +154,8 @@ export default class AddMonster extends Component {
               <AdvantageIcon />
               <input
                 aria-label="Roll initiative with advantage"
-                onChange={this.getAdvantage}
-                ref="adv_checkbox"
+                onChange={this.getStats}
+                id="advantage"
                 title="Rolls with advantage"
                 type="checkbox"
                 checked={this.state.advantage}
@@ -202,7 +168,7 @@ export default class AddMonster extends Component {
         <FormGroup controlId="hit-points" validationState={this.state.hpValidation}>
           <ControlLabel>Hit Points</ControlLabel>
           <FormControl
-            onChange={this.getHP}
+            onChange={this.getStats}
             placeholder="180"
             type="number"
             value={this.state.hp}
@@ -212,14 +178,19 @@ export default class AddMonster extends Component {
         {/* Armor Class */}
         <FormGroup controlId="armor-class" validationState={this.state.acValidation}>
           <ControlLabel>Armor Class</ControlLabel>
-          <FormControl onChange={this.getAC} placeholder="18" type="number" value={this.state.ac} />
+          <FormControl
+            onChange={this.getStats}
+            placeholder="18"
+            type="number"
+            value={this.state.ac}
+          />
         </FormGroup>
 
         {/* Experience */}
         <FormGroup controlId="experience" validationState={this.state.xpValidation}>
           <ControlLabel>Experience</ControlLabel>
           <FormControl
-            onChange={this.getXP}
+            onChange={this.getStats}
             placeholder="10000"
             type="number"
             value={this.state.xp}
@@ -233,7 +204,7 @@ export default class AddMonster extends Component {
             <Label>Optional</Label>
           </ControlLabel>
           <FormControl
-            onChange={this.getTag}
+            onChange={this.getStats}
             placeholder="Red"
             type="text"
             value={this.state.tag}
@@ -246,13 +217,14 @@ export default class AddMonster extends Component {
         </FormGroup>
 
         {/* Number Range */}
-        <FormGroup controlId="numLow" validationState={this.state.numValidation}>
+        <FormGroup validationState={this.state.numValidation}>
           <ControlLabel>
             Number Range&nbsp;<Label>Optional</Label>
           </ControlLabel>
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <FormControl
-              onChange={this.getNumLow}
+              id="numLow"
+              onChange={this.getStats}
               placeholder="1"
               style={{ width: '45%' }}
               type="number"
@@ -262,7 +234,8 @@ export default class AddMonster extends Component {
               <strong>&ndash;</strong>
             </div>
             <FormControl
-              onChange={this.getNumHigh}
+              id="numHigh"
+              onChange={this.getStats}
               placeholder="10"
               style={{ width: '45%' }}
               type="number"
