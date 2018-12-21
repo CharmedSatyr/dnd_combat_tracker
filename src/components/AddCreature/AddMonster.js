@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { AdvantageIcon } from '../Icons'
 import { saveLocal } from '../localStorage.functions'
 import { setID } from '../component.functions'
+import Creature from '../../constants/creature'
 
 import {
   ControlLabel,
@@ -103,9 +104,8 @@ export default class AddMonster extends Component {
   addMonsters() {
     const { name, modifier, advantage, ac, hp, xp, tag, numHigh, numLow } = this.state
     const monsters = []
-    const groupID = setID()
     for (let i = numLow || 0; i <= (numHigh || 0); i++) {
-      const monster = {
+      const monster = new Creature(
         name,
         modifier,
         advantage,
@@ -113,10 +113,10 @@ export default class AddMonster extends Component {
         hp,
         xp,
         tag,
-        number: i,
-        id: `monster-${setID()}`,
-        groupID,
-      }
+        i,
+        `monster-${setID()}`,
+        setID()
+      )
       monsters.push(monster)
     }
     this.props.addCreatures(monsters)
