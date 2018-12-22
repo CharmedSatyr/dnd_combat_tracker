@@ -55,7 +55,7 @@ export default class AddPlayer extends Component {
     const player = new Creature(name, modifier, advantage, `player-${setID()}`)
     creatures.push(player)
     this.props.addCreatures(creatures)
-    saveLocal(player)
+    saveLocal(creatures)
     this.setState(defaultState)
   }
   render() {

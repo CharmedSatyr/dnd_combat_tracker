@@ -12,9 +12,7 @@ export default class MonsterHunting5E extends Component {
   addWitchers(e) {
     e.preventDefault()
     this.props.addCreatures(witchers)
-    witchers.forEach(d => {
-      saveLocal(d)
-    })
+    saveLocal(witchers)
   }
   render() {
     return (
