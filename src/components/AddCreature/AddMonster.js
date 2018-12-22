@@ -109,13 +109,13 @@ export default class AddMonster extends Component {
         name,
         modifier,
         advantage,
+        `monster-${setID()}`, // id
         ac,
         hp,
         xp,
         tag,
-        i,
-        `monster-${setID()}`,
-        setID()
+        i, // number
+        setID() // groupID
       )
       monsters.push(monster)
     }
