@@ -3,6 +3,7 @@ import { AdvantageIcon } from '../Icons'
 
 import { saveLocal, setID } from '../component.functions'
 import MonsterHunting5E from './MonsterHunting5E'
+import Creature from '../../constants/creature'
 
 import { ControlLabel, Button, Form, FormControl, FormGroup, InputGroup } from 'react-bootstrap'
 
@@ -51,15 +52,10 @@ export default class AddPlayer extends Component {
   addCreatures() {
     const { advantage, modifier, name } = this.state
     const creatures = []
-    const creature = {
-      name,
-      modifier,
-      advantage,
-      id: `player-${setID()}`,
-    }
-    creatures.push(creature)
+    const player = new Creature(name, modifier, advantage, `player-${setID()}`)
+    creatures.push(player)
     this.props.addCreatures(creatures)
-    saveLocal(creature)
+    saveLocal(player)
     this.setState(defaultState)
   }
   render() {
