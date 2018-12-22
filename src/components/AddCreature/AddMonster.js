@@ -119,7 +119,6 @@ export default class AddMonster extends Component {
         groupID
       )
       creatures.push(monster)
-      console.log('monster:', monster)
     }
     this.props.addCreatures(creatures)
     saveLocal(creatures)
