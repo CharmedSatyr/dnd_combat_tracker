@@ -29,10 +29,10 @@ export default (state = [], payload) => {
         creatures.forEach(cr => {
           // If it has a group
           if (cr.groupID) {
-            // check tags obj for group's initiative
+            // check groupIDs obj for group's initiative
             if (groupIDs.hasOwnProperty(cr.groupID) && groupIDs[cr.groupID]) {
               cr.initiative = groupIDs[cr.groupID]
-              // otherwise roll it!
+              // otherwise roll for initiative!
               // with advantage
             } else if (cr.advantage) {
               groupIDs[cr.groupID] = d20A(cr.modifier)
@@ -42,10 +42,11 @@ export default (state = [], payload) => {
               groupIDs[cr.groupID] = d20(cr.modifier)
               cr.initiative = groupIDs[cr.groupID]
             }
-            // If no group, use ID
+            // If the creature has no group, use its id
           } else if (cr.id) {
+            // only the number part
             const shortID = cr.id.split('-')[1]
-            // If advantage, roll w/
+            // If it has advantage, roll w/
             if (cr.advantage) {
               groupIDs[shortID] = d20A(cr.modifier)
               cr.initiative = groupIDs[shortID]
