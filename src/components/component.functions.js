@@ -1,12 +1,12 @@
 import * as c from '../constants'
 
-// Generate a new numerical ID
+// Generate an 18-digit numerical ID
 export const setID = () =>
   Math.random()
     .toString()
     .slice(2)
 
-// Save new creature array to user browser cache
+// Save creature array to user's browser cache
 export const saveLocal = newCreatures => {
   let existingCreatures
   if (localStorage.hasOwnProperty(c.LOCAL_CREATURES)) {
