@@ -1,5 +1,5 @@
 class Creature {
-  constructor(name, modifier, advantage, ac, hp, xp, tag, number, id, groupID) {
+  constructor(name, modifier, advantage, id, ac, hp, xp, tag, number, groupID) {
     this.name = name
     this.modifier = modifier
     this.advantage = advantage
