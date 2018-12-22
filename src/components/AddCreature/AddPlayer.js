@@ -46,10 +46,10 @@ export default class AddPlayer extends Component {
     })
 
     if (name && modifier) {
-      this.addCreatures()
+      this.addPlayer()
     }
   }
-  addCreatures() {
+  addPlayer() {
     const { advantage, modifier, name } = this.state
     const creatures = []
     const player = new Creature(name, modifier, advantage, `player-${setID()}`)
