@@ -103,7 +103,8 @@ export default class AddMonster extends Component {
   }
   addMonsters() {
     const { name, modifier, advantage, ac, hp, xp, tag, numHigh, numLow } = this.state
-    const monsters = []
+    const creatures = []
+    const groupID = setID()
     for (let i = numLow || 0; i <= (numHigh || 0); i++) {
       const monster = new Creature(
         name,
@@ -115,12 +116,13 @@ export default class AddMonster extends Component {
         xp,
         tag,
         i, // number
-        setID() // groupID
+        groupID
       )
-      monsters.push(monster)
+      creatures.push(monster)
+      console.log('monster:', monster)
     }
-    this.props.addCreatures(monsters)
-    saveLocal(monsters)
+    this.props.addCreatures(creatures)
+    saveLocal(creatures)
     this.setState(defaultState)
   }
   render() {
