@@ -9,7 +9,7 @@ import RemoveButtons from './RemoveButtons'
 import PlayerListGroupItem from './PlayerListGroupItem'
 import MonsterListGroupItem from './MonsterListGroupItem'
 
-import { setStateFromLocal } from './initiative.functions'
+import { setStateFromLocal } from '../localStorage.functions'
 
 import { Col, ListGroup } from 'react-bootstrap'
 
