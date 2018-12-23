@@ -3,6 +3,7 @@ import React from 'react'
 import { Label } from 'react-bootstrap'
 
 import { AdvantageIcon, HourglassIcon, MonsterIcon, RemoveIcon } from '../Icons'
+import IncrementDecrementButtons from './IncrementDecrementButtons'
 
 const setLabel = (tag, number) => {
   if (tag && number) {
@@ -41,6 +42,8 @@ const MonsterListGroupItem = ({ monster, removeCreature }) => {
         <Label bsStyle="info">{monster.order}</Label>
         <RemoveIcon id={monster.id} removeCreature={removeCreature} />
       </div>
+      {/* ORDER CONTROL */}
+      <IncrementDecrementButtons id={monster.id} />
       {/* CENTER */}
       <div style={{ width: '65%' }}>
         <MonsterIcon />

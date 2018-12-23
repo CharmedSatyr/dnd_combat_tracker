@@ -4,6 +4,8 @@ import { AdvantageIcon, HourglassIcon, PlayerIcon, RemoveIcon } from '../Icons'
 
 import { Label } from 'react-bootstrap'
 
+import IncrementDecrementButtons from './IncrementDecrementButtons'
+
 const initiativeLength = initiative => {
   const il = initiative.toString()
   return il.length === 1 ? <span>&nbsp;{il}</span> : il
@@ -31,6 +33,8 @@ const PlayerListGroupItem = ({ player, removeCreature }) => {
         <Label bsStyle="info">{player.order}</Label>
         <RemoveIcon id={player.id} removeCreature={removeCreature} />
       </div>
+      {/* ORDER CONTROL */}
+      <IncrementDecrementButtons id={player.id} />
       {/* CENTER */}
       <div style={{ width: '65%' }}>
         <PlayerIcon />

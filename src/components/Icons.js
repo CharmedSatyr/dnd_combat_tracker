@@ -12,6 +12,10 @@ export const AdvantageIcon = () => (
   </span>
 )
 
+export const ChevronDownIcon = () => <Glyphicon glyph="chevron-down" />
+
+export const ChevronUpIcon = () => <Glyphicon glyph="chevron-up" />
+
 export const HourglassIcon = () => <Glyphicon glyph="hourglass" style={{ color: '#555' }} />
 
 export const MonsterIcon = () => (
