@@ -34,7 +34,7 @@ const PlayerListGroupItem = ({ player, removeCreature }) => {
         <RemoveIcon id={player.id} removeCreature={removeCreature} />
       </div>
       {/* ORDER CONTROL */}
-      <IncrementDecrementButtons id={player.id} />
+      {player.order && <IncrementDecrementButtons id={player.id} />}
       {/* CENTER */}
       <div style={{ width: '65%' }}>
         <PlayerIcon />
