@@ -1,6 +1,7 @@
 import React from 'react'
 import Initiative from './Initiative/'
 import AddCreature from './AddCreature/'
+import Experience from './Experience'
 
 import { Grid, PageHeader, Row } from 'react-bootstrap'
 
@@ -10,6 +11,7 @@ const App = () => (
     <Row className="show-grid">
       <AddCreature />
       <Initiative />
+      <Experience />
     </Row>
   </Grid>
 )
