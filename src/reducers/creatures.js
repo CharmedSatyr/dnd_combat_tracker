@@ -5,7 +5,8 @@ export default (state = [], payload) => {
   let updated
   switch (payload.type) {
     case c.ADD_CREATURES:
-      return [...state, ...payload.creatures]
+      updated = [...state, ...payload.creatures]
+      return updated
     case c.INCREMENT_CREATURE_INITIATIVE:
       // Find the index of the id
       const incrementIndex = state.findIndex(c => c.id === payload.id)
@@ -25,7 +26,6 @@ export default (state = [], payload) => {
         updated[incrementIndex].order = incrementIndex + 1
         updated[incrementIndex - 1].order = incrementIndex
       }
-
       return updated
     case c.DECREMENT_CREATURE_INITIATIVE:
       // Find the index of the id
@@ -64,8 +64,8 @@ export default (state = [], payload) => {
         return roll1 >= roll2 ? roll1 : roll2
       }
 
-      const roll = state => {
-        let creatures = [...state]
+      const roll = creaturesArray => {
+        let creatures = [...creaturesArray]
         const groupIDs = {}
         // Loop through creatures once
         creatures.forEach(cr => {
@@ -118,11 +118,11 @@ export default (state = [], payload) => {
           .sort((a, b) => b.modifier - a.modifier) // by modifier
           .sort((a, b) => a.order - b.order) // by order
       }
-
       updated = roll(state)
       return updated
     case c.SET_STATE_FROM_LOCAL:
-      return [...payload.localCreatures]
+      updated = [...payload.localCreatures]
+      return updated
     default:
       return state
   }
