@@ -42,7 +42,7 @@ class Initiative extends Component {
       creatureList = creatures.map((c, i) => {
         const player = c.id.split('-')[0] === 'player'
         return player ? (
-          <PlayerListGroupItem key={c.id} player={c} removeCreature={removeCreature} />
+          <PlayerListGroupItem key={i} player={c} removeCreature={removeCreature} />
         ) : (
           <MonsterListGroupItem key={c.id} monster={c} removeCreature={removeCreature} />
         )
