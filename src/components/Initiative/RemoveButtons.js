@@ -9,7 +9,7 @@ const RemovePlayers = ({ creatures, removeCreature, removeLocal }) => (
       onClick={() => {
         creatures.forEach(cr => {
           if (cr.id.split('-')[0] === 'player') {
-            removeCreature(cr.id)
+            removeCreature(cr)
             removeLocal(cr.id)
           }
         })
@@ -28,7 +28,7 @@ const RemoveMonsters = ({ creatures, removeCreature, removeLocal }) => (
       onClick={() => {
         creatures.forEach(cr => {
           if (cr.id.split('-')[0] === 'monster') {
-            removeCreature(cr.id)
+            removeCreature(cr)
             removeLocal(cr.id)
           }
         })

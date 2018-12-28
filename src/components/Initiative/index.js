@@ -70,7 +70,7 @@ class Initiative extends Component {
 const mapStateToProps = (state, props) => ({ creatures: state.creatures })
 
 const mapDispatchToProps = dispatch => ({
-  removeCreature: id => dispatch(a.removeCreature(id)),
+  removeCreature: creature => dispatch(a.removeCreature(creature)),
   rollInitiative: () => dispatch(a.rollInitiative()),
   setStateFromLocal: localCreatures => dispatch(a.setStateFromLocal(localCreatures)),
 })

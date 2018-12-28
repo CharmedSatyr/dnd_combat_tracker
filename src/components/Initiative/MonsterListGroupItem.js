@@ -40,7 +40,7 @@ const MonsterListGroupItem = ({ monster, removeCreature }) => {
         }}
       >
         <Label bsStyle="info">{monster.order}</Label>
-        <RemoveIcon id={monster.id} removeCreature={removeCreature} />
+        <RemoveIcon creature={monster} removeCreature={removeCreature} />
       </div>
       {/* ORDER CONTROL */}
       {monster.order && <IncrementDecrementButtons id={monster.id} />}

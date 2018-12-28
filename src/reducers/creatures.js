@@ -49,7 +49,7 @@ export default (state = [], payload) => {
 
       return updated
     case c.REMOVE_CREATURE:
-      updated = [...state.filter(creature => creature.id !== payload.id)]
+      updated = [...state.filter(creature => creature.id !== payload.creature.id)]
       return updated
     case c.ROLL_INITIATIVE:
       const d20 = modifier => {

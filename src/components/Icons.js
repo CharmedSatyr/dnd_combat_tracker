@@ -40,7 +40,7 @@ export class RemoveIcon extends Component {
     this.removeCreature = this.removeCreature.bind(this)
   }
   removeCreature() {
-    this.props.removeCreature(this.props.id)
+    this.props.removeCreature(this.props.creature)
     removeLocal(this.props.id)
   }
   render() {
