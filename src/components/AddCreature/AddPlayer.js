@@ -41,7 +41,7 @@ export default class AddPlayer extends Component {
     e.preventDefault()
     const { name, modifier } = this.state
     this.setState({
-      name: name ? 'success' : 'error',
+      nameValidation: name ? 'success' : 'error',
       modValidation: modifier ? 'success' : 'error',
     })
 
