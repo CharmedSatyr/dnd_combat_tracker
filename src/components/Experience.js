@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 
 import { Col } from 'react-bootstrap'
 
@@ -24,3 +25,9 @@ export default connect(
   mapStateToProps,
   null
 )(Experience)
+
+Experience.propTypes = {
+  playerCount: PropTypes.number.isRequired,
+  totalXP: PropTypes.number.isRequired,
+  xpPerPlayer: PropTypes.number.isRequired,
+}
