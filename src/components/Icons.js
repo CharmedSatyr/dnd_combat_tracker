@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
 import { removeLocal } from './localStorage.functions'
 
@@ -56,4 +57,18 @@ export class RemoveIcon extends Component {
       </span>
     )
   }
+}
+
+RemoveIcon.propTypes = {
+  creature: PropTypes.objectOf({
+    name: PropTypes.string.isRequired,
+    modifier: PropTypes.number.isRequired,
+    ac: PropTypes.number,
+    hp: PropTypes.number,
+    xp: PropTypes.number,
+    initiative: PropTypes.number,
+    order: PropTypes.number,
+  }).isRequired,
+  id: PropTypes.string.isRequired,
+  removeCreature: PropTypes.func.isRequired,
 }
