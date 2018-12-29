@@ -42,7 +42,7 @@ export class RemoveIcon extends Component {
   }
   removeCreature() {
     this.props.removeCreature(this.props.creature)
-    removeLocal(this.props.id)
+    removeLocal(this.props.creature.id)
   }
   render() {
     return (
@@ -60,15 +60,15 @@ export class RemoveIcon extends Component {
 }
 
 RemoveIcon.propTypes = {
-  creature: PropTypes.objectOf({
+  creature: PropTypes.shape({
     name: PropTypes.string.isRequired,
     modifier: PropTypes.number.isRequired,
     ac: PropTypes.number,
     hp: PropTypes.number,
     xp: PropTypes.number,
     initiative: PropTypes.number,
+    id: PropTypes.string.isRequired,
     order: PropTypes.number,
   }).isRequired,
-  id: PropTypes.string.isRequired,
   removeCreature: PropTypes.func.isRequired,
 }
