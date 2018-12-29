@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import { AdvantageIcon, HourglassIcon, PlayerIcon, RemoveIcon } from '../Icons'
 
@@ -59,3 +60,13 @@ const PlayerListGroupItem = ({ player, removeCreature }) => {
 }
 
 export default PlayerListGroupItem
+
+PlayerListGroupItem.propTypes = {
+  player: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    modifier: PropTypes.number.isRequired,
+    initiative: PropTypes.number,
+    order: PropTypes.number,
+  }).isRequired,
+  removeCreature: PropTypes.func.isRequired,
+}

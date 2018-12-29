@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import { Button, FormGroup } from 'react-bootstrap'
 
@@ -13,3 +14,7 @@ const RollButton = ({ rollFunction }) => {
 }
 
 export default RollButton
+
+RollButton.propTypes = {
+  rollFunction: PropTypes.func.isRequired,
+}

@@ -1,5 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
+
 import { Button } from 'react-bootstrap'
 import { ChevronDownIcon, ChevronUpIcon } from '../Icons'
 import * as a from '../../actions'
@@ -35,3 +37,9 @@ export default connect(
   null,
   mapDispatchToProps
 )(IncrementDecrementButtons)
+
+IncrementDecrementButtons.propTypes = {
+  decrementCreatureInitiative: PropTypes.func.isRequired,
+  id: PropTypes.string.isRequired,
+  incrementCreatureInitiative: PropTypes.func.isRequired,
+}

@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import { Label } from 'react-bootstrap'
 
@@ -86,3 +87,16 @@ const MonsterListGroupItem = ({ monster, removeCreature }) => {
 }
 
 export default MonsterListGroupItem
+
+MonsterListGroupItem.propTypes = {
+  monster: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    modifier: PropTypes.number.isRequired,
+    ac: PropTypes.number.isRequired,
+    hp: PropTypes.number.isRequired,
+    xp: PropTypes.number.isRequired,
+    initiative: PropTypes.number,
+    order: PropTypes.number,
+  }).isRequired,
+  removeCreature: PropTypes.func.isRequired,
+}

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 
 import * as a from '../../actions'
 import * as c from '../../constants'
@@ -36,7 +37,7 @@ class Initiative extends Component {
     }
   }
   render() {
-    const { creatures, removeCreature } = this.props
+    const { creatures, removeCreature, rollInitiative } = this.props
     let creatureList
     if (creatures) {
       creatureList = creatures.map((c, i) => {
@@ -54,7 +55,7 @@ class Initiative extends Component {
         <Col xs={12} md={4} className="well">
           {creatureList && <ListGroup>{creatureList}</ListGroup>}
 
-          <RollButton rollFunction={this.props.rollInitiative} />
+          <RollButton rollFunction={rollInitiative} />
           <hr />
           <RemoveButtons
             creatures={creatures}
@@ -67,7 +68,7 @@ class Initiative extends Component {
   }
 }
 
-const mapStateToProps = (state, props) => ({ creatures: state.creatures })
+const mapStateToProps = state => ({ creatures: state.creatures })
 
 const mapDispatchToProps = dispatch => ({
   removeCreature: creature => dispatch(a.removeCreature(creature)),
@@ -79,3 +80,10 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(Initiative)
+
+Initiative.propTypes = {
+  creatures: PropTypes.arrayOf(PropTypes.object).isRequired,
+  removeCreature: PropTypes.func.isRequired,
+  rollInitiative: PropTypes.func.isRequired,
+  setStateFromLocal: PropTypes.func.isRequired,
+}

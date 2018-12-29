@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import { Button, FormGroup } from 'react-bootstrap'
 
@@ -58,26 +59,30 @@ const RemoveCreatures = ({ creatures, removeCreature, removeLocal }) => (
   </FormGroup>
 )
 
-const RemoveButtons = ({ creatures, removeCreature, removeLocal }) => {
-  return (
-    <span>
-      <RemovePlayers
-        creatures={creatures}
-        removeCreature={removeCreature}
-        removeLocal={removeLocal}
-      />
-      <RemoveMonsters
-        creatures={creatures}
-        removeCreature={removeCreature}
-        removeLocal={removeLocal}
-      />
-      <RemoveCreatures
-        creatures={creatures}
-        removeCreature={removeCreature}
-        removeLocal={removeLocal}
-      />
-    </span>
-  )
-}
+const RemoveButtons = ({ creatures, removeCreature, removeLocal }) => (
+  <span>
+    <RemovePlayers
+      creatures={creatures}
+      removeCreature={removeCreature}
+      removeLocal={removeLocal}
+    />
+    <RemoveMonsters
+      creatures={creatures}
+      removeCreature={removeCreature}
+      removeLocal={removeLocal}
+    />
+    <RemoveCreatures
+      creatures={creatures}
+      removeCreature={removeCreature}
+      removeLocal={removeLocal}
+    />
+  </span>
+)
 
 export default RemoveButtons
+
+RemoveButtons.propTypes = {
+  creatures: PropTypes.arrayOf(PropTypes.object).isRequired,
+  removeCreature: PropTypes.func.isRequired,
+  removeLocal: PropTypes.func.isRequired,
+}
