@@ -1,4 +1,6 @@
 import React from 'react'
+import PropTypes from 'prop-types'
+
 import { connect } from 'react-redux'
 import { Col, Tab, Tabs } from 'react-bootstrap'
 
@@ -28,3 +30,7 @@ export default connect(
   null,
   mapDispatchToProps
 )(AddCreature)
+
+AddCreature.propTypes = {
+  addCreatures: PropTypes.func.isRequired,
+}

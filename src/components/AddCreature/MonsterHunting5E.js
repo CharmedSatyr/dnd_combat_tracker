@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+
 import { FormGroup, Button } from 'react-bootstrap'
 
 import witchers from '../../constants/witchers'
@@ -28,4 +30,8 @@ export default class MonsterHunting5E extends Component {
       </FormGroup>
     )
   }
+}
+
+MonsterHunting5E.propTypes = {
+  addCreatures: PropTypes.func.isRequired,
 }

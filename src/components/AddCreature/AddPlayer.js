@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import { AdvantageIcon } from '../Icons'
+import PropTypes from 'prop-types'
 
+import { AdvantageIcon } from '../Icons'
 import { saveLocal, setID } from '../component.functions'
 import MonsterHunting5E from './MonsterHunting5E'
 import Creature from '../../constants/creature'
@@ -116,4 +117,8 @@ export default class AddPlayer extends Component {
       </Form>
     )
   }
+}
+
+AddPlayer.propTypes = {
+  addCreatures: PropTypes.func.isRequired,
 }
