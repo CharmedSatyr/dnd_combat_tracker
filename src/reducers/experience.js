@@ -8,7 +8,9 @@ const defaultState = {
 }
 
 export default (state = defaultState, payload) => {
-  let playerCount, totalXP, xpPerPlayer
+  let playerCount = 0,
+    totalXP = 0,
+    xpPerPlayer = 0
   switch (payload.type) {
     case c.ADD_CREATURES:
       playerCount =
