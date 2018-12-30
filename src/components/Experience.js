@@ -32,7 +32,18 @@ export default connect(
 )(Experience)
 
 Experience.propTypes = {
-  creatures: PropTypes.arrayOf(PropTypes.object),
+  creatures: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      modifier: PropTypes.number.isRequired,
+      advantage: PropTypes.bool.isRequired,
+      ac: PropTypes.number,
+      hp: PropTypes.number,
+      xp: PropTypes.number,
+      initiative: PropTypes.number,
+      order: PropTypes.number,
+    })
+  ),
   playerCount: PropTypes.number.isRequired,
   totalXP: PropTypes.number.isRequired,
   xpPerPlayer: PropTypes.number.isRequired,

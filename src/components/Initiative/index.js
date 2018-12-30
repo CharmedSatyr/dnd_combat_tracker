@@ -82,7 +82,18 @@ export default connect(
 )(Initiative)
 
 Initiative.propTypes = {
-  creatures: PropTypes.arrayOf(PropTypes.object).isRequired,
+  creatures: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      modifier: PropTypes.number.isRequired,
+      advantage: PropTypes.bool.isRequired,
+      ac: PropTypes.number,
+      hp: PropTypes.number,
+      xp: PropTypes.number,
+      initiative: PropTypes.number,
+      order: PropTypes.number,
+    })
+  ).isRequired,
   removeCreature: PropTypes.func.isRequired,
   rollInitiative: PropTypes.func.isRequired,
   setStateFromLocal: PropTypes.func.isRequired,
