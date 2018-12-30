@@ -92,6 +92,7 @@ MonsterListGroupItem.propTypes = {
   monster: PropTypes.shape({
     name: PropTypes.string.isRequired,
     modifier: PropTypes.number.isRequired,
+    advantage: PropTypes.bool.isRequired,
     ac: PropTypes.number.isRequired,
     hp: PropTypes.number.isRequired,
     xp: PropTypes.number.isRequired,
