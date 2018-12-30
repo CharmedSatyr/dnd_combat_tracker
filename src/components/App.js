@@ -7,7 +7,7 @@ import { Grid, PageHeader, Row } from 'react-bootstrap'
 
 const App = () => (
   <Grid>
-    <PageHeader>D&amp;D Initiative Tracker</PageHeader>
+    <PageHeader>D&amp;D Combat Tracker</PageHeader>
     <Row className="show-grid">
       <AddCreature />
       <Initiative />
