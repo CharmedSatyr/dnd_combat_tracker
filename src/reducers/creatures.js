@@ -1,5 +1,6 @@
 // Creature Reducer
 import * as c from '../constants'
+import * as f from './reducer.functions'
 
 export default (state = [], payload) => {
   let updated
@@ -52,18 +53,6 @@ export default (state = [], payload) => {
       updated = [...state.filter(creature => creature.id !== payload.creature.id)]
       return updated
     case c.ROLL_INITIATIVE:
-      const d20 = modifier => {
-        const min = 1 + parseInt(modifier)
-        const max = 20 + parseInt(modifier)
-        return Math.floor(Math.random() * (max - (min + 1)) + min)
-      }
-
-      const d20A = modifier => {
-        const roll1 = d20(modifier)
-        const roll2 = d20(modifier)
-        return roll1 >= roll2 ? roll1 : roll2
-      }
-
       const roll = creaturesArray => {
         let creatures = [...creaturesArray]
         const groupIDs = {}
@@ -77,11 +66,11 @@ export default (state = [], payload) => {
               // otherwise roll for initiative!
               // with advantage
             } else if (cr.advantage) {
-              groupIDs[cr.groupID] = d20A(cr.modifier)
+              groupIDs[cr.groupID] = f.d20A(cr.modifier)
               cr.initiative = groupIDs[cr.groupID]
               // or without advantage
             } else {
-              groupIDs[cr.groupID] = d20(cr.modifier)
+              groupIDs[cr.groupID] = f.d20(cr.modifier)
               cr.initiative = groupIDs[cr.groupID]
             }
             // If the creature has no group, use its id
@@ -90,11 +79,11 @@ export default (state = [], payload) => {
             const shortID = cr.id.split('-')[1]
             // If it has advantage, roll w/
             if (cr.advantage) {
-              groupIDs[shortID] = d20A(cr.modifier)
+              groupIDs[shortID] = f.d20A(cr.modifier)
               cr.initiative = groupIDs[shortID]
               // if it doesn't, don't
             } else {
-              groupIDs[shortID] = d20(cr.modifier)
+              groupIDs[shortID] = f.d20(cr.modifier)
               cr.initiative = groupIDs[shortID]
             }
           }
@@ -111,12 +100,7 @@ export default (state = [], payload) => {
             (cr.order = initiativeOrder.indexOf(cr.groupID ? cr.groupID : cr.id.split('-')[1]) + 1)
         )
         // Sort creatures
-        return creatures
-          .sort((a, b) => (a.name > b.name ? -1 : 1)) // by name
-          .sort((a, b) => a.number && b.number && a.number - b.number) // by tag number
-          .sort((a, b) => (b.advantage ? 1 : -1)) // by advantage
-          .sort((a, b) => b.modifier - a.modifier) // by modifier
-          .sort((a, b) => a.order - b.order) // by order
+        return f.sortCreaturesArray(creatures)
       }
       updated = roll(state)
       return updated
