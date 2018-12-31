@@ -4,7 +4,7 @@ import * as c from '../constants'
 export default (state = [], payload) => {
   let updated
   switch (payload.type) {
-    case c.ADD_CREATURES:
+    case c.ADD_CREATURES_TO_STATE:
       updated = [...state, ...payload.creatures]
       return updated
     case c.INCREMENT_CREATURE_INITIATIVE:
@@ -48,7 +48,7 @@ export default (state = [], payload) => {
       }
 
       return updated
-    case c.REMOVE_CREATURE:
+    case c.REMOVE_CREATURE_FROM_STATE:
       updated = [...state.filter(creature => creature.id !== payload.creature.id)]
       return updated
     case c.ROLL_INITIATIVE:
@@ -119,9 +119,6 @@ export default (state = [], payload) => {
           .sort((a, b) => a.order - b.order) // by order
       }
       updated = roll(state)
-      return updated
-    case c.SET_STATE_FROM_LOCAL:
-      updated = [...payload.localCreatures]
       return updated
     default:
       return state
