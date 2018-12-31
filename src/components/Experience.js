@@ -8,11 +8,11 @@ const Experience = ({ creatures, playerCount, totalXP }) => (
   <span>
     {creatures.length > 0 && (
       <Col xs={12} md={4} className="well">
-        Players: {parseInt(playerCount)}
+        <strong>Players:</strong> {parseInt(playerCount)}
         <br />
-        Total Experience: {parseInt(totalXP)}
+        <strong>Total Experience:</strong> {parseInt(totalXP)}
         <br />
-        Experience/Player:{' '}
+        <strong>Experience/Player:</strong>{' '}
         {parseInt(playerCount) > 0 ? Math.floor(parseInt(totalXP) / parseInt(playerCount)) : 0}
       </Col>
     )}
