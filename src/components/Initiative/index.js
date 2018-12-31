@@ -2,39 +2,23 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
-import * as a from '../../actions'
-import * as c from '../../constants'
-
-import RollButton from './RollButton'
-import RemoveButtons from './RemoveButtons'
-import PlayerListGroupItem from './PlayerListGroupItem'
-import MonsterListGroupItem from './MonsterListGroupItem'
-
-import { setStateFromLocal } from '../localStorage.functions'
-
 import { Col, ListGroup } from 'react-bootstrap'
 
+import * as a from '../../actions'
+
+import {
+  findCreaturesInLocalStorage,
+  removeCreatureFromLocalStorage,
+} from '../localStorage.functions'
+
+import MonsterListGroupItem from './MonsterListGroupItem'
+import PlayerListGroupItem from './PlayerListGroupItem'
+import RemoveButtons from './RemoveButtons'
+import RollButton from './RollButton'
+
 class Initiative extends Component {
-  constructor(props) {
-    super(props)
-    this.removeLocal = this.removeLocal.bind(this)
-  }
   componentDidMount() {
-    setStateFromLocal(this.props.setStateFromLocal)
-  }
-  removeLocal(id) {
-    let creatures
-    if (localStorage.hasOwnProperty(c.LOCAL_CREATURES)) {
-      creatures = localStorage.getItem(c.LOCAL_CREATURES)
-      try {
-        creatures = JSON.parse(creatures)
-        creatures = creatures.filter(c => c.id !== id)
-        creatures = JSON.stringify(creatures)
-        localStorage.setItem(c.LOCAL_CREATURES, creatures)
-      } catch (e) {
-        console.error('Error:', e)
-      }
-    }
+    findCreaturesInLocalStorage(this.props.addCreatures)
   }
   render() {
     const { creatures, removeCreature, rollInitiative } = this.props
@@ -60,7 +44,7 @@ class Initiative extends Component {
           <RemoveButtons
             creatures={creatures}
             removeCreature={removeCreature}
-            removeLocal={this.removeLocal}
+            removeLocal={removeCreatureFromLocalStorage}
           />
         </Col>
       )
@@ -71,9 +55,9 @@ class Initiative extends Component {
 const mapStateToProps = state => ({ creatures: state.creatures })
 
 const mapDispatchToProps = dispatch => ({
+  addCreatures: localCreatures => dispatch(a.addCreatures(localCreatures)),
   removeCreature: creature => dispatch(a.removeCreature(creature)),
   rollInitiative: () => dispatch(a.rollInitiative()),
-  setStateFromLocal: localCreatures => dispatch(a.setStateFromLocal(localCreatures)),
 })
 
 export default connect(
@@ -82,6 +66,7 @@ export default connect(
 )(Initiative)
 
 Initiative.propTypes = {
+  addCreatures: PropTypes.func.isRequired,
   creatures: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string.isRequired,
@@ -96,5 +81,4 @@ Initiative.propTypes = {
   ).isRequired,
   removeCreature: PropTypes.func.isRequired,
   rollInitiative: PropTypes.func.isRequired,
-  setStateFromLocal: PropTypes.func.isRequired,
 }

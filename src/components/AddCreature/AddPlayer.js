@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import { AdvantageIcon } from '../Icons'
-import { saveLocal, setID } from '../component.functions'
+import { setID } from '../component.functions'
+import { saveCreaturesToLocalStorage } from '../localStorage.functions'
 import MonsterHunting5E from './MonsterHunting5E'
 import Creature from '../../constants/creature'
 
@@ -56,7 +57,7 @@ export default class AddPlayer extends Component {
     const player = new Creature(name, modifier, advantage, `player-${setID()}`)
     creatures.push(player)
     this.props.addCreatures(creatures)
-    saveLocal(creatures)
+    saveCreaturesToLocalStorage(creatures)
     this.setState(defaultState)
   }
   render() {

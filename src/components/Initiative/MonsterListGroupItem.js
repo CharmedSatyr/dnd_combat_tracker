@@ -6,20 +6,7 @@ import { Label } from 'react-bootstrap'
 import { AdvantageIcon, HourglassIcon, MonsterIcon, RemoveIcon } from '../Icons'
 import IncrementDecrementButtons from './IncrementDecrementButtons'
 
-const setLabel = (tag, number) => {
-  if (tag && number) {
-    return `${tag} ${number}`
-  } else if (tag) {
-    return tag
-  } else if (number) {
-    return number
-  }
-}
-
-const initiativeLength = initiative => {
-  const il = initiative.toString()
-  return il.length === 1 ? <span>&nbsp;{il}</span> : il
-}
+import { setLabel, initiativeLength } from '../component.functions'
 
 const MonsterListGroupItem = ({ monster, removeCreature }) => {
   return (

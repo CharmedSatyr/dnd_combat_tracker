@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { removeLocal } from './localStorage.functions'
+import { removeCreatureFromLocalStorage } from './localStorage.functions'
 
 import { Glyphicon } from 'react-bootstrap'
 
@@ -42,7 +42,7 @@ export class RemoveIcon extends Component {
   }
   removeCreature() {
     this.props.removeCreature(this.props.creature)
-    removeLocal(this.props.creature.id)
+    removeCreatureFromLocalStorage(this.props.creature.id)
   }
   render() {
     return (

@@ -1,6 +1,7 @@
 import * as c from '../constants'
 
-export const saveLocal = newCreatures => {
+// Save creature array to user's browser cache
+export const saveCreaturesToLocalStorage = newCreatures => {
   let existingCreatures = []
   if (localStorage.hasOwnProperty(c.LOCAL_CREATURES)) {
     try {
@@ -15,7 +16,8 @@ export const saveLocal = newCreatures => {
   localStorage.setItem(c.LOCAL_CREATURES, existingCreatures)
 }
 
-export const removeLocal = id => {
+// Remove a single creature from user's browser cache
+export const removeCreatureFromLocalStorage = id => {
   let creatures
   if (localStorage.hasOwnProperty(c.LOCAL_CREATURES)) {
     creatures = localStorage.getItem(c.LOCAL_CREATURES)
@@ -30,24 +32,14 @@ export const removeLocal = id => {
   }
 }
 
-export const setStateFromLocal = propFunction => {
+// Check user's browser cache for saved creatures
+// and execute a callback function on them
+export const findCreaturesInLocalStorage = cb => {
   if (localStorage.hasOwnProperty(c.LOCAL_CREATURES)) {
     try {
       let localCreatures = localStorage.getItem(c.LOCAL_CREATURES)
       localCreatures = JSON.parse(localCreatures)
-      propFunction(localCreatures)
-    } catch (e) {
-      console.error('Error:', e)
-    }
-  }
-}
-
-export const removeCreatureFromLocal = props => {
-  if (localStorage.hasOwnProperty(c.LOCAL_CREATURES)) {
-    try {
-      let localCreatures = localStorage.getItem(c.LOCAL_CREATURES)
-      localCreatures = JSON.parse(localCreatures)
-      props.setStateFromLocal(localCreatures)
+      cb(localCreatures)
     } catch (e) {
       console.error('Error:', e)
     }

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import { AdvantageIcon } from '../Icons'
-import { saveLocal } from '../localStorage.functions'
+import { saveCreaturesToLocalStorage } from '../localStorage.functions'
 import { setID } from '../component.functions'
 import Creature from '../../constants/creature'
 
@@ -123,7 +123,7 @@ export default class AddMonster extends Component {
       creatures.push(monster)
     }
     this.props.addCreatures(creatures)
-    saveLocal(creatures)
+    saveCreaturesToLocalStorage(creatures)
     this.setState(defaultState)
   }
   render() {
