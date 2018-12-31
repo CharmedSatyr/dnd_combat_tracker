@@ -1,4 +1,4 @@
-import * as c from '../constants'
+import React from 'react'
 
 // Generate an 18-digit numerical ID
 export const setID = () =>
@@ -6,22 +6,19 @@ export const setID = () =>
     .toString()
     .slice(2)
 
-// Save creature array to user's browser cache
-export const saveLocal = newCreatures => {
-  let existingCreatures
-  if (localStorage.hasOwnProperty(c.LOCAL_CREATURES)) {
-    existingCreatures = localStorage.getItem(c.LOCAL_CREATURES)
-    try {
-      existingCreatures = JSON.parse(existingCreatures)
-      existingCreatures.push(...newCreatures)
-      existingCreatures = JSON.stringify(existingCreatures)
-      localStorage.setItem(c.LOCAL_CREATURES, existingCreatures)
-    } catch (e) {
-      console.error('Error:', e)
-    }
-  } else {
-    existingCreatures = [...newCreatures]
-    existingCreatures = JSON.stringify(existingCreatures)
-    localStorage.setItem(c.LOCAL_CREATURES, existingCreatures)
+// Dynamically label creatures based on presence of tag/number inputs
+export const setLabel = (tag, number) => {
+  if (tag && number) {
+    return `${tag} ${number}`
+  } else if (tag) {
+    return tag
+  } else if (number) {
+    return number
   }
+}
+
+// Ensure all initiative rolls take up two spaces
+export const initiativeLength = initiative => {
+  const il = initiative.toString()
+  return il.length === 1 ? <span>&nbsp;{il}</span> : il
 }
