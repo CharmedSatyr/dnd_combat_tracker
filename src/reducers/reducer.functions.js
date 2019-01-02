@@ -8,14 +8,13 @@ export const sortCreaturesArray = array =>
 
 // Roll a d20 and account for modifier
 export const d20 = (modifier = 0) => {
-  try {
-    const mod = parseInt(modifier)
-    const min = 1 + mod
-    const max = 20 + mod
-    return Math.floor(Math.random() * (max - (min + 1)) + min)
-  } catch (err) {
-    console.error('d20 Error:', err)
+  const mod = parseInt(modifier)
+  if (isNaN(mod)) {
+    throw new Error('`d20` Error: Argument must be a number')
   }
+  const min = 1 + mod
+  const max = 20 + mod
+  return Math.floor(Math.random() * (max - (min + 1)) + min)
 }
 
 // Roll a d20 with advantage and account for modifier
@@ -24,6 +23,13 @@ export const d20A = (modifier = 0) => {
   const roll2 = d20(modifier)
   return roll1 >= roll2 ? roll1 : roll2
 }
+
+// Given an object of groupID keys and number values,
+// return an array of groupIDs where a lower index corresponds to a higher value
+export const orderInitiativeGroups = groupIDs =>
+  []
+    .concat(...Object.entries(groupIDs).sort((a, b) => b[1] - a[1]))
+    .filter(o => typeof o === 'string')
 
 // Roll initiative
 export const rollInitiative = creaturesArray => {
@@ -63,9 +69,7 @@ export const rollInitiative = creaturesArray => {
   })
 
   // Get an array of all the Group or Player IDs in initiative order
-  const initiativeOrder = []
-    .concat(...Object.entries(groupIDs).sort((a, b) => b[1] - a[1]))
-    .filter(o => typeof o === 'string')
+  const initiativeOrder = orderInitiativeGroups(groupIDs)
 
   // Give each creature object an order property based on that
   creatures.forEach(
@@ -76,6 +80,7 @@ export const rollInitiative = creaturesArray => {
 }
 
 // Check that the array's initiative order is valid
+// NOTE: Order is ascending though based on descending initiative values
 export const isValidInitiativeOrder = creatures =>
   creatures.every((cr, i) => {
     if (i === 0 && cr.order === 0) {
@@ -87,10 +92,10 @@ export const isValidInitiativeOrder = creatures =>
     }
   })
 
-// Find the length of the initiative order, discounting groups with the same initiative
+// Find the length of the initiative order, counting groups with the same initiative as one
 export const findInitiativeOrderLength = creatures => {
   if (!isValidInitiativeOrder(creatures)) {
-    throw new Error('Error: invalid initiative order provided to findInitiativeOrderLength')
+    throw new Error('`findInitiativeOrderLength` Error: Argument must have valid initiative order')
   }
   return creatures[creatures.length - 1].order
 }
