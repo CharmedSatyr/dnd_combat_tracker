@@ -1,8 +1,54 @@
+// Sort creatures into optimal display order
 export const sortCreaturesArray = array =>
   array
-    .sort((a, b) => (a.name > b.name ? -1 : 1)) // by name
-    .sort((a, b) => a.number && b.number && a.number - b.number) // by tag number
-    .sort((a, b) => (b.advantage ? 1 : -1)) // by advantage
+    .sort((a, b) => {
+      const an = a.name.toUpperCase()
+      const bn = b.name.toUpperCase()
+      if (an < bn) {
+        return -1
+      } else if (an > bn) {
+        return 1
+      } else {
+        return 0
+      }
+    }) // by name
+    .sort((a, b) => {
+      if (a.number && b.number) {
+        return a.number - b.number
+      } else if (a.number) {
+        return -1
+      } else {
+        return 0
+      }
+    }) // by number
+    .sort((a, b) => {
+      if (a.tag && b.tag) {
+        const at = a.tag.toUpperCase()
+        const bt = b.tag.toUpperCase()
+        if (at < bt) {
+          return -1
+        } else if (at > bt) {
+          return 1
+        } else {
+          return 0
+        }
+      } else if (a.tag) {
+        return -1
+      } else if (b.tag) {
+        return 1
+      } else {
+        return 0
+      }
+    }) // by tag
+    .sort((a, b) => {
+      if (a.advantage && !b.advantage) {
+        return -1
+      } else if (!a.advantage && b.advantage) {
+        return 1
+      } else {
+        return 0
+      }
+    }) // by advantage
     .sort((a, b) => b.modifier - a.modifier) // by modifier
     .sort((a, b) => a.order - b.order) // by order
 
