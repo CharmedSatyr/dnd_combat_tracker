@@ -2,6 +2,25 @@ import * as f from '../reducer.functions'
 
 // sortCreaturesArray
 describe('`sortCreaturesArray` reducer function', () => {
+  it("should throw an Error if a creature's `name` is not a string", () => {
+    const noName = [{ modifier: 0, advantage: false }]
+    expect(() => f.sortCreaturesArray(noName)).toThrow()
+    const badName = [{ name: true, modifier: 0, advantage: false }]
+    expect(() => f.sortCreaturesArray(badName)).toThrow()
+  })
+  it("should throw an Error if a creature's `modifier` is not a numbr", () => {
+    const noMod = [{ name: 'a', advantage: false }]
+    expect(() => f.sortCreaturesArray(noMod)).toThrow()
+    const badMod = [{ name: 'a', modifier: 'a', advantage: false }]
+    expect(() => f.sortCreaturesArray(badMod)).toThrow()
+  })
+  it("should throw an Error if a creature's `advantage` property is anot a Boolean", () => {
+    const noAdv = [{ name: 'a', modifier: 0 }]
+    expect(() => f.sortCreaturesArray(noAdv)).toThrow()
+    const badAdv = [{ advantage: 'b', name: 'a', modifier: 0 }]
+    expect(() => f.sortCreaturesArray(badAdv)).toThrow()
+  })
+
   it('should return an Array', () => {
     const creatures = [{ name: 'a', number: 1, advantage: false, modifier: 2, order: 1 }]
     expect(Array.isArray(f.sortCreaturesArray(creatures))).toBeTruthy()
@@ -30,53 +49,59 @@ describe('`sortCreaturesArray` reducer function', () => {
   })
   it('should sort by name, then number [integration test]', () => {
     const creatures = [
-      { name: 'c', number: 2, advantage: false },
-      { name: 'a', number: undefined, advantage: false },
-      { name: 'c', number: 1, advantage: false },
-      { name: 'b', number: undefined, advantage: false },
+      { modifier: 0, name: 'c', number: 2, advantage: false },
+      { modifier: 0, name: 'a', number: undefined, advantage: false },
+      { modifier: 0, name: 'c', number: 1, advantage: false },
+      { modifier: 0, name: 'b', number: undefined, advantage: false },
     ]
     const sorted = [
-      { name: 'c', number: 1, advantage: false },
-      { name: 'c', number: 2, advantage: false },
-      { name: 'a', number: undefined, advantage: false },
-      { name: 'b', number: undefined, advantage: false },
+      { modifier: 0, name: 'c', number: 1, advantage: false },
+      { modifier: 0, name: 'c', number: 2, advantage: false },
+      { modifier: 0, name: 'a', number: undefined, advantage: false },
+      { modifier: 0, name: 'b', number: undefined, advantage: false },
     ]
     expect(f.sortCreaturesArray(creatures)).toEqual(sorted)
   })
   it('should sort alphabetically by tag, all else being equal', () => {
     const creatures = [
-      { name: 'a', tag: 'green', number: undefined, advantage: false },
-      { name: 'a', tag: 'blue', number: undefined, advantage: false },
+      { modifier: 0, name: 'a', tag: 'green', number: undefined, advantage: false },
+      { modifier: 0, name: 'a', tag: 'blue', number: undefined, advantage: false },
     ]
     const sorted = [
-      { name: 'a', tag: 'blue', advantage: false },
-      { name: 'a', tag: 'green', advantage: false },
+      { modifier: 0, name: 'a', tag: 'blue', advantage: false },
+      { modifier: 0, name: 'a', tag: 'green', advantage: false },
     ]
     expect(f.sortCreaturesArray(creatures)).toEqual(sorted)
   })
   it('should sort creatures with advantage higher, all else being equal', () => {
-    const creatures = [{ name: 'a', advantage: false }, { name: 'a', advantage: true }]
-    const sorted = [{ name: 'a', advantage: true }, { name: 'a', advantage: false }]
+    const creatures = [
+      { modifier: 0, name: 'a', advantage: false },
+      { modifier: 0, name: 'a', advantage: true },
+    ]
+    const sorted = [
+      { modifier: 0, name: 'a', advantage: true },
+      { modifier: 0, name: 'a', advantage: false },
+    ]
     expect(f.sortCreaturesArray(creatures)).toEqual(sorted)
   })
   it('should sort by name, number, tag, then advantage [integration test]', () => {
     const creatures = [
-      { advantage: false, name: 'd', tag: 'blue', number: 2 },
-      { advantage: true, name: 'b', number: 1 },
-      { advantage: false, name: 'a', number: 2 },
-      { advantage: true, name: 'b', number: 2 },
-      { advantage: false, name: 'c', tag: 'red', number: 1 },
-      { advantage: false, name: 'a', number: 1 },
-      { advantage: false, name: 'c', tag: 'red', number: 2 },
+      { advantage: false, modifier: 0, name: 'd', tag: 'blue', number: 2 },
+      { advantage: true, modifier: 0, name: 'b', number: 1 },
+      { advantage: false, modifier: 0, name: 'a', number: 2 },
+      { advantage: true, modifier: 0, name: 'b', number: 2 },
+      { advantage: false, modifier: 0, name: 'c', tag: 'red', number: 1 },
+      { advantage: false, modifier: 0, name: 'a', number: 1 },
+      { advantage: false, modifier: 0, name: 'c', tag: 'red', number: 2 },
     ]
     const sorted = [
-      { advantage: true, name: 'b', number: 1 },
-      { advantage: true, name: 'b', number: 2 },
-      { advantage: false, name: 'd', tag: 'blue', number: 2 },
-      { advantage: false, name: 'c', tag: 'red', number: 1 },
-      { advantage: false, name: 'c', tag: 'red', number: 2 },
-      { advantage: false, name: 'a', number: 1 },
-      { advantage: false, name: 'a', number: 2 },
+      { advantage: true, modifier: 0, name: 'b', number: 1 },
+      { advantage: true, modifier: 0, name: 'b', number: 2 },
+      { advantage: false, modifier: 0, name: 'd', tag: 'blue', number: 2 },
+      { advantage: false, modifier: 0, name: 'c', tag: 'red', number: 1 },
+      { advantage: false, modifier: 0, name: 'c', tag: 'red', number: 2 },
+      { advantage: false, modifier: 0, name: 'a', number: 1 },
+      { advantage: false, modifier: 0, name: 'a', number: 2 },
     ]
     expect(f.sortCreaturesArray(creatures)).toEqual(sorted)
   })

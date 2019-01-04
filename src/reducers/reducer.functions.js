@@ -1,6 +1,22 @@
 // Sort creatures into optimal display order
-export const sortCreaturesArray = array =>
-  array
+export const sortCreaturesArray = array => {
+  if (!array.every(c => typeof c.name === 'string')) {
+    throw new Error(
+      '`sortCreaturesArray` Error: Every creature must have a `name` property that is a string.'
+    )
+  }
+  if (!array.every(c => typeof c.modifier === 'number')) {
+    throw new Error(
+      '`sortCreaturesArray` Error: Every creature must have a `modifier` property that is a number.'
+    )
+  }
+  if (!array.every(c => typeof c.advantage === 'boolean')) {
+    throw new Error(
+      '`sortCreaturesArray` Error: Every creature must have an `advantage` property that is a Boolean.'
+    )
+  }
+
+  return array
     .sort((a, b) => {
       const an = a.name.toUpperCase()
       const bn = b.name.toUpperCase()
@@ -51,6 +67,7 @@ export const sortCreaturesArray = array =>
     }) // by advantage
     .sort((a, b) => b.modifier - a.modifier) // by modifier
     .sort((a, b) => a.order - b.order) // by order
+}
 
 // Roll a d20 and account for modifier
 export const d20 = (modifier = 0) => {
