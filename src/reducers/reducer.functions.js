@@ -1,20 +1,24 @@
 // Sort creatures into optimal display order
 export const sortCreaturesArray = array => {
-  if (!array.every(c => typeof c.name === 'string')) {
-    throw new Error(
-      '`sortCreaturesArray` Error: Every creature must have a `name` property that is a string.'
-    )
-  }
-  if (!array.every(c => typeof c.modifier === 'number')) {
-    throw new Error(
-      '`sortCreaturesArray` Error: Every creature must have a `modifier` property that is a number.'
-    )
-  }
-  if (!array.every(c => typeof c.advantage === 'boolean')) {
-    throw new Error(
-      '`sortCreaturesArray` Error: Every creature must have an `advantage` property that is a Boolean.'
-    )
-  }
+  // Comprehensive error checking
+  array.forEach(c => {
+    if (typeof c.name !== 'string') {
+      throw new Error(
+        '`sortCreaturesArray` Error: Every creature must have a `name` property that is a string.'
+      )
+    }
+
+    if (typeof c.modifier !== 'number') {
+      throw new Error(
+        '`sortCreaturesArray` Error: Every creature must have a `modifier` property that is a number.'
+      )
+    }
+    if (typeof c.advantage !== 'boolean') {
+      throw new Error(
+        '`sortCreaturesArray` Error: Every creature must have an `advantage` property that is a Boolean.'
+      )
+    }
+  })
 
   return array
     .sort((a, b) => {
