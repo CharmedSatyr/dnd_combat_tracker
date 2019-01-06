@@ -60,17 +60,26 @@ export const sortCreaturesArray = array => {
         return 0
       }
     }) // by tag
-    .sort((a, b) => {
-      if (a.advantage && !b.advantage) {
-        return -1
-      } else if (!a.advantage && b.advantage) {
-        return 1
-      } else {
-        return 0
-      }
-    }) // by advantage
-    .sort((a, b) => b.modifier - a.modifier) // by modifier
-    .sort((a, b) => a.order - b.order) // by order
+    .sort(s)
+}
+
+function s(a, b) {
+  // Sort by order
+  if (a.order !== b.order) {
+    return a.order - b.order
+  }
+
+  // else modifier
+  if (a.modifier !== b.modifier) {
+    return b.modifier - a.modifier
+  }
+
+  // else by advantage
+  if (a.advantage && !b.advantage) {
+    return -1
+  } else if (!a.advantage && b.advantage) {
+    return 1
+  }
 }
 
 // Roll a d20 and account for modifier
