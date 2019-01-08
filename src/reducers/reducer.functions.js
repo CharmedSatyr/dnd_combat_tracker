@@ -1,85 +1,80 @@
 // Sort creatures into optimal display order
 export const sortCreaturesArray = array => {
-  // Comprehensive error checking
-  array.forEach(c => {
-    if (typeof c.name !== 'string') {
+  // Check creature property types
+  array.forEach(creature => {
+    if (typeof creature.name !== 'string') {
       throw new Error(
         '`sortCreaturesArray` Error: Every creature must have a `name` property that is a string.'
       )
     }
 
-    if (typeof c.modifier !== 'number') {
+    if (typeof creature.modifier !== 'number') {
       throw new Error(
         '`sortCreaturesArray` Error: Every creature must have a `modifier` property that is a number.'
       )
     }
-    if (typeof c.advantage !== 'boolean') {
+    if (typeof creature.advantage !== 'boolean') {
       throw new Error(
         '`sortCreaturesArray` Error: Every creature must have an `advantage` property that is a Boolean.'
       )
     }
   })
 
-  return array
-    .sort((a, b) => {
-      const an = a.name.toUpperCase()
-      const bn = b.name.toUpperCase()
-      if (an < bn) {
+  return array.sort((a, b) => {
+    // Sort by order
+    if (a.order !== b.order) {
+      return a.order - b.order
+    }
+
+    // else modifier
+    if (a.modifier !== b.modifier) {
+      return b.modifier - a.modifier
+    }
+
+    // else by advantage
+    if (a.advantage && !b.advantage) {
+      return -1
+    } else if (!a.advantage && b.advantage) {
+      return 1
+    }
+
+    // else by tag
+    if (a.tag && b.tag) {
+      const at = a.tag.toUpperCase()
+      const bt = b.tag.toUpperCase()
+      if (at < bt) {
         return -1
-      } else if (an > bn) {
+      } else if (at > bt) {
         return 1
       } else {
         return 0
       }
-    }) // by name
-    .sort((a, b) => {
-      if (a.number && b.number) {
-        return a.number - b.number
-      } else if (a.number) {
-        return -1
-      } else {
-        return 0
-      }
-    }) // by number
-    .sort((a, b) => {
-      if (a.tag && b.tag) {
-        const at = a.tag.toUpperCase()
-        const bt = b.tag.toUpperCase()
-        if (at < bt) {
-          return -1
-        } else if (at > bt) {
-          return 1
-        } else {
-          return 0
-        }
-      } else if (a.tag) {
-        return -1
-      } else if (b.tag) {
-        return 1
-      } else {
-        return 0
-      }
-    }) // by tag
-    .sort(s)
-}
+    } else if (a.tag) {
+      return -1
+    } else if (b.tag) {
+      return 1
+    }
 
-function s(a, b) {
-  // Sort by order
-  if (a.order !== b.order) {
-    return a.order - b.order
-  }
+    // else by number
+    if (a.number && b.number) {
+      return a.number - b.number
+    } else if (a.number) {
+      return -1
+    } else if (b.number) {
+      return 1
+    }
 
-  // else modifier
-  if (a.modifier !== b.modifier) {
-    return b.modifier - a.modifier
-  }
+    // else by name
+    const an = a.name.toUpperCase()
+    const bn = b.name.toUpperCase()
+    if (an < bn) {
+      return -1
+    } else if (an > bn) {
+      return 1
+    }
 
-  // else by advantage
-  if (a.advantage && !b.advantage) {
-    return -1
-  } else if (!a.advantage && b.advantage) {
-    return 1
-  }
+    return 0
+  })
 }
 
 // Roll a d20 and account for modifier
