@@ -12,25 +12,7 @@ export default (state = [], payload) => {
       updated = f.incrementGroupInitiativeOrder(payload, state)
       return updated
     case c.DECREMENT_GROUP_INITIATIVE_ORDER:
-      // Find the index of the id
-      const decrementIndex = state.findIndex(c => c.id === payload.id)
-
-      // Copy the state
-      updated = [...state]
-
-      // If the objects exist
-      if (updated[decrementIndex] && updated[decrementIndex + 1]) {
-        // Swap the object at the decrementIndex with the one before it
-        ;[updated[decrementIndex], updated[decrementIndex + 1]] = [
-          updated[decrementIndex + 1],
-          updated[decrementIndex],
-        ]
-
-        // Switch the order numbers
-        updated[decrementIndex].order = updated[decrementIndex].order - 1
-        updated[decrementIndex + 1].order = updated[decrementIndex + 1].order + 1
-      }
-
+      updated = f.decrementGroupInitiativeOrder(payload, state)
       return updated
     case c.REMOVE_CREATURE_FROM_STATE:
       updated = [...state.filter(creature => creature.id !== payload.creature.id)]
