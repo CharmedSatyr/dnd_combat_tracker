@@ -31,7 +31,7 @@ const MonsterListGroupItem = ({ monster, removeCreature }) => {
         <RemoveIcon creature={monster} removeCreature={removeCreature} />
       </div>
       {/* ORDER CONTROL */}
-      {monster.order && <IncrementDecrementButtons id={monster.id} />}
+      {monster.order && <IncrementDecrementButtons groupID={monster.groupID} />}
       {/* CENTER */}
       <div style={{ width: '65%' }}>
         <MonsterIcon />

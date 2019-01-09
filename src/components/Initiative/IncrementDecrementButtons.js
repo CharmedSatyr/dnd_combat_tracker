@@ -8,7 +8,7 @@ import * as a from '../../actions'
 
 const IncrementDecrementButtons = ({
   decrementCreatureInitiative,
-  id,
+  groupID,
   incrementCreatureInitiative,
 }) => (
   <div
@@ -19,18 +19,18 @@ const IncrementDecrementButtons = ({
       justifyContent: 'space-between',
     }}
   >
-    <Button bsSize="xsmall" onClick={() => incrementCreatureInitiative(id)}>
+    <Button bsSize="xsmall" onClick={() => incrementCreatureInitiative(groupID)}>
       <ChevronUpIcon />
     </Button>
-    <Button bsSize="xsmall" onClick={() => decrementCreatureInitiative(id)}>
+    <Button bsSize="xsmall" onClick={() => decrementCreatureInitiative(groupID)}>
       <ChevronDownIcon />
     </Button>
   </div>
 )
 
 const mapDispatchToProps = dispatch => ({
-  decrementCreatureInitiative: id => dispatch(a.decrementCreatureInitiative(id)),
-  incrementCreatureInitiative: id => dispatch(a.incrementCreatureInitiative(id)),
+  decrementCreatureInitiative: groupID => dispatch(a.decrementCreatureInitiative(groupID)),
+  incrementCreatureInitiative: groupID => dispatch(a.incrementCreatureInitiative(groupID)),
 })
 
 export default connect(
@@ -40,6 +40,6 @@ export default connect(
 
 IncrementDecrementButtons.propTypes = {
   decrementCreatureInitiative: PropTypes.func.isRequired,
-  id: PropTypes.string.isRequired,
+  groupID: PropTypes.string.isRequired,
   incrementCreatureInitiative: PropTypes.func.isRequired,
 }
