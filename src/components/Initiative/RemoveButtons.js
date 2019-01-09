@@ -11,7 +11,7 @@ const RemovePlayers = ({ creatures, removeCreature, removeLocal }) => (
         creatures.forEach(cr => {
           if (cr.id.split('-')[0] === 'player') {
             removeCreature(cr)
-            removeLocal(cr.id)
+            removeLocal(cr)
           }
         })
       }}
@@ -30,7 +30,7 @@ const RemoveMonsters = ({ creatures, removeCreature, removeLocal }) => (
         creatures.forEach(cr => {
           if (cr.id.split('-')[0] === 'monster') {
             removeCreature(cr)
-            removeLocal(cr.id)
+            removeLocal(cr)
           }
         })
       }}
@@ -47,9 +47,8 @@ const RemoveCreatures = ({ creatures, removeCreature, removeLocal }) => (
       className="btn btn-danger"
       onClick={() => {
         creatures.forEach(cr => {
-          removeCreature(cr.id)
-
-          removeLocal(cr.id)
+          removeCreature(cr)
+          removeLocal(cr)
         })
       }}
       style={{ width: '100%' }}

@@ -42,7 +42,7 @@ export class RemoveIcon extends Component {
   }
   removeCreature() {
     this.props.removeCreature(this.props.creature)
-    removeCreatureFromLocalStorage(this.props.creature.id)
+    removeCreatureFromLocalStorage(this.props.creature)
   }
   render() {
     return (

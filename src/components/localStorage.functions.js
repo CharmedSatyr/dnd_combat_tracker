@@ -17,13 +17,13 @@ export const saveCreaturesToLocalStorage = newCreatures => {
 }
 
 // Remove a single creature from user's browser cache
-export const removeCreatureFromLocalStorage = id => {
+export const removeCreatureFromLocalStorage = creature => {
   let creatures
   if (localStorage.hasOwnProperty(c.LOCAL_CREATURES)) {
     creatures = localStorage.getItem(c.LOCAL_CREATURES)
     try {
       creatures = JSON.parse(creatures)
-      creatures = creatures.filter(c => c.id !== id)
+      creatures = creatures.filter(c => c.id !== creature.id)
       creatures = JSON.stringify(creatures)
       localStorage.setItem(c.LOCAL_CREATURES, creatures)
     } catch (e) {
