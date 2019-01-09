@@ -11,7 +11,7 @@ export default (state = [], payload) => {
     case c.INCREMENT_GROUP_INITIATIVE_ORDER:
       updated = f.incrementGroupInitiativeOrder(payload, state)
       return updated
-    case c.DECREMENT_CREATURE_INITIATIVE:
+    case c.DECREMENT_GROUP_INITIATIVE_ORDER:
       // Find the index of the id
       const decrementIndex = state.findIndex(c => c.id === payload.id)
 

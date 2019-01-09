@@ -29,7 +29,7 @@ const IncrementDecrementButtons = ({
 )
 
 const mapDispatchToProps = dispatch => ({
-  decrementCreatureInitiative: groupID => dispatch(a.decrementCreatureInitiative(groupID)),
+  decrementGroupInitiativeOrder: groupID => dispatch(a.decrementGroupInitiativeOrder(groupID)),
   incrementGroupInitiativeOrder: groupID => dispatch(a.incrementGroupInitiativeOrder(groupID)),
 })
 
@@ -39,7 +39,7 @@ export default connect(
 )(IncrementDecrementButtons)
 
 IncrementDecrementButtons.propTypes = {
-  decrementCreatureInitiative: PropTypes.func.isRequired,
+  decrementGroupInitiativeOrder: PropTypes.func.isRequired,
   groupID: PropTypes.string.isRequired,
   incrementGroupInitiativeOrder: PropTypes.func.isRequired,
 }
