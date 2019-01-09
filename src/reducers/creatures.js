@@ -8,7 +8,7 @@ export default (state = [], payload) => {
     case c.ADD_CREATURES_TO_STATE:
       updated = [...state, ...payload.creatures]
       return updated
-    case c.INCREMENT_CREATURE_INITIATIVE:
+    case c.INCREMENT_GROUP_INITIATIVE_ORDER:
       updated = f.incrementGroupInitiativeOrder(payload, state)
       return updated
     case c.DECREMENT_CREATURE_INITIATIVE:
