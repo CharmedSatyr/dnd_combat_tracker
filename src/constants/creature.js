@@ -9,7 +9,7 @@ class Creature {
     this.tag = tag
     this.number = parseInt(number)
     this.id = id
-    this.groupID = groupID
+    this.groupID = groupID || id.split('-')[1]
   }
 }
 
