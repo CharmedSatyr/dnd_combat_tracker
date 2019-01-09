@@ -154,17 +154,17 @@ export const findInitiativeOrderLength = creatures => {
   }
   return creatures[creatures.length - 1].order
 }
-// Decrement Group Initiative Order
-export const decrementGroupInitiativeOrder = (payload, creatures) => {
-  // Find the index of the first creature with target groupID
-  const decrementIndex = creatures.findIndex(c => c.groupID === payload.groupID)
+// Increment Group Initiative Order (make creatures' turn later)
+export const incrementGroupInitiativeOrder = (payload, creatures) => {
+  // Find the index of the first creature in the target group
+  const i = creatures.findIndex(c => c.groupID === payload.groupID)
   // Find how many creatures have the target groupID
   const count = creatures.filter(c => c.groupID === payload.groupID).length
 
   // If the objects exist
-  if (creatures[decrementIndex] && creatures[decrementIndex + count]) {
-    const { groupID } = creatures[decrementIndex]
-    const succeedingGroupID = creatures[decrementIndex + count].groupID
+  if (creatures[i] && creatures[i + count]) {
+    const { groupID } = creatures[i]
+    const succeedingGroupID = creatures[i + count].groupID
     const updatedOrder = creatures.map((cr, i) => {
       if (cr.groupID === groupID) {
         cr.order = cr.order + 1
@@ -179,15 +179,15 @@ export const decrementGroupInitiativeOrder = (payload, creatures) => {
   return creatures
 }
 
-// Increment Group Initiative Order
-export const incrementGroupInitiativeOrder = (payload, creatures) => {
-  // Find the index of the id
-  const incrementIndex = creatures.findIndex(c => c.groupID === payload.groupID)
+// Decrement Group Initiative Order (make creatures' turn earlier)
+export const decrementGroupInitiativeOrder = (payload, creatures) => {
+  // Find the index of the first creature in the target group
+  const i = creatures.findIndex(c => c.groupID === payload.groupID)
 
   // If the objects exist
-  if (creatures[incrementIndex] && creatures[incrementIndex - 1]) {
-    const { groupID } = creatures[incrementIndex]
-    const preceedingGroupID = creatures[incrementIndex - 1].groupID
+  if (creatures[i] && creatures[i - 1]) {
+    const { groupID } = creatures[i]
+    const preceedingGroupID = creatures[i - 1].groupID
     const updatedOrder = creatures.map((cr, i) => {
       if (cr.groupID === groupID) {
         cr.order = cr.order - 1

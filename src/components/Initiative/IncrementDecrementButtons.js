@@ -19,10 +19,10 @@ const IncrementDecrementButtons = ({
       justifyContent: 'space-between',
     }}
   >
-    <Button bsSize="xsmall" onClick={() => incrementGroupInitiativeOrder(groupID)}>
+    <Button bsSize="xsmall" onClick={() => decrementGroupInitiativeOrder(groupID)}>
       <ChevronUpIcon />
     </Button>
-    <Button bsSize="xsmall" onClick={() => decrementGroupInitiativeOrder(groupID)}>
+    <Button bsSize="xsmall" onClick={() => incrementGroupInitiativeOrder(groupID)}>
       <ChevronDownIcon />
     </Button>
   </div>

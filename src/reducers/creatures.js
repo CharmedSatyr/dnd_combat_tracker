@@ -8,11 +8,11 @@ export default (state = [], payload) => {
     case c.ADD_CREATURES_TO_STATE:
       updated = [...state, ...payload.creatures]
       return updated
-    case c.INCREMENT_GROUP_INITIATIVE_ORDER:
-      updated = f.incrementGroupInitiativeOrder(payload, state)
-      return updated
     case c.DECREMENT_GROUP_INITIATIVE_ORDER:
       updated = f.decrementGroupInitiativeOrder(payload, state)
+      return updated
+    case c.INCREMENT_GROUP_INITIATIVE_ORDER:
+      updated = f.incrementGroupInitiativeOrder(payload, state)
       return updated
     case c.REMOVE_CREATURE_FROM_STATE:
       updated = [...state.filter(creature => creature.id !== payload.creature.id)]
