@@ -9,24 +9,7 @@ export default (state = [], payload) => {
       updated = [...state, ...payload.creatures]
       return updated
     case c.INCREMENT_CREATURE_INITIATIVE:
-      // Find the index of the id
-      const incrementIndex = state.findIndex(c => c.id === payload.id)
-
-      // Copy the state
-      updated = [...state]
-
-      // If the objects exist
-      if (updated[incrementIndex] && updated[incrementIndex - 1]) {
-        // Swap the object at the incrementIndex with the one before it
-        ;[updated[incrementIndex], updated[incrementIndex - 1]] = [
-          updated[incrementIndex - 1],
-          updated[incrementIndex],
-        ]
-
-        // Switch the order numbers
-        updated[incrementIndex].order = incrementIndex + 1
-        updated[incrementIndex - 1].order = incrementIndex
-      }
+      updated = f.incrementGroupInitiativeOrder(payload, state)
       return updated
     case c.DECREMENT_CREATURE_INITIATIVE:
       // Find the index of the id
