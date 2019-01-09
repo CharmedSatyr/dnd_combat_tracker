@@ -7,9 +7,9 @@ import { ChevronDownIcon, ChevronUpIcon } from '../Icons'
 import * as a from '../../actions'
 
 const IncrementDecrementButtons = ({
-  decrementCreatureInitiative,
+  decrementGroupInitiativeOrder,
   groupID,
-  incrementCreatureInitiative,
+  incrementGroupInitiativeOrder,
 }) => (
   <div
     style={{
@@ -19,10 +19,10 @@ const IncrementDecrementButtons = ({
       justifyContent: 'space-between',
     }}
   >
-    <Button bsSize="xsmall" onClick={() => incrementCreatureInitiative(groupID)}>
+    <Button bsSize="xsmall" onClick={() => incrementGroupInitiativeOrder(groupID)}>
       <ChevronUpIcon />
     </Button>
-    <Button bsSize="xsmall" onClick={() => decrementCreatureInitiative(groupID)}>
+    <Button bsSize="xsmall" onClick={() => decrementGroupInitiativeOrder(groupID)}>
       <ChevronDownIcon />
     </Button>
   </div>
