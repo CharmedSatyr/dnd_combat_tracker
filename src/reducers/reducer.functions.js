@@ -108,34 +108,18 @@ export const rollInitiative = creaturesArray => {
   const groupIDs = {}
   // Loop through creatures once
   creatures.forEach(cr => {
-    // If it has a group
-    if (cr.groupID) {
-      // check groupIDs obj for group's initiative
-      if (groupIDs.hasOwnProperty(cr.groupID) && groupIDs[cr.groupID]) {
-        cr.initiative = groupIDs[cr.groupID]
-        // otherwise roll for initiative!
-        // with advantage
-      } else if (cr.advantage) {
-        groupIDs[cr.groupID] = d20A(cr.modifier)
-        cr.initiative = groupIDs[cr.groupID]
-        // or without advantage
-      } else {
-        groupIDs[cr.groupID] = d20(cr.modifier)
-        cr.initiative = groupIDs[cr.groupID]
-      }
-      // If the creature has no group, use its id
-    } else if (cr.id) {
-      // only the number part
-      const shortID = cr.id.split('-')[1]
-      // If it has advantage, roll w/
-      if (cr.advantage) {
-        groupIDs[shortID] = d20A(cr.modifier)
-        cr.initiative = groupIDs[shortID]
-        // if it doesn't, don't
-      } else {
-        groupIDs[shortID] = d20(cr.modifier)
-        cr.initiative = groupIDs[shortID]
-      }
+    // check groupIDs obj for group's initiative
+    if (groupIDs.hasOwnProperty(cr.groupID) && groupIDs[cr.groupID]) {
+      cr.initiative = groupIDs[cr.groupID]
+      // otherwise roll for initiative!
+      // with advantage
+    } else if (cr.advantage) {
+      groupIDs[cr.groupID] = d20A(cr.modifier)
+      cr.initiative = groupIDs[cr.groupID]
+      // or without advantage
+    } else {
+      groupIDs[cr.groupID] = d20(cr.modifier)
+      cr.initiative = groupIDs[cr.groupID]
     }
   })
 
@@ -169,4 +153,27 @@ export const findInitiativeOrderLength = creatures => {
     throw new Error('`findInitiativeOrderLength` Error: Argument must have valid initiative order')
   }
   return creatures[creatures.length - 1].order
+}
+
+// Increment Group Initiative Order
+export const incrementGroupInitiativeOrder = (payload, creatures) => {
+  // Find the index of the id
+  const incrementIndex = creatures.findIndex(c => c.groupID === payload.groupID)
+
+  // If the objects exist
+  if (creatures[incrementIndex] && creatures[incrementIndex - 1]) {
+    const { groupID } = creatures[incrementIndex]
+    const preceedingGroupID = creatures[incrementIndex - 1].groupID
+    const updatedOrder = creatures.map((cr, i) => {
+      if (cr.groupID === groupID) {
+        cr.order = cr.order - 1
+      }
+      if (cr.groupID === preceedingGroupID) {
+        cr.order = cr.order + 1
+      }
+      return cr
+    })
+    return sortCreaturesArray(updatedOrder)
+  }
+  return creatures
 }
