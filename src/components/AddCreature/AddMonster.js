@@ -24,6 +24,8 @@ const defaultState = {
   ac: '',
   hp: '',
   xp: '',
+  lair: '',
+  legendary: '',
   tag: '',
   numLow: '',
   numHigh: '',
@@ -62,6 +64,12 @@ export default class AddMonster extends Component {
       case 'experience':
         this.setState({ xp: e.target.value })
         break
+      case 'lair':
+        this.setState({ lair: e.target.value })
+        break
+      case 'legendary':
+        this.setState({ legendary: e.target.value })
+        break
       case 'tag':
         this.setState({ tag: e.target.value })
         break
@@ -81,10 +89,9 @@ export default class AddMonster extends Component {
 
     // If there is no number range, OR both numbers are filled in and are valid
     let validNum = false
-    if (
-      (!numHigh && !numLow) ||
-      (numHigh && numLow && numLow < numHigh && numLow > 0 && numHigh - numLow <= 10)
-    ) {
+    if (!numHigh && !numLow) {
+      validNum = true
+    } else if (numHigh && numLow && numLow < numHigh && numLow > 0 && numHigh - numLow <= 10) {
       // Valid num
       validNum = true
     }
@@ -96,7 +103,7 @@ export default class AddMonster extends Component {
       hpValidation: hp ? 'success' : 'error',
       acValidation: ac ? 'success' : 'error',
       xpValidation: xp ? 'success' : 'error',
-      numValidation: validNum ? 'success' : 'warning',
+      numValidation: validNum ? 'success' : 'error',
     })
 
     if (name && modifier && ac && hp && xp && validNum) {
@@ -104,7 +111,20 @@ export default class AddMonster extends Component {
     }
   }
   addMonsters() {
-    const { name, modifier, advantage, ac, hp, xp, tag, numHigh, numLow } = this.state
+    console.log('gonna add some monstas')
+    const {
+      name,
+      modifier,
+      advantage,
+      ac,
+      hp,
+      xp,
+      lair,
+      legendary,
+      tag,
+      numHigh,
+      numLow,
+    } = this.state
     const creatures = []
     const groupID = setID()
     for (let i = numLow || 0; i <= (numHigh || 0); i++) {
@@ -116,6 +136,8 @@ export default class AddMonster extends Component {
         ac,
         hp,
         xp,
+        lair,
+        legendary,
         tag,
         i, // number
         groupID
@@ -200,6 +222,36 @@ export default class AddMonster extends Component {
           />
         </FormGroup>
         <hr />
+        {/* Lair Action Initiative Count */}
+        <FormGroup controlId="lair" validationState={null}>
+          <ControlLabel>
+            Lair Action Initiative Count&nbsp;
+            <Label>Optional</Label>
+          </ControlLabel>
+          <FormControl
+            onChange={this.getStats}
+            placeholder="20"
+            type="number"
+            value={this.state.lair}
+          />
+          <HelpBlock>Set a fixed initiative count for the creature's lair actions.</HelpBlock>
+        </FormGroup>
+        {/* Legendary Actions */}
+        <FormGroup controlId="legendary" validationState={null}>
+          <ControlLabel>
+            Legendary Actions&nbsp;
+            <Label>Optional</Label>
+          </ControlLabel>
+          <FormControl
+            onChange={this.getStats}
+            placeholder="3"
+            type="number"
+            value={this.state.legendary}
+          />
+          <HelpBlock>Assign the creature a number of Legendary Actions.</HelpBlock>
+        </FormGroup>
+
+        <hr />
         {/* Tag */}
         <FormGroup controlId="tag" validationState={null}>
           <ControlLabel>
@@ -245,7 +297,7 @@ export default class AddMonster extends Component {
               value={this.state.numHigh}
             />
           </div>
-          <HelpBlock>Include up to 10 numbered creatures within a group</HelpBlock>
+          <HelpBlock>Include up to 10 numbered creatures within a group.</HelpBlock>
         </FormGroup>
 
         {/* Button */}
