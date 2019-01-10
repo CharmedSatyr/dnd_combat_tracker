@@ -43,7 +43,7 @@ const MonsterListGroupItem = ({ monster, removeCreature }) => {
           <strong>{monster.modifier >= 0 ? `+${monster.modifier}` : `${monster.modifier}`}</strong>
           {monster.advantage && <AdvantageIcon />}
         </span>
-        {/* LOW CENTER */}
+        {/* MID CENTER */}
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <span>
             <span style={{ color: '#555' }}>AC:&nbsp;</span>
@@ -58,6 +58,23 @@ const MonsterListGroupItem = ({ monster, removeCreature }) => {
             <strong>{monster.xp}</strong>
           </span>
         </div>
+        {/* LOW CENTER */}
+        {monster.legendary && (
+          <div>
+            <span>
+              <span style={{ color: '#555' }}>Legendary Actions:&nbsp;</span>
+              <strong>{monster.legendary}</strong>
+            </span>
+          </div>
+        )}
+        {monster.lair && (
+          <div>
+            <span>
+              <span style={{ color: '#555' }}>Lair Action Initiative Count:&nbsp;</span>
+              <strong>{monster.lair}</strong>
+            </span>
+          </div>
+        )}
       </div>
       {/* RIGHT */}
       <div style={{ fontSize: '200%', width: 'auto' }}>
@@ -83,6 +100,10 @@ MonsterListGroupItem.propTypes = {
     ac: PropTypes.number.isRequired,
     hp: PropTypes.number.isRequired,
     xp: PropTypes.number.isRequired,
+    lair: PropTypes.number,
+    legendary: PropTypes.number,
+    tag: PropTypes.string,
+    number: PropTypes.number,
     initiative: PropTypes.number,
     order: PropTypes.number,
   }).isRequired,
