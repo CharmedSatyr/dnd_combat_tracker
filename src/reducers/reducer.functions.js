@@ -138,7 +138,7 @@ export const rollInitiative = creaturesArray => {
 // NOTE: Order is ascending though based on descending initiative values
 export const isValidInitiativeOrder = creatures =>
   creatures.every((cr, i) => {
-    if (i === 0 && cr.order === 0) {
+    if (i === 0 && cr.order === 1) {
       return true
     } else if (i !== 0 && creatures[i - 1].order <= cr.order) {
       return true
