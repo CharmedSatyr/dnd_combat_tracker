@@ -75,6 +75,8 @@ Initiative.propTypes = {
       ac: PropTypes.number,
       hp: PropTypes.number,
       xp: PropTypes.number,
+      lair: PropTypes.number,
+      legendary: PropTypes.number,
       initiative: PropTypes.number,
       order: PropTypes.number,
     })
