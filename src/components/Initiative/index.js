@@ -11,6 +11,7 @@ import {
   removeCreatureFromLocalStorage,
 } from '../localStorage.functions'
 
+import AddOnListGroupItem from './AddOnListGroupItem'
 import MonsterListGroupItem from './MonsterListGroupItem'
 import PlayerListGroupItem from './PlayerListGroupItem'
 import RemoveButtons from './RemoveButtons'
@@ -25,12 +26,19 @@ class Initiative extends Component {
     let creatureList
     if (creatures) {
       creatureList = creatures.map((c, i) => {
-        const player = c.id.split('-')[0] === 'player'
-        return player ? (
-          <PlayerListGroupItem key={i} player={c} removeCreature={removeCreature} />
-        ) : (
-          <MonsterListGroupItem key={c.id} monster={c} removeCreature={removeCreature} />
-        )
+        const type = c.id.split('-')[0]
+        if (c.type === 'addon') {
+          return <AddOnListGroupItem key={i} monster={c} />
+        }
+        /* Not using `c.id` for key to avoid problems when saved, static groups are added */
+        switch (type) {
+          case 'player':
+            return <PlayerListGroupItem key={i} player={c} removeCreature={removeCreature} />
+          case 'monster':
+            return <MonsterListGroupItem key={i} monster={c} removeCreature={removeCreature} />
+          default:
+            return null
+        }
       })
     }
 
@@ -70,8 +78,8 @@ Initiative.propTypes = {
   creatures: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string.isRequired,
-      modifier: PropTypes.number.isRequired,
-      advantage: PropTypes.bool.isRequired,
+      modifier: PropTypes.number,
+      advantage: PropTypes.bool,
       ac: PropTypes.number,
       hp: PropTypes.number,
       xp: PropTypes.number,
