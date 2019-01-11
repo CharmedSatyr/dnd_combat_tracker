@@ -5,6 +5,8 @@ import { removeCreatureFromLocalStorage } from './localStorage.functions'
 
 import { Glyphicon } from 'react-bootstrap'
 
+export const LairActionIcon = () => <Glyphicon title="Lair Action" glyph="home" />
+
 export const AdvantageIcon = () => (
   <span>
     &nbsp;
