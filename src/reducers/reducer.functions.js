@@ -130,8 +130,8 @@ export const rollInitiative = creaturesArray => {
   creatures.forEach(
     cr => (cr.order = initiativeOrder.indexOf(cr.groupID ? cr.groupID : cr.id.split('-')[1]) + 1)
   )
-  // Sort creatures
-  return sortCreaturesArray(creatures)
+
+  return creatures
 }
 
 // Check that the array's initiative order is valid

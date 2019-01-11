@@ -19,6 +19,7 @@ export default (state = [], payload) => {
       return updated
     case c.ROLL_INITIATIVE:
       updated = f.rollInitiative(state)
+      updated = f.sortCreaturesArray(updated)
       return updated
     default:
       return state
