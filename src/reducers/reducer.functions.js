@@ -1,3 +1,5 @@
+import { setID } from '../components/component.functions'
+
 // Sort creatures into optimal display order
 export const sortCreaturesArray = array => {
   // Check creature property types
@@ -24,6 +26,11 @@ export const sortCreaturesArray = array => {
     // Sort by order
     if (a.order !== b.order) {
       return a.order - b.order
+    }
+
+    // else initiative
+    if (a.initiative !== b.initiative) {
+      return b.initiative - a.initiative
     }
 
     // else modifier
@@ -95,21 +102,36 @@ export const d20A = (modifier = 0) => {
   return roll1 >= roll2 ? roll1 : roll2
 }
 
-// Given an object of groupID keys and number values,
-// return an array of groupIDs where a lower index corresponds to a higher value
-export const orderInitiativeGroups = groupIDs =>
-  []
-    .concat(...Object.entries(groupIDs).sort((a, b) => b[1] - a[1]))
-    .filter(o => typeof o === 'string')
+// Create lair actions for creatures who have them
+export const createLairActions = creatures =>
+  creatures.reduce((acc, curr) => {
+    // If the creature has a lair action
+    // and the type of the 'creature' isn't addon
+    if (curr.lair && curr.type !== 'addon') {
+      const lairAction = Object.assign({}, curr, {
+        groupID: setID(), // Set a new groupID because it won't increment/decrement with the others
+        type: 'addon', // It's not a proper creature but an addon
+      })
+      acc.push(curr, lairAction)
+      // else if the type of the 'creature' isn't addon
+    } else if (curr.type !== 'addon') {
+      acc.push(curr)
+    }
+    return acc
+  }, [])
 
-// Roll initiative
-export const rollInitiative = creaturesArray => {
-  let creatures = [...creaturesArray]
+// rollInitiativeByGroup
+export const rollInitiativeByGroup = creatures => {
   const groupIDs = {}
   // Loop through creatures once
   creatures.forEach(cr => {
+    // Set the initiative and group for addon
+    if (cr.type === 'addon') {
+      groupIDs[cr.groupID] = cr.lair
+      cr.initiative = cr.lair
+    }
     // check groupIDs obj for group's initiative
-    if (groupIDs.hasOwnProperty(cr.groupID) && groupIDs[cr.groupID]) {
+    else if (groupIDs.hasOwnProperty(cr.groupID) && groupIDs[cr.groupID]) {
       cr.initiative = groupIDs[cr.groupID]
       // otherwise roll for initiative!
       // with advantage
@@ -122,14 +144,28 @@ export const rollInitiative = creaturesArray => {
       cr.initiative = groupIDs[cr.groupID]
     }
   })
+  return groupIDs
+}
 
-  // Get an array of all the Group or Player IDs in initiative order
-  const initiativeOrder = orderInitiativeGroups(groupIDs)
+// Given an object of groupID keys and number values,
+// return an array of groupIDs where a lower index corresponds to a higher value
+export const orderInitiativeGroups = groupIDs =>
+  []
+    .concat(...Object.entries(groupIDs).sort((a, b) => b[1] - a[1]))
+    .filter(o => typeof o === 'string')
+
+// Roll initiative
+export const rollInitiative = creaturesArray => {
+  let creatures = [...creaturesArray]
+
+  // Roll initiative by group
+  const initiativeByGroup = rollInitiativeByGroup(creatures)
+
+  // Get an array of all the groupIDs in initiative order
+  const initiativeOrder = orderInitiativeGroups(initiativeByGroup)
 
   // Give each creature object an order property based on that
-  creatures.forEach(
-    cr => (cr.order = initiativeOrder.indexOf(cr.groupID ? cr.groupID : cr.id.split('-')[1]) + 1)
-  )
+  creatures.forEach(cr => (cr.order = initiativeOrder.indexOf(cr.groupID) + 1))
 
   return creatures
 }
