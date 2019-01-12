@@ -1,5 +1,16 @@
 import * as f from '../reducer.functions'
 
+// createLairActions
+describe('`createLairActions` reducer function', () => {
+  it('should return an array', () => {
+    const creatures = [
+      { name: 'a', number: 1, advantage: false, modifier: 2 },
+      { name: 'b', number: undefined, advantage: false, modifier: 2 },
+    ]
+    expect(Array.isArray(f.createLairActions(creatures))).toBeTruthy()
+  })
+})
+
 // sortCreaturesArray
 describe('`sortCreaturesArray` reducer function', () => {
   it("should throw an Error if a creature's `name` is not a string", () => {
@@ -21,7 +32,7 @@ describe('`sortCreaturesArray` reducer function', () => {
     expect(() => f.sortCreaturesArray(badAdv)).toThrow()
   })
 
-  it('should return an Array', () => {
+  it('should return an array', () => {
     const creatures = [{ name: 'a', number: 1, advantage: false, modifier: 2, order: 1 }]
     expect(Array.isArray(f.sortCreaturesArray(creatures))).toBeTruthy()
   })
@@ -188,7 +199,7 @@ describe('`d20A` reducer function', () => {
 
 // orderInitiativeGroups
 describe('`orderInitiativeGroups` reducer function', () => {
-  it('should return an Array', () => {
+  it('should return an array', () => {
     const groupIDs = { a: 23, b: 1, c: 13 }
     expect(Array.isArray(f.orderInitiativeGroups(groupIDs))).toBeTruthy()
   })
@@ -256,7 +267,7 @@ describe('`findInitiativeOrderLength` reducer function', () => {
 
 // decrementGroupInitiativeOrder (make creatures go earlier)
 describe('`decrementGroupInitiativeOrder` reducer function', () => {
-  it('should return an Array', () => {
+  it('should return an array', () => {
     const payload = { groupID: 'c' }
     const creatures = [
       { name: 'ann', modifier: 0, advantage: false, groupID: 'a', order: 1 },
@@ -278,7 +289,7 @@ describe('`decrementGroupInitiativeOrder` reducer function', () => {
     ]
     expect(Array.isArray(f.decrementGroupInitiativeOrder(payload, creatures))).toBeTruthy()
   })
-  it('should return an Array of the same length as its argument', () => {
+  it('should return an array of the same length as its argument', () => {
     const payload = { groupID: 'c' }
     const creatures = [
       { name: 'ann', modifier: 0, advantage: false, groupID: 'a', order: 1 },
@@ -369,12 +380,11 @@ describe('`decrementGroupInitiativeOrder` reducer function', () => {
       expect(p.order).toBe(newOrder)
     })
   })
-  // it('should return an Array sorted in ascending order', () => {})
 })
 
 // incrementGroupInitiativeOrder (make creatures go later)
 describe('`incrementGroupInitiativeOrder` reducer function', () => {
-  it('should return an Array', () => {
+  it('should return an array', () => {
     const payload = { groupID: 'c' }
     const creatures = [
       { name: 'ann', modifier: 0, advantage: false, groupID: 'a', order: 1 },
@@ -396,7 +406,7 @@ describe('`incrementGroupInitiativeOrder` reducer function', () => {
     ]
     expect(Array.isArray(f.incrementGroupInitiativeOrder(payload, creatures))).toBeTruthy()
   })
-  it('should return an Array of the same length as its argument', () => {
+  it('should return an array of the same length as its argument', () => {
     const payload = { groupID: 'c' }
     const creatures = [
       { name: 'ann', modifier: 0, advantage: false, groupID: 'a', order: 1 },
@@ -487,5 +497,12 @@ describe('`incrementGroupInitiativeOrder` reducer function', () => {
       expect(p.order).toBe(newOrder)
     })
   })
-  // it('should return an Array sorted in ascending order', () => {})
 })
+
+/*
+describe('`rollInitiativeByGroup` reducer function')
+describe('`createLairActions` reducer function')
+describe('`rollInitiative` reducer function')
+- More for createLairActions
+Need to make a new function so that if you remove an item, the order updates, too! The function will just go along and give things orders based on the groupIDs/orderInitiativeGroups functions. Ish.
+*/
