@@ -37,9 +37,7 @@ const AddOnListGroupItem = ({ monster }) => (
     </div>
     {/* RIGHT */}
     <div style={{ fontSize: '200%', width: 'auto' }}>
-      <strong>
-        {typeof monster.lair === 'number' ? initiativeLength(monster.lair) : <HourglassIcon />}
-      </strong>
+      <strong>{monster.initiative}</strong>
     </div>
   </div>
 )
@@ -61,5 +59,4 @@ AddOnListGroupItem.propTypes = {
     initiative: PropTypes.number,
     order: PropTypes.number,
   }).isRequired,
-  removeCreature: PropTypes.func.isRequired,
 }
