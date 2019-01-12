@@ -18,7 +18,8 @@ export default (state = [], payload) => {
       updated = [...state.filter(creature => creature.id !== payload.creature.id)]
       return updated
     case c.ROLL_INITIATIVE:
-      updated = f.rollInitiative(state)
+      updated = f.createLairActions(state)
+      updated = f.rollInitiative(updated)
       updated = f.sortCreaturesArray(updated)
       return updated
     default:
