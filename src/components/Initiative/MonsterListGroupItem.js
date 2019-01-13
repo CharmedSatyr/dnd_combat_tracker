@@ -78,11 +78,7 @@ const MonsterListGroupItem = ({ monster, removeCreature }) => (
     {/* RIGHT */}
     <div style={{ fontSize: '200%', width: 'auto' }}>
       <strong>
-        {typeof monster.initiative === 'number' ? (
-          initiativeLength(monster.initiative)
-        ) : (
-          <HourglassIcon />
-        )}
+        {(monster.initiative && initiativeLength(monster.initiative)) || <HourglassIcon />}
       </strong>
     </div>
   </div>
