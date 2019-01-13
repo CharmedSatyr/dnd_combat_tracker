@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { Label } from 'react-bootstrap'
-import { HourglassIcon, LairActionIcon } from '../Icons'
+import { LairActionIcon } from '../Icons'
 import IncrementDecrementButtons from './IncrementDecrementButtons'
 
 import { setLabel, initiativeLength } from '../component.functions'
@@ -37,7 +37,7 @@ const AddOnListGroupItem = ({ monster }) => (
     </div>
     {/* RIGHT */}
     <div style={{ fontSize: '200%', width: 'auto' }}>
-      <strong>{monster.initiative}</strong>
+      <strong>{initiativeLength(monster.initiative)}</strong>
     </div>
   </div>
 )
