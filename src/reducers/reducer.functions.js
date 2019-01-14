@@ -147,6 +147,17 @@ export const rollInitiativeByGroup = creatures => {
   return groupIDs
 }
 
+// Given an array of creatures and an array of their groupIDs in initiative order
+// Update the order properties of each creature sequentially by groupID
+export const assignOrder = (creatures, orderedGroupIdArray) => {
+  if (!orderedGroupIdArray) {
+    throw new Error('`assignOrder` Error: Missing `orderedGroupIdArray` argument')
+  }
+  return creatures.map(cr =>
+    Object.assign({}, cr, { order: orderedGroupIdArray.indexOf(cr.groupID) + 1 })
+  )
+}
+
 // Given an object of groupID keys and number values,
 // return an array of groupIDs where a lower index corresponds to a higher value
 export const orderInitiativeGroups = groupIDs =>
@@ -165,9 +176,21 @@ export const rollInitiative = creaturesArray => {
   const initiativeOrder = orderInitiativeGroups(initiativeByGroup)
 
   // Give each creature object an order property based on that
-  creatures.forEach(cr => (cr.order = initiativeOrder.indexOf(cr.groupID) + 1))
+  return assignOrder(creatures, initiativeOrder)
+}
 
-  return creatures
+// Update order of creatures if they already have an initiative
+// e.g., after removing a creature from the initiative order
+export const updateOrder = creatures => {
+  const groupIDs = creatures
+    .map(c => {
+      if (c.initiative) {
+        return c.groupID
+      }
+      throw new Error(`\`updateOrder\` Error: Missing initiative at creature ID: ${c.id}`)
+    })
+    .filter((c, i, arr) => c !== arr[i - 1])
+  return assignOrder(creatures, groupIDs)
 }
 
 // Check that the array's initiative order is valid
@@ -190,6 +213,7 @@ export const findInitiativeOrderLength = creatures => {
   }
   return creatures[creatures.length - 1].order
 }
+
 // Increment Group Initiative Order (make creatures' turn later)
 export const incrementGroupInitiativeOrder = (payload, creatures) => {
   // Find the index of the first creature in the target group
