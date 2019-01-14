@@ -9,6 +9,31 @@ describe('`createLairActions` reducer function', () => {
     ]
     expect(Array.isArray(f.createLairActions(creatures))).toBeTruthy()
   })
+  it('should create an additional object for each creature that has a `lair` property', () => {
+    const creatures = [
+      { name: 'a', number: 1, advantage: false, modifier: 2, lair: 20 },
+      { name: 'b', number: undefined, advantage: false, modifier: 2 },
+    ]
+    expect(f.createLairActions(creatures).length).toBe(3)
+  })
+  it('should add child objects with different groupIDs than their parents', () => {
+    const creatures = [
+      { name: 'a', groupID: 'r', number: 1, advantage: false, modifier: 2, lair: 20 },
+    ]
+    expect(f.createLairActions(creatures)).not.toBe(creatures[0].groupID)
+  })
+  it('should add child objects with a `type` of `addon` for creatures with a `lair` property', () => {
+    const creatures = [
+      { name: 'a', number: 1, advantage: false, modifier: 2, lair: 20 },
+      { name: 'b', number: undefined, advantage: false, modifier: 2 },
+    ]
+    expect(f.createLairActions(creatures)[1].type).toBe('addon')
+    expect(f.createLairActions(creatures)[2].type).toBeUndefined()
+  })
+  it('should add child objects with the same `name` as their parents', () => {
+    const creatures = [{ name: 'a', number: 1, advantage: false, modifier: 2, lair: 20 }]
+    expect(f.createLairActions(creatures)[1].name).toBe(creatures[0].name)
+  })
 })
 
 // sortCreaturesArray
@@ -499,10 +524,75 @@ describe('`incrementGroupInitiativeOrder` reducer function', () => {
   })
 })
 
+// updateOrder
+describe('`updateOrder` reducer function', () => {
+  it('should return an array', () => {
+    const creatures = [
+      { groupID: 'a', initiative: 10, order: 1 },
+      { groupID: 'a', initiative: 10, order: 1 },
+      { groupID: 'b', initiative: 8, order: 3 },
+    ]
+    expect(Array.isArray(f.updateOrder(creatures))).toBeTruthy()
+  })
+  it('should throw an error if any of the creatures lacks an initiative', () => {
+    const creatures = [
+      { groupID: 'a', id: '1a', initiative: 10, order: 1 },
+      { groupID: 'a', id: '2a', initiative: 10, order: 1 },
+      { groupID: 'b', id: '3b', initiative: undefined, order: undefined },
+    ]
+    expect(() => f.updateOrder(creatures)).toThrow()
+  })
+  it('should return creatures with updated `order` properties', () => {
+    const creatures = [
+      { groupID: 'a', initiative: 10, order: 1 },
+      { groupID: 'a', initiative: 10, order: 1 },
+      { groupID: 'b', initiative: 8, order: 3 },
+    ]
+    const reordered = [
+      { groupID: 'a', initiative: 10, order: 1 },
+      { groupID: 'a', initiative: 10, order: 1 },
+      { groupID: 'b', initiative: 8, order: 2 },
+    ]
+    expect(f.updateOrder(creatures)).toEqual(reordered)
+  })
+})
+
+// assignOrder
+describe('`assignOrder` reducer function', () => {
+  it('should return an array', () => {
+    const creatures = [
+      { groupID: 'a', initiative: 10, order: 1 },
+      { groupID: 'a', initiative: 10, order: 1 },
+      { groupID: 'b', initiative: 8, order: 3 },
+    ]
+    const initiativeOrder = ['a', 'b']
+    expect(Array.isArray(f.assignOrder(creatures, initiativeOrder))).toBeTruthy()
+  })
+  it('should throw an error if the `orderedGroupIdArray` argument is missing', () => {
+    const creatures = [
+      { groupID: 'a', initiative: 10, order: 1 },
+      { groupID: 'a', initiative: 10, order: 1 },
+      { groupID: 'b', initiative: 8, order: 3 },
+    ]
+    expect(() => f.assignOrder(creatures)).toThrow()
+  })
+  it('should assign sequential order to creatures objects based on `initiativeOrder`', () => {
+    const creatures = [
+      { groupID: 'a', initiative: 10, order: 1 },
+      { groupID: 'a', initiative: 10, order: 1 },
+      { groupID: 'b', initiative: 8, order: 3 },
+    ]
+    const initiativeOrder = ['a', 'b']
+    const reordered = [
+      { groupID: 'a', initiative: 10, order: 1 },
+      { groupID: 'a', initiative: 10, order: 1 },
+      { groupID: 'b', initiative: 8, order: 2 },
+    ]
+    expect(f.assignOrder(creatures, initiativeOrder)).toEqual(reordered)
+  })
+})
+
 /*
 describe('`rollInitiativeByGroup` reducer function')
-describe('`createLairActions` reducer function')
 describe('`rollInitiative` reducer function')
-- More for createLairActions
-Need to make a new function so that if you remove an item, the order updates, too! The function will just go along and give things orders based on the groupIDs/orderInitiativeGroups functions. Ish.
 */
