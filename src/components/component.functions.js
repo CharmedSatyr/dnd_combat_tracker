@@ -1,6 +1,4 @@
-import React from 'react'
-
-// Generate an 18-digit numerical ID
+// Generate an random numerical ID
 export const setID = () =>
   Math.random()
     .toString()
@@ -13,12 +11,13 @@ export const setLabel = (tag, number) => {
   } else if (tag) {
     return tag
   } else if (number) {
-    return number
+    return number.toString()
   }
+  return ''
 }
 
 // Ensure all initiative rolls take up two spaces
 export const initiativeLength = initiative => {
   const il = initiative.toString()
-  return il.length === 1 ? <span>&nbsp;{il}</span> : il
+  return il.length === 1 ? ` ${il}` : il
 }
