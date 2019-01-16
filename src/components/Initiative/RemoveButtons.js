@@ -89,6 +89,8 @@ RemoveButtons.propTypes = {
       ac: PropTypes.number,
       hp: PropTypes.number,
       xp: PropTypes.number,
+      id: PropTypes.string.isRequired,
+      groupID: PropTypes.string.isRequired,
       initiative: PropTypes.number,
       order: PropTypes.number,
     })

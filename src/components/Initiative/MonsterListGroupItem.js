@@ -94,6 +94,8 @@ MonsterListGroupItem.propTypes = {
     ac: PropTypes.number.isRequired,
     hp: PropTypes.number.isRequired,
     xp: PropTypes.number.isRequired,
+    id: PropTypes.string.isRequired,
+    groupID: PropTypes.string.isRequired,
     lair: PropTypes.number,
     legendary: PropTypes.number,
     tag: PropTypes.string,

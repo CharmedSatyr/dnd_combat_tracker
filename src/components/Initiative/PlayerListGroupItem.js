@@ -66,6 +66,8 @@ PlayerListGroupItem.propTypes = {
     name: PropTypes.string.isRequired,
     modifier: PropTypes.number.isRequired,
     advantage: PropTypes.bool.isRequired,
+    id: PropTypes.string.isRequired,
+    groupID: PropTypes.string.isRequired,
     initiative: PropTypes.number,
     order: PropTypes.number,
   }).isRequired,
