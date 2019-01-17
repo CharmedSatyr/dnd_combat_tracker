@@ -33,7 +33,7 @@ describe('`experience` reducer', () => {
     const updatedState = { monsterCount: initialState.monsterCount + 1 }
     expect(experience(initialState, addAction)).toEqual(expect.objectContaining(updatedState))
   })
-  it("should increment `totalXP` by the total amount of added monsters' experience when `ADD_CREATURES_TO_STATE` is received", () => {
+  it("should increment `totalXP` by the total amount of added monsters' `xp` when `ADD_CREATURES_TO_STATE` is received", () => {
     const updatedState = { totalXP: 100 }
     expect(experience(initialState, addAction)).toEqual(expect.objectContaining(updatedState))
   })
@@ -57,19 +57,19 @@ describe('`experience` reducer', () => {
     const updatedState = { playerCount: usedState.playerCount - 1 }
     expect(experience(usedState, removePlayerAction)).toEqual(expect.objectContaining(updatedState))
   })
-  it('should decrement `monsterCount` by the number of monsters added when `REMOVE_CREATURE_FROM_STATE` is received', () => {
+  it('should decrement `monsterCount` by 1 when `REMOVE_CREATURE_FROM_STATE` is received', () => {
     const updatedState = { monsterCount: usedState.monsterCount - 1 }
     expect(experience(usedState, removeMonsterAction)).toEqual(
       expect.objectContaining(updatedState)
     )
   })
-  it("should decrement `totalXP` by the removed monster's experience when `REMOVE_CREATURE_FROM_STATE` is received", () => {
+  it("should decrement `totalXP` by the removed monster's `xp` when `REMOVE_CREATURE_FROM_STATE` is received", () => {
     const updatedState = { totalXP: 0 }
     expect(experience(usedState, removeMonsterAction)).toEqual(
       expect.objectContaining(updatedState)
     )
   })
-  it('should update `xpPerPlayer` by the ratio of total xp to players when `REMOVE_CREATURE_FROM_STATE` is received', () => {
+  it('should update `xpPerPlayer` to the ratio of total xp to players when `REMOVE_CREATURE_FROM_STATE` is received', () => {
     const updatedState = { xpPerPlayer: 0 }
     expect(experience(usedState, removeMonsterAction)).toEqual(
       expect.objectContaining(updatedState)
