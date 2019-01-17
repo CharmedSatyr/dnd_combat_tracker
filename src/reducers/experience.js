@@ -1,30 +1,32 @@
 // Experience Reducer
 import * as c from '../constants'
 
-const defaultState = {
+export const initialState = {
   monsterCount: 0,
   playerCount: 0,
   totalXP: 0,
   xpPerPlayer: 0,
 }
 
-export default (state = defaultState, payload) => {
+export default (state = initialState, payload) => {
   let monsterCount = 0,
     playerCount = 0,
     totalXP = 0,
     xpPerPlayer = 0
   switch (payload.type) {
     case c.ADD_CREATURES_TO_STATE:
-      monsterCount =
-        payload.creatures.filter(c => c.id.split('-')[0] === 'monster').length + state.monsterCount
-
-      playerCount =
-        payload.creatures.filter(c => c.id.split('-')[0] === 'player').length + state.playerCount
-
-      totalXP =
-        payload.creatures
-          .filter(c => c.id.split('-')[0] === 'monster')
-          .reduce((acc, curr) => acc + curr.xp, 0) + state.totalXP
+      payload.creatures.forEach(c => {
+        if (c.id.split('-')[0] === 'monster') {
+          monsterCount++
+          totalXP += c.xp
+        }
+        if (c.id.split('-')[0] === 'player') {
+          playerCount++
+        }
+      })
+      monsterCount += state.monsterCount
+      totalXP += state.totalXP
+      playerCount += state.playerCount
 
       xpPerPlayer = playerCount > 0 ? totalXP / playerCount : 0
 
