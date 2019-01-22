@@ -26,8 +26,8 @@ export const removeCreatureFromLocalStorage = creature => {
       creatures = creatures.filter(c => c.id !== creature.id)
       creatures = JSON.stringify(creatures)
       localStorage.setItem(c.LOCAL_CREATURES, creatures)
-    } catch (e) {
-      console.error('removeLocal Error:', e)
+    } catch (err) {
+      console.error('removeLocal Error:', err)
     }
   }
 }
@@ -40,8 +40,8 @@ export const findCreaturesInLocalStorage = cb => {
       let localCreatures = localStorage.getItem(c.LOCAL_CREATURES)
       localCreatures = JSON.parse(localCreatures)
       cb(localCreatures)
-    } catch (e) {
-      console.error('Error:', e)
+    } catch (err) {
+      console.error('Error:', err)
     }
   }
 }
