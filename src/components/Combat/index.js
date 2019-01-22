@@ -1,9 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-const Conditions = () => <div>placeholder</div>
+const Combat = () => <div>placeholder</div>
 
-export default Conditions
+export default Combat
 
 /* Blinded
  * Charmed
