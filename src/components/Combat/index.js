@@ -1,9 +1,46 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
+// import PropTypes from 'prop-types'
+import { Col, Label, ListGroup } from 'react-bootstrap'
+import { setLabel } from '../component.functions'
+// import * as a from '../../actions'
+import { MonsterIcon } from '../Icons'
 
-const Combat = () => <div>placeholder</div>
+class Combat extends Component {
+  render() {
+    const { creatures } = this.props
+    let creatureList
+    if (creatures) {
+      creatureList = creatures.map((c, i) => {
+        const type = c.id.split('-')[0]
+        if (type === 'monster') {
+          return <MonsterListGroupItem monster={c} />
+        } else {
+          return null
+        }
+      })
+    }
 
-export default Combat
+    return (
+      creatureList.length > 0 && (
+        <Col xs={12} md={4} className="well">
+          {creatureList && <ListGroup>{creatureList}</ListGroup>}
+        </Col>
+      )
+    )
+  }
+}
+
+const mapStateToProps = state => ({ creatures: state.creatures })
+
+const mapDispatchToProps = dispatch => ({})
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Combat)
+
+Combat.propTypes = {}
 
 /* Blinded
  * Charmed
@@ -21,3 +58,55 @@ export default Combat
  * Unconscious
  * Exhaustion
  */
+
+const MonsterListGroupItem = ({ monster }) => (
+  <div
+    className="list-group-item"
+    style={{
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+    }}
+  >
+    {/* CENTER */}
+    <div style={{ width: '65%' }}>
+      <MonsterIcon />
+      <strong>{monster.name}</strong>&nbsp;
+      <Label>{setLabel(monster.tag, monster.number)}</Label>
+      <br />
+      <span />
+      {/* MID CENTER */}
+      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+        <span>
+          <span style={{ color: '#555' }}>AC:&nbsp;</span>
+          <strong>{monster.ac}</strong>
+        </span>{' '}
+        <span>
+          <span style={{ color: '#555' }}>HP:&nbsp;</span>
+          <strong>{monster.hp}</strong>
+        </span>{' '}
+        <span>
+          <span style={{ color: '#555' }}>XP:&nbsp;</span>
+          <strong>{monster.xp}</strong>
+        </span>
+      </div>
+      {/* LOW CENTER */}
+      {monster.legendary && (
+        <div>
+          <span>
+            <span style={{ color: '#555' }}>Legendary Actions:&nbsp;</span>
+            <strong>{monster.legendary}</strong>
+          </span>
+        </div>
+      )}
+      {monster.lair && (
+        <div>
+          <span>
+            <span style={{ color: '#555' }}>Lair Action Initiative Count:&nbsp;</span>
+            <strong>{monster.lair}</strong>
+          </span>
+        </div>
+      )}
+    </div>
+  </div>
+)
