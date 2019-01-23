@@ -8,12 +8,14 @@ import { Grid, PageHeader, Row } from 'react-bootstrap'
 
 const App = () => (
   <Grid>
-    <PageHeader>D&amp;D Combat Tracker</PageHeader>
+    <PageHeader>D&amp;D Initiative &amp; Combat Tracker</PageHeader>
     <Row className="show-grid">
       <AddCreature />
       <Initiative />
-      <Experience />
       <Combat />
+    </Row>
+    <Row className="show-grid">
+      <Experience />
     </Row>
   </Grid>
 )
