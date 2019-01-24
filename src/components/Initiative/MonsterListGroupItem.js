@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { Label } from 'react-bootstrap'
+import { monsterPropTypes } from '../../constants/propTypes'
 
 import { AdvantageIcon, HourglassIcon, MonsterIcon, RemoveIcon } from '../Icons'
 import IncrementDecrementButtons from './IncrementDecrementButtons'
@@ -87,21 +88,6 @@ const MonsterListGroupItem = ({ monster, removeCreature }) => (
 export default MonsterListGroupItem
 
 MonsterListGroupItem.propTypes = {
-  monster: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    modifier: PropTypes.number.isRequired,
-    advantage: PropTypes.bool.isRequired,
-    ac: PropTypes.number.isRequired,
-    hp: PropTypes.number.isRequired,
-    xp: PropTypes.number.isRequired,
-    id: PropTypes.string.isRequired,
-    groupID: PropTypes.string.isRequired,
-    lair: PropTypes.number,
-    legendary: PropTypes.number,
-    tag: PropTypes.string,
-    number: PropTypes.number,
-    initiative: PropTypes.number,
-    order: PropTypes.number,
-  }).isRequired,
+  ...monsterPropTypes,
   removeCreature: PropTypes.func.isRequired,
 }

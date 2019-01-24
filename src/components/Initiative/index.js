@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
+import { creaturesPropTypes } from '../../constants/propTypes'
 
 import { Col, ListGroup } from 'react-bootstrap'
 
@@ -75,22 +76,7 @@ export default connect(
 
 Initiative.propTypes = {
   addCreatures: PropTypes.func.isRequired,
-  creatures: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      modifier: PropTypes.number,
-      advantage: PropTypes.bool,
-      ac: PropTypes.number,
-      hp: PropTypes.number,
-      xp: PropTypes.number,
-      id: PropTypes.string.isRequired,
-      groupID: PropTypes.string.isRequired,
-      lair: PropTypes.number,
-      legendary: PropTypes.number,
-      initiative: PropTypes.number,
-      order: PropTypes.number,
-    })
-  ).isRequired,
+  ...creaturesPropTypes,
   removeCreature: PropTypes.func.isRequired,
   rollInitiative: PropTypes.func.isRequired,
 }

@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
 import { Button, FormGroup } from 'react-bootstrap'
+import { creaturesPropTypes } from '../../constants/propTypes'
 
 const RemovePlayers = ({ creatures, removeCreature, removeLocal }) => (
   <FormGroup>
@@ -81,20 +81,7 @@ const RemoveButtons = ({ creatures, removeCreature, removeLocal }) => (
 export default RemoveButtons
 
 RemoveButtons.propTypes = {
-  creatures: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      modifier: PropTypes.number.isRequired,
-      advantage: PropTypes.bool.isRequired,
-      ac: PropTypes.number,
-      hp: PropTypes.number,
-      xp: PropTypes.number,
-      id: PropTypes.string.isRequired,
-      groupID: PropTypes.string.isRequired,
-      initiative: PropTypes.number,
-      order: PropTypes.number,
-    })
-  ).isRequired,
+  ...creaturesPropTypes,
   removeCreature: PropTypes.func.isRequired,
   removeLocal: PropTypes.func.isRequired,
 }

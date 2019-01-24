@@ -1,8 +1,7 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-
 import { Label } from 'react-bootstrap'
 import { LairActionIcon } from '../Icons'
+import { lairActionPropTypes } from '../../constants/propTypes'
 import IncrementDecrementButtons from './IncrementDecrementButtons'
 
 import { setLabel, initiativeLength } from '../component.functions'
@@ -45,20 +44,5 @@ const AddOnListGroupItem = ({ monster }) => (
 export default AddOnListGroupItem
 
 AddOnListGroupItem.propTypes = {
-  monster: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    modifier: PropTypes.number.isRequired,
-    advantage: PropTypes.bool.isRequired,
-    ac: PropTypes.number.isRequired,
-    hp: PropTypes.number.isRequired,
-    xp: PropTypes.number.isRequired,
-    id: PropTypes.string.isRequired,
-    groupID: PropTypes.string.isRequired,
-    lair: PropTypes.number,
-    legendary: PropTypes.number,
-    tag: PropTypes.string,
-    number: PropTypes.number,
-    initiative: PropTypes.number.isRequired,
-    order: PropTypes.number.isRequired,
-  }).isRequired,
+  ...lairActionPropTypes,
 }
