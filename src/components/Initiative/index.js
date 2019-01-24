@@ -12,7 +12,7 @@ import {
   removeCreatureFromLocalStorage,
 } from '../localStorage.functions'
 
-import AddOnListGroupItem from './AddOnListGroupItem'
+import LairActionListGroupItem from './LairActionListGroupItem'
 import MonsterListGroupItem from './MonsterListGroupItem'
 import PlayerListGroupItem from './PlayerListGroupItem'
 import RemoveButtons from './RemoveButtons'
@@ -27,12 +27,11 @@ class Initiative extends Component {
     let creatureList
     if (creatures) {
       creatureList = creatures.map((c, i) => {
-        const type = c.id.split('-')[0]
-        if (c.type === 'addon') {
-          return <AddOnListGroupItem key={i} monster={c} />
+        if (c.type === 'lair-action') {
+          return <LairActionListGroupItem key={i} monster={c} />
         }
         /* Not using `c.id` for key to avoid problems when saved, static groups are added */
-        switch (type) {
+        switch (c.type) {
           case 'player':
             return <PlayerListGroupItem key={i} player={c} removeCreature={removeCreature} />
           case 'monster':

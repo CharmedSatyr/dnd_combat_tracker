@@ -2,10 +2,13 @@ import PropTypes from 'prop-types'
 
 // Base Creature class
 export const creaturePropTypes = {
-  groupID: PropTypes.string.isRequired,
-  id: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  order: PropTypes.number,
+  creature: PropTypes.shape({
+    groupID: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
+    initiative: PropTypes.number,
+    name: PropTypes.string.isRequired,
+    order: PropTypes.number,
+  }),
 }
 
 // Array of creatures objects
@@ -50,10 +53,12 @@ export const monsterPropTypes = {
 
 // Lair Action class
 export const lairActionPropTypes = {
-  groupID: PropTypes.string.isRequired,
-  id: PropTypes.string.isRequired,
-  initiative: PropTypes.number.isRequired,
-  name: PropTypes.string.isRequired,
-  order: PropTypes.number.isRequired,
-  type: PropTypes.string.isRequired,
+  lairAction: PropTypes.shape({
+    groupID: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
+    initiative: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired,
+    order: PropTypes.number.isRequired,
+    type: PropTypes.string.isRequired,
+  }),
 }

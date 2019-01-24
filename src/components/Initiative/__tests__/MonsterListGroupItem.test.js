@@ -6,14 +6,15 @@ describe('`MonsterListGroupItem` component', () => {
   it('should render without crashing', () => {
     const props = {
       monster: {
-        name: 'A',
-        modifier: 0,
-        advantage: false,
         ac: 10,
-        hp: 20,
-        xp: 200,
-        id: '100',
+        advantage: false,
         groupID: '120',
+        hp: 20,
+        id: '100',
+        modifier: 0,
+        name: 'A',
+        type: 'monster',
+        xp: 200,
       },
       removeCreature: jest.fn(),
     }

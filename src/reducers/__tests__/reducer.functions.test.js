@@ -22,12 +22,12 @@ describe('`createLairActions` reducer function', () => {
     ]
     expect(f.createLairActions(creatures)).not.toBe(creatures[0].groupID)
   })
-  it('should add child objects with a `type` of `addon` for creatures with a `lair` property', () => {
+  it('should add child objects with a `type` of `lair-action` for creatures with a `lair` property', () => {
     const creatures = [
       { name: 'a', number: 1, advantage: false, modifier: 2, lair: 20 },
       { name: 'b', number: undefined, advantage: false, modifier: 2 },
     ]
-    expect(f.createLairActions(creatures)[1].type).toBe('addon')
+    expect(f.createLairActions(creatures)[1].type).toBe('lair-action')
     expect(f.createLairActions(creatures)[2].type).toBeUndefined()
   })
   it('should add child objects with the same `name` as their parents', () => {

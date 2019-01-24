@@ -6,14 +6,12 @@ describe('`PlayerListGroupItem` component', () => {
   it('should render without crashing', () => {
     const props = {
       player: {
-        name: 'A',
-        modifier: 0,
         advantage: false,
-        ac: 10,
-        hp: 20,
-        xp: 200,
-        id: '100',
         groupID: '10202',
+        id: '12',
+        modifier: 0,
+        name: 'A',
+        type: 'player',
       },
       removeCreature: jest.fn(),
     }

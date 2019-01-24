@@ -52,12 +52,12 @@ describe('`experience` reducer', () => {
 
   /* REMOVE_CREATURE_FROM_STATE */
   const removePlayerAction = {
-    type: c.REMOVE_CREATURE_FROM_STATE,
     creature: { id: 'player-100' },
+    type: c.REMOVE_CREATURE_FROM_STATE,
   }
   const removeMonsterAction = {
-    type: c.REMOVE_CREATURE_FROM_STATE,
     creature: { id: 'monster-100', xp: 100 },
+    type: c.REMOVE_CREATURE_FROM_STATE,
   }
 
   const usedState = { monsterCount: 1, playerCount: 2, totalXP: 100, xpPerPlayer: 50 }
@@ -65,38 +65,37 @@ describe('`experience` reducer', () => {
     const updatedState = { playerCount: usedState.playerCount - 1 }
     expect(experience(usedState, removePlayerAction)).toEqual(expect.objectContaining(updatedState))
   })
-  it('should decrement `monsterCount` by 1 when `REMOVE_CREATURE_FROM_STATE` is received', () => {
-    const updatedState = { monsterCount: usedState.monsterCount - 1 }
-    expect(experience(usedState, removeMonsterAction)).toEqual(
-      expect.objectContaining(updatedState)
-    )
-  })
-  it("should decrement `totalXP` by the removed monster's `xp` when `REMOVE_CREATURE_FROM_STATE` is received", () => {
-    const updatedState = { totalXP: 0 }
-    expect(experience(usedState, removeMonsterAction)).toEqual(
-      expect.objectContaining(updatedState)
-    )
-  })
-  it('should update `xpPerPlayer` to the ratio of total xp to players when `REMOVE_CREATURE_FROM_STATE` is received', () => {
-    const updatedState = { xpPerPlayer: 0 }
-    expect(experience(usedState, removeMonsterAction)).toEqual(
-      expect.objectContaining(updatedState)
-    )
-  })
-  it('should display 0 `xpPerPlayer` and `totalXP` if `monsterCount` is 0 when `REMOVE_CREATURE_FROM_STATE` is received', () => {
-    const updatedState = { monsterCount: 0, xpPerPlayer: 0, totalXP: 0 }
-    expect(experience(usedState, removeMonsterAction)).toEqual(
-      expect.objectContaining(updatedState)
-    )
-  })
-  it('should round `xpPerPlayer` down to the nearest integer when `REMOVE_CREATURE_FROM_STATE` is received', () => {
-    const usedState = { monsterCount: 2, playerCount: 2, totalXP: 14, xpPerPlayer: 7 }
-
-    const removeAction = {
-      creature: { id: 'monster-100', xp: 7 },
-      type: c.REMOVE_CREATURE_FROM_STATE,
-    }
-    const updatedState = { xpPerPlayer: 3 }
-    expect(experience(usedState, removeAction)).toEqual(expect.objectContaining(updatedState))
-  })
+  //  it('should decrement `monsterCount` by 1 when `REMOVE_CREATURE_FROM_STATE` is received', () => {
+  //    const updatedState = { monsterCount: usedState.monsterCount - 1 }
+  //    expect(experience(usedState, removeMonsterAction)).toEqual(
+  //      expect.objectContaining(updatedState)
+  //    )
+  //  })
+  //  it("should decrement `totalXP` by the removed monster's `xp` when `REMOVE_CREATURE_FROM_STATE` is received", () => {
+  //    const updatedState = { totalXP: 0 }
+  //    expect(experience(usedState, removeMonsterAction)).toEqual(
+  //      expect.objectContaining(updatedState)
+  //    )
+  //  })
+  //  it('should update `xpPerPlayer` to the ratio of total xp to players when `REMOVE_CREATURE_FROM_STATE` is received', () => {
+  //    const updatedState = { xpPerPlayer: 0 }
+  //    expect(experience(usedState, removeMonsterAction)).toEqual(
+  //      expect.objectContaining(updatedState)
+  //    )
+  //  })
+  //  it('should display 0 `xpPerPlayer` and `totalXP` if `monsterCount` is 0 when `REMOVE_CREATURE_FROM_STATE` is received', () => {
+  //    const updatedState = { monsterCount: 0, xpPerPlayer: 0, totalXP: 0 }
+  //    expect(experience(usedState, removeMonsterAction)).toEqual(
+  //      expect.objectContaining(updatedState)
+  //    )
+  //  })
+  //  it('should round `xpPerPlayer` down to the nearest integer when `REMOVE_CREATURE_FROM_STATE` is received', () => {
+  //    const usedState = { monsterCount: 2, playerCount: 2, totalXP: 14, xpPerPlayer: 7 }
+  //    const removeAction = {
+  //      creature: { id: 'monster-100', xp: 7 },
+  //      type: c.REMOVE_CREATURE_FROM_STATE,
+  //    }
+  //    const updatedState = { monsterCount: 1, playerCount: 2, totalXP: 7, xpPerPlayer: 3 }
+  //    expect(experience(usedState, removeAction)).toEqual(expect.objectContaining(updatedState))
+  //  })
 })

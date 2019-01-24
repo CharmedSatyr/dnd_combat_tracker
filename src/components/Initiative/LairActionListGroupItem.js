@@ -6,7 +6,7 @@ import IncrementDecrementButtons from './IncrementDecrementButtons'
 
 import { setLabel, initiativeLength } from '../component.functions'
 
-const AddOnListGroupItem = ({ monster }) => (
+const LairActionListGroupItem = ({ monster }) => (
   <div
     className="list-group-item"
     style={{
@@ -41,8 +41,8 @@ const AddOnListGroupItem = ({ monster }) => (
   </div>
 )
 
-export default AddOnListGroupItem
+export default LairActionListGroupItem
 
-AddOnListGroupItem.propTypes = {
+LairActionListGroupItem.propTypes = {
   ...lairActionPropTypes,
 }

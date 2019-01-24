@@ -5,6 +5,7 @@ import { Col, Label, ListGroup } from 'react-bootstrap'
 import { setLabel } from '../component.functions'
 // import * as a from '../../actions'
 import { MonsterIcon } from '../Icons'
+import { creaturesPropTypes } from '../../constants/propTypes'
 
 class Combat extends Component {
   render() {
@@ -12,9 +13,8 @@ class Combat extends Component {
     let creatureList
     if (creatures) {
       creatureList = creatures.map((c, i) => {
-        const type = c.id.split('-')[0]
-        if (type === 'monster') {
-          return <MonsterListGroupItem monster={c} />
+        if (c.type === 'monster') {
+          return <MonsterListGroupItem key={i} monster={c} />
         } else {
           return null
         }
@@ -40,7 +40,9 @@ export default connect(
   mapDispatchToProps
 )(Combat)
 
-Combat.propTypes = {}
+Combat.propTypes = {
+  ...creaturesPropTypes,
+}
 
 /* Blinded
  * Charmed
