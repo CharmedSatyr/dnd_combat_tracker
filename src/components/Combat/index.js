@@ -46,6 +46,7 @@ Combat.propTypes = {
 
 /* Blinded
  * Charmed
+ * Concentrating
  * Deafened
  * Frightened
  * Grappled
