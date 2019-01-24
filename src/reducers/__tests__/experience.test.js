@@ -41,6 +41,14 @@ describe('`experience` reducer', () => {
     const updatedState = { xpPerPlayer: 50 }
     expect(experience(initialState, addAction)).toEqual(expect.objectContaining(updatedState))
   })
+  it('should round `xpPerPlayer` down to the nearest integer when `ADD_CREATURES_TO_STATE` is received', () => {
+    const addAction = {
+      creatures: [{ id: 'player-100' }, { id: 'player-200' }, { id: 'monster-100', xp: 7 }],
+      type: c.ADD_CREATURES_TO_STATE,
+    }
+    const updatedState = { xpPerPlayer: 3 }
+    expect(experience(initialState, addAction)).toEqual(expect.objectContaining(updatedState))
+  })
 
   /* REMOVE_CREATURE_FROM_STATE */
   const removePlayerAction = {
@@ -80,5 +88,15 @@ describe('`experience` reducer', () => {
     expect(experience(usedState, removeMonsterAction)).toEqual(
       expect.objectContaining(updatedState)
     )
+  })
+  it('should round `xpPerPlayer` down to the nearest integer when `REMOVE_CREATURE_FROM_STATE` is received', () => {
+    const usedState = { monsterCount: 2, playerCount: 2, totalXP: 14, xpPerPlayer: 7 }
+
+    const removeAction = {
+      creature: { id: 'monster-100', xp: 7 },
+      type: c.REMOVE_CREATURE_FROM_STATE,
+    }
+    const updatedState = { xpPerPlayer: 3 }
+    expect(experience(usedState, removeAction)).toEqual(expect.objectContaining(updatedState))
   })
 })

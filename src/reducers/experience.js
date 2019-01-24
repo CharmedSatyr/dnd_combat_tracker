@@ -28,7 +28,7 @@ export default (state = initialState, payload) => {
       totalXP += state.totalXP
       playerCount += state.playerCount
 
-      xpPerPlayer = playerCount > 0 ? totalXP / playerCount : 0
+      xpPerPlayer = playerCount > 0 ? Math.floor(totalXP / playerCount) : 0
 
       return Object.assign({}, state, { monsterCount, playerCount, totalXP, xpPerPlayer })
     case c.REMOVE_CREATURE_FROM_STATE:
@@ -44,7 +44,7 @@ export default (state = initialState, payload) => {
         totalXP = state.totalXP
       }
 
-      xpPerPlayer = playerCount > 0 ? totalXP / playerCount : 0
+      xpPerPlayer = playerCount > 0 ? Math.floor(totalXP / playerCount) : 0
 
       return Object.assign({}, state, { monsterCount, playerCount, totalXP, xpPerPlayer })
     default:
