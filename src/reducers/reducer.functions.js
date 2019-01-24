@@ -106,15 +106,15 @@ export const d20A = (modifier = 0) => {
 export const createLairActions = creatures =>
   creatures.reduce((acc, curr) => {
     // If the creature has a lair action
-    // and the type of the 'creature' isn't addon
-    if (curr.lair && curr.type !== 'addon') {
+    // and the type of the 'creature' isn't a lair action
+    if (curr.lair && curr.type !== 'lair-action') {
       const lairAction = Object.assign({}, curr, {
         groupID: setID(), // Set a new groupID because it won't increment/decrement with the others
-        type: 'addon', // It's not a proper creature but an addon
+        type: 'lair-action', // It's not a proper creature but a lair-action
       })
       acc.push(curr, lairAction)
-      // else if the type of the 'creature' isn't addon
-    } else if (curr.type !== 'addon') {
+      // else if the type of the 'creature' isn't lair-action
+    } else if (curr.type !== 'lair-action') {
       acc.push(curr)
     }
     return acc
@@ -125,8 +125,8 @@ export const rollInitiativeByGroup = creatures => {
   const groupIDs = {}
   // Loop through creatures once
   creatures.forEach(cr => {
-    // Set the initiative and group for addon
-    if (cr.type === 'addon') {
+    // Set the initiative and group for lair-action
+    if (cr.type === 'lair-action') {
       groupIDs[cr.groupID] = cr.lair
       cr.initiative = cr.lair
     }
