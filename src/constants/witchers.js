@@ -1,15 +1,15 @@
-import Creature from './creature'
+import { Player } from './creature'
 
-const Brunhild = new Creature('Brunhild', 4, false, 'player-100')
+const Brunhild = new Player({ advantage: false, modifier: 4, name: 'Brunhild' })
 
-const Hishiro = new Creature('Hishiro Gozen', 1, false, 'player-200')
+const Hishiro = new Player({ advantage: false, modifier: 1, name: 'Hishiro Gozen' })
 
-const Keph = new Creature('Keph Thrassden', 6, true, 'player-300')
+const Keph = new Player({ advantage: true, modifier: 6, name: 'Keph Thrassden' })
 
-const Marni = new Creature('Marni Moonfoot', 5, false, 'player-400')
+const Marni = new Player({ advantage: false, modifier: 5, name: 'Marni Moonfoot' })
 
-const Rokas = new Creature('Rokas Rothenel', 5, true, 'player-500')
+const Rokas = new Player({ advantage: true, modifier: 5, name: 'Rokas Rothenel' })
 
-const Shadow = new Creature('Shadow', 9, false, 'player-600')
+const Shadow = new Player({ advantage: false, modifier: 9, name: 'Shadow' })
 
 export default [Brunhild, Hishiro, Keph, Marni, Rokas, Shadow]

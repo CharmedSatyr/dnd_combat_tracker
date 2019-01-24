@@ -59,7 +59,7 @@ const MonsterListGroupItem = ({ monster, removeCreature }) => (
         </span>
       </div>
       {/* LOW CENTER */}
-      {monster.legendary && (
+      {monster.legendary > 0 && (
         <div>
           <span>
             <span style={{ color: '#555' }}>Legendary Actions:&nbsp;</span>
@@ -67,7 +67,7 @@ const MonsterListGroupItem = ({ monster, removeCreature }) => (
           </span>
         </div>
       )}
-      {monster.lair && (
+      {monster.lair > 0 && (
         <div>
           <span>
             <span style={{ color: '#555' }}>Lair Action Initiative Count:&nbsp;</span>

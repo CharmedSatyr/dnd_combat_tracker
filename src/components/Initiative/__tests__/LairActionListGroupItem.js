@@ -1,24 +1,21 @@
 import React from 'react'
-import AddOnListGroupItem from '../AddOnListGroupItem'
+import LairActionListGroupItem from '../LairActionListGroupItem'
 import { shallow } from 'enzyme'
 
-describe('`AddOnListGroupItem` component', () => {
+describe('`LairActionListGroupItem` component', () => {
   it('should render without crashing', () => {
     const props = {
       monster: {
+        groupID: '101',
+        id: '102',
+        initiative: 20,
         name: 'A',
         modifier: 0,
-        advantage: false,
-        ac: 10,
-        hp: 20,
-        xp: 200,
-        id: '102',
-        groupID: '101',
-        initiative: 20,
         order: 1,
+        type: 'lair-action',
       },
     }
-    const addOnListGroupItem = shallow(<AddOnListGroupItem monster={props.monster} />)
-    expect(addOnListGroupItem).toHaveLength(1)
+    const lairActionListGroupItem = shallow(<LairActionListGroupItem monster={props.monster} />)
+    expect(lairActionListGroupItem).toHaveLength(1)
   })
 })

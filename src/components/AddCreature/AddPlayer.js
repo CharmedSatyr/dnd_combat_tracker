@@ -2,38 +2,45 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import { AdvantageIcon } from '../Icons'
-import { setID } from '../component.functions'
 import { saveCreaturesToLocalStorage } from '../localStorage.functions'
 import MonsterHunting5E from './MonsterHunting5E'
-import Creature from '../../constants/creature'
+import { Player } from '../../constants/creature'
 
 import { ControlLabel, Button, Form, FormControl, FormGroup, InputGroup } from 'react-bootstrap'
 
 const defaultState = {
-  name: '',
-  modifier: '',
-  advantage: false,
-  nameValidation: null,
-  modValidation: null,
+  stats: {
+    advantage: false,
+    modifier: '',
+    name: '',
+  },
+  validation: {
+    mod: null,
+    name: null,
+  },
 }
 
 export default class AddPlayer extends Component {
   constructor(props) {
     super(props)
-    this.state = { ...defaultState }
+    this.state = defaultState
     this.getStats = this.getStats.bind(this)
     this.getValidationState = this.getValidationState.bind(this)
   }
   getStats(e) {
+    let { stats } = this.state
     switch (e.currentTarget.id) {
-      case 'name':
-        this.setState({ name: e.target.value })
+      case 'advantage':
+        stats.advantage = !this.state.stats.advantage
+        this.setState({ stats })
         break
       case 'modifier':
-        this.setState({ modifier: e.target.value })
+        stats.modifier = e.target.value
+        this.setState({ stats })
         break
-      case 'advantage':
-        this.setState({ advantage: !this.state.advantage })
+      case 'name':
+        stats.name = e.target.value
+        this.setState({ stats })
         break
       default:
         break
@@ -41,42 +48,41 @@ export default class AddPlayer extends Component {
   }
   getValidationState(e) {
     e.preventDefault()
-    const { name, modifier } = this.state
-    this.setState({
-      nameValidation: name ? 'success' : 'error',
-      modValidation: modifier ? 'success' : 'error',
-    })
+    const { validation } = this.state
+    const { name, modifier } = this.state.stats
+    validation.name = name ? 'success' : 'error'
+    validation.mod = modifier ? 'success' : 'error'
+    this.setState({ validation })
 
     if (name && modifier) {
       this.addPlayer()
     }
   }
   addPlayer() {
-    const { advantage, modifier, name } = this.state
-    const creatures = []
-    const player = new Creature(name, modifier, advantage, `player-${setID()}`)
-    creatures.push(player)
-    this.props.addCreatures(creatures)
-    saveCreaturesToLocalStorage(creatures)
+    const player = new Player({ ...this.state.stats })
+    this.props.addCreatures([player])
+    saveCreaturesToLocalStorage([player])
+
     this.setState(defaultState)
   }
   render() {
+    const { stats, validation } = this.state
     return (
       <Form>
         {/* Player Name */}
-        <FormGroup controlId="name" validationState={this.state.nameValidation}>
+        <FormGroup controlId="name" validationState={validation.name}>
           <ControlLabel>Player Name</ControlLabel>
           <FormControl
             onChange={this.getStats}
             placeholder="Marni Moonfoot"
             type="text"
-            value={this.state.name}
+            value={stats.name}
           />
           <FormControl.Feedback />
         </FormGroup>
 
         {/* Initiative Modifier */}
-        <FormGroup validationState={this.state.modValidation}>
+        <FormGroup validationState={validation.mod}>
           <ControlLabel>Initiative Modifier</ControlLabel>
           <InputGroup>
             <FormControl
@@ -84,7 +90,7 @@ export default class AddPlayer extends Component {
               onChange={this.getStats}
               placeholder="5"
               type="number"
-              value={this.state.modifier}
+              value={stats.modifier}
             />
             {/* Advantage */}
             <InputGroup.Addon>
@@ -95,7 +101,7 @@ export default class AddPlayer extends Component {
                 id="advantage"
                 title="Rolls with advantage"
                 type="checkbox"
-                checked={this.state.advantage}
+                checked={stats.advantage}
               />
             </InputGroup.Addon>
           </InputGroup>

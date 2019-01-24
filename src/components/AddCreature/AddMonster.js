@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import { AdvantageIcon } from '../Icons'
 import { saveCreaturesToLocalStorage } from '../localStorage.functions'
 import { setID } from '../component.functions'
-import Creature from '../../constants/creature'
+import { Monster } from '../../constants/creature'
 
 import {
   ControlLabel,
@@ -18,60 +18,74 @@ import {
 } from 'react-bootstrap'
 
 const defaultState = {
-  name: '',
-  modifier: '',
-  advantage: false,
-  ac: '',
-  hp: '',
-  xp: '',
-  lair: '',
-  legendary: '',
-  tag: '',
   numLow: '',
   numHigh: '',
-  acValidation: null,
-  hpValidation: null,
-  modValidation: null,
-  nameValidation: null,
-  xpValidation: null,
-  numValidation: null,
+  stats: {
+    ac: '',
+    advantage: false,
+    hp: '',
+    lair: '',
+    legendary: '',
+    modifier: '',
+    name: '',
+    tag: '',
+    xp: '',
+  },
+  validation: {
+    ac: null,
+    hp: null,
+    mod: null,
+    name: null,
+    num: null,
+    xp: null,
+  },
 }
 
 export default class AddMonster extends Component {
   constructor(props) {
     super(props)
-    this.state = { ...defaultState }
     this.getStats = this.getStats.bind(this)
     this.getValidationState = this.getValidationState.bind(this)
+    this.state = defaultState
   }
   getStats(e) {
+    let { stats } = this.state
     switch (e.currentTarget.id) {
-      case 'name':
-        this.setState({ name: e.target.value })
-        break
       case 'advantage':
-        this.setState({ advantage: !this.state.advantage })
-        break
-      case 'modifier':
-        this.setState({ modifier: e.target.value })
-        break
-      case 'hit-points':
-        this.setState({ hp: e.target.value })
+        stats.advantage = !this.state.stats.advantage
+        this.setState({ stats })
         break
       case 'armor-class':
-        this.setState({ ac: e.target.value })
+        stats.ac = e.target.value
+        this.setState({ stats })
         break
       case 'experience':
-        this.setState({ xp: e.target.value })
+        stats.xp = e.target.value
+        this.setState({ stats })
+        break
+      case 'hit-points':
+        stats.hp = e.target.value
+        this.setState({ stats })
         break
       case 'lair':
-        this.setState({ lair: e.target.value })
+        stats.lair = e.target.value
+        this.setState({ stats })
         break
       case 'legendary':
-        this.setState({ legendary: e.target.value })
+        stats.legendary = e.target.value
+        this.setState({ stats })
+        break
+      case 'modifier':
+        stats.modifier = e.target.value
+        this.setState({ stats })
+        break
+      case 'name':
+        stats.name = e.target.value
+        this.setState({ stats })
         break
       case 'tag':
-        this.setState({ tag: e.target.value })
+        stats.tag = e.target.value
+        this.setState({ stats })
         break
       case 'numLow':
         this.setState({ numLow: e.target.value })
@@ -85,7 +99,8 @@ export default class AddMonster extends Component {
   }
   getValidationState(e) {
     e.preventDefault()
-    const { name, modifier, hp, ac, xp, numHigh, numLow } = this.state
+    const { ac, hp, modifier, name, xp } = this.state.stats
+    const { numHigh, numLow, validation } = this.state
 
     // If there is no number range, OR both numbers are filled in and are valid
     let validNum = false
@@ -97,51 +112,25 @@ export default class AddMonster extends Component {
     }
 
     // Required inputs
-    this.setState({
-      nameValidation: name ? 'success' : 'error',
-      modValidation: modifier ? 'success' : 'error',
-      hpValidation: hp ? 'success' : 'error',
-      acValidation: ac ? 'success' : 'error',
-      xpValidation: xp ? 'success' : 'error',
-      numValidation: validNum ? 'success' : 'error',
-    })
+    validation.ac = ac ? 'success' : 'error'
+    validation.hp = hp ? 'success' : 'error'
+    validation.mod = modifier ? 'success' : 'error'
+    validation.name = name ? 'success' : 'error'
+    validation.num = validNum ? 'success' : 'error'
+    validation.xp = xp ? 'success' : 'error'
+    this.setState({ validation })
 
     if (name && modifier && ac && hp && xp && validNum) {
       this.addMonsters()
     }
   }
   addMonsters() {
-    console.log('gonna add some monstas')
-    const {
-      name,
-      modifier,
-      advantage,
-      ac,
-      hp,
-      xp,
-      lair,
-      legendary,
-      tag,
-      numHigh,
-      numLow,
-    } = this.state
+    const { numHigh, numLow, stats } = this.state
     const creatures = []
-    const groupID = setID()
     for (let i = numLow || 0; i <= (numHigh || 0); i++) {
-      const monster = new Creature(
-        name,
-        modifier,
-        advantage,
-        `monster-${setID()}`, // id
-        ac,
-        hp,
-        xp,
-        lair,
-        legendary,
-        tag,
-        i, // number
-        groupID
-      )
+      stats.groupID = setID()
+      stats.number = i
+      const monster = new Monster(stats)
       creatures.push(monster)
     }
     this.props.addCreatures(creatures)
@@ -149,21 +138,22 @@ export default class AddMonster extends Component {
     this.setState(defaultState)
   }
   render() {
+    const { stats, validation } = this.state
     return (
       <Form>
         {/* Monster Name */}
-        <FormGroup controlId="name" validationState={this.state.nameValidation}>
+        <FormGroup controlId="name" validationState={validation.name}>
           <ControlLabel>Monster Name</ControlLabel>
           <FormControl
             onChange={this.getStats}
             placeholder="Beholder"
             type="text"
-            value={this.state.name}
+            value={stats.name}
           />
           <FormControl.Feedback />
         </FormGroup>
         {/* Initiative Modifier */}
-        <FormGroup validationState={this.state.modValidation}>
+        <FormGroup validationState={validation.mod}>
           <ControlLabel>Initiative Modifier</ControlLabel>
           <InputGroup>
             <FormControl
@@ -171,7 +161,7 @@ export default class AddMonster extends Component {
               onChange={this.getStats}
               placeholder="2"
               type="number"
-              value={this.state.modifier}
+              value={stats.modifier}
             />
 
             {/* Advantage */}
@@ -183,42 +173,32 @@ export default class AddMonster extends Component {
                 id="advantage"
                 title="Rolls with advantage"
                 type="checkbox"
-                checked={this.state.advantage}
+                checked={stats.advantage}
               />
             </InputGroup.Addon>
           </InputGroup>
         </FormGroup>
 
         {/* Hit Points */}
-        <FormGroup controlId="hit-points" validationState={this.state.hpValidation}>
+        <FormGroup controlId="hit-points" validationState={validation.hp}>
           <ControlLabel>Hit Points</ControlLabel>
-          <FormControl
-            onChange={this.getStats}
-            placeholder="180"
-            type="number"
-            value={this.state.hp}
-          />
+          <FormControl onChange={this.getStats} placeholder="180" type="number" value={stats.hp} />
         </FormGroup>
 
         {/* Armor Class */}
-        <FormGroup controlId="armor-class" validationState={this.state.acValidation}>
+        <FormGroup controlId="armor-class" validationState={validation.ac}>
           <ControlLabel>Armor Class</ControlLabel>
-          <FormControl
-            onChange={this.getStats}
-            placeholder="18"
-            type="number"
-            value={this.state.ac}
-          />
+          <FormControl onChange={this.getStats} placeholder="18" type="number" value={stats.ac} />
         </FormGroup>
 
         {/* Experience */}
-        <FormGroup controlId="experience" validationState={this.state.xpValidation}>
+        <FormGroup controlId="experience" validationState={validation.xp}>
           <ControlLabel>Experience</ControlLabel>
           <FormControl
             onChange={this.getStats}
             placeholder="10000"
             type="number"
-            value={this.state.xp}
+            value={stats.xp}
           />
         </FormGroup>
         <hr />
@@ -228,12 +208,7 @@ export default class AddMonster extends Component {
             Lair Action Initiative Count&nbsp;
             <Label>Optional</Label>
           </ControlLabel>
-          <FormControl
-            onChange={this.getStats}
-            placeholder="20"
-            type="number"
-            value={this.state.lair}
-          />
+          <FormControl onChange={this.getStats} placeholder="20" type="number" value={stats.lair} />
           <HelpBlock>Set a fixed initiative count for the creature's lair actions.</HelpBlock>
         </FormGroup>
         {/* Legendary Actions */}
@@ -246,7 +221,7 @@ export default class AddMonster extends Component {
             onChange={this.getStats}
             placeholder="3"
             type="number"
-            value={this.state.legendary}
+            value={stats.legendary}
           />
           <HelpBlock>Assign the creature a number of Legendary Actions.</HelpBlock>
         </FormGroup>
@@ -258,12 +233,7 @@ export default class AddMonster extends Component {
             Tag&nbsp;
             <Label>Optional</Label>
           </ControlLabel>
-          <FormControl
-            onChange={this.getStats}
-            placeholder="Red"
-            type="text"
-            value={this.state.tag}
-          />
+          <FormControl onChange={this.getStats} placeholder="Red" type="text" value={stats.tag} />
           <FormControl.Feedback />
           <HelpBlock>
             Creatures created together share stats and initiative. You can use the same tag for
@@ -272,7 +242,7 @@ export default class AddMonster extends Component {
         </FormGroup>
 
         {/* Number Range */}
-        <FormGroup validationState={this.state.numValidation}>
+        <FormGroup validationState={validation.num}>
           <ControlLabel>
             Number Range&nbsp;<Label>Optional</Label>
           </ControlLabel>

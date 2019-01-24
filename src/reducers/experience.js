@@ -16,11 +16,11 @@ export default (state = initialState, payload) => {
   switch (payload.type) {
     case c.ADD_CREATURES_TO_STATE:
       payload.creatures.forEach(c => {
-        if (c.id.split('-')[0] === 'monster') {
+        if (c.type === 'monster') {
           monsterCount++
           totalXP += c.xp
         }
-        if (c.id.split('-')[0] === 'player') {
+        if (c.type === 'player') {
           playerCount++
         }
       })
@@ -32,7 +32,7 @@ export default (state = initialState, payload) => {
 
       return Object.assign({}, state, { monsterCount, playerCount, totalXP, xpPerPlayer })
     case c.REMOVE_CREATURE_FROM_STATE:
-      const type = payload.creature.id.split('-')[0]
+      const { type } = payload.creature
       monsterCount = type === 'monster' ? state.monsterCount - 1 : state.monsterCount
       playerCount = type === 'player' ? state.playerCount - 1 : state.playerCount
 
