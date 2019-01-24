@@ -16,7 +16,9 @@ export default (state = [], payload) => {
       return updated
     case c.REMOVE_CREATURE_FROM_STATE:
       updated = [...state.filter(creature => creature.id !== payload.creature.id)]
-      updated = f.updateOrder(updated)
+      if (updated.every(c => c.initiative)) {
+        updated = f.updateOrder(updated)
+      }
       return updated
     case c.ROLL_INITIATIVE:
       updated = f.createLairActions(state)
