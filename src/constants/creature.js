@@ -31,6 +31,7 @@ export class Monster extends Creature {
       blinded: false,
       charmed: false,
       concentrating: false,
+      custom: [],
       deafened: false,
       exhaustion: {
         level: 0,

@@ -39,6 +39,7 @@ export const monsterPropTypes = {
       blinded: PropTypes.bool.isRequired,
       charmed: PropTypes.bool.isRequired,
       concentrating: PropTypes.bool.isRequired,
+      custom: PropTypes.arrayOf(PropTypes.string).isRequired,
       deafened: PropTypes.bool.isRequired,
       exhaustion: PropTypes.shape({
         level: PropTypes.number.isRequired,
