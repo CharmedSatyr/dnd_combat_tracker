@@ -35,6 +35,26 @@ export const monsterPropTypes = {
   monster: PropTypes.shape({
     ac: PropTypes.number.isRequired,
     advantage: PropTypes.bool.isRequired,
+    conditions: PropTypes.shape({
+      blinded: PropTypes.bool.isRequired,
+      charmed: PropTypes.bool.isRequired,
+      concentrating: PropTypes.bool.isRequired,
+      deafened: PropTypes.bool.isRequired,
+      exhaustion: PropTypes.shape({
+        level: PropTypes.number.isRequired,
+      }).isRequired,
+      frightened: PropTypes.bool.isRequired,
+      grappled: PropTypes.bool.isRequired,
+      incapacitated: PropTypes.bool.isRequired,
+      invisible: PropTypes.bool.isRequired,
+      paralyzed: PropTypes.bool.isRequired,
+      petrified: PropTypes.bool.isRequired,
+      poisoned: PropTypes.bool.isRequired,
+      prone: PropTypes.bool.isRequired,
+      restrained: PropTypes.bool.isRequired,
+      stunned: PropTypes.bool.isRequired,
+      unconscious: PropTypes.bool.isRequired,
+    }).isRequired,
     groupID: PropTypes.number.isRequired,
     hp: PropTypes.shape({
       current: PropTypes.number.isRequired,

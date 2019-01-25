@@ -27,6 +27,26 @@ export class Monster extends Creature {
   constructor(stats) {
     super(stats)
     this.ac = parseInt(stats.ac) // Armor Class
+    this.conditions = {
+      blinded: false,
+      charmed: false,
+      concentrating: false,
+      deafened: false,
+      exhaustion: {
+        level: 0,
+      },
+      frightened: false,
+      grappled: false,
+      incapacitated: false,
+      invisible: false,
+      paralyzed: false,
+      petrified: false,
+      poisoned: false,
+      prone: false,
+      restrained: false,
+      stunned: false,
+      unconscious: false,
+    }
     this.groupID = stats.groupID // initiative and order are shared by group. groupID used for inc/dec order
     this.hp = { current: parseInt(stats.hp), max: parseInt(stats.hp) } // Current hit points = Maximum hit points on creation
     this.lair = parseInt(stats.lair) // Optional fixed initiative count for lair action
