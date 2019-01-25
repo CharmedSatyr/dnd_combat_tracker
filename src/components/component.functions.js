@@ -1,8 +1,10 @@
 // Generate an random numerical ID
 export const setID = () =>
-  Math.random()
-    .toString()
-    .slice(2)
+  parseInt(
+    Math.random()
+      .toString()
+      .slice(2)
+  )
 
 // Dynamically label creatures based on presence of tag/number inputs
 export const setLabel = (tag, number) => {
