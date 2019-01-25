@@ -215,17 +215,17 @@ export const findInitiativeOrderLength = creatures => {
 }
 
 // Increment Group Initiative Order (make creatures' turn later)
-export const incrementGroupInitiativeOrder = (payload, creatures) => {
+export const incrementGroupInitiativeOrder = (state, payload) => {
   // Find the index of the first creature in the target group
-  const i = creatures.findIndex(c => c.groupID === payload.groupID)
+  const i = state.findIndex(c => c.groupID === payload.groupID)
   // Find how many creatures have the target groupID
-  const count = creatures.filter(c => c.groupID === payload.groupID).length
+  const count = state.filter(c => c.groupID === payload.groupID).length
 
   // If the objects exist
-  if (creatures[i] && creatures[i + count]) {
-    const { groupID } = creatures[i]
-    const succeedingGroupID = creatures[i + count].groupID
-    const updatedOrder = creatures.map((cr, i) => {
+  if (state[i] && state[i + count]) {
+    const { groupID } = state[i]
+    const succeedingGroupID = state[i + count].groupID
+    const updatedOrder = state.map((cr, i) => {
       if (cr.groupID === groupID) {
         cr.order = cr.order + 1
       }
@@ -236,19 +236,19 @@ export const incrementGroupInitiativeOrder = (payload, creatures) => {
     })
     return sortCreaturesArray(updatedOrder)
   }
-  return creatures
+  return state
 }
 
 // Decrement Group Initiative Order (make creatures' turn earlier)
-export const decrementGroupInitiativeOrder = (payload, creatures) => {
+export const decrementGroupInitiativeOrder = (state, payload) => {
   // Find the index of the first creature in the target group
-  const i = creatures.findIndex(c => c.groupID === payload.groupID)
+  const i = state.findIndex(c => c.groupID === payload.groupID)
 
   // If the objects exist
-  if (creatures[i] && creatures[i - 1]) {
-    const { groupID } = creatures[i]
-    const preceedingGroupID = creatures[i - 1].groupID
-    const updatedOrder = creatures.map((cr, i) => {
+  if (state[i] && state[i - 1]) {
+    const { groupID } = state[i]
+    const preceedingGroupID = state[i - 1].groupID
+    const updatedOrder = state.map((cr, i) => {
       if (cr.groupID === groupID) {
         cr.order = cr.order - 1
       }
@@ -259,7 +259,7 @@ export const decrementGroupInitiativeOrder = (payload, creatures) => {
     })
     return sortCreaturesArray(updatedOrder)
   }
-  return creatures
+  return state
 }
 
 // damageCreature

@@ -9,7 +9,7 @@ export default (state = [], payload) => {
       updated = [...state, ...payload.creatures]
       return updated
     case c.DECREMENT_GROUP_INITIATIVE_ORDER:
-      updated = f.decrementGroupInitiativeOrder(payload, state)
+      updated = f.decrementGroupInitiativeOrder(state, payload)
       return updated
     case c.DAMAGE_CREATURE:
       updated = f.damageCreature(state, payload)
@@ -18,7 +18,7 @@ export default (state = [], payload) => {
       updated = f.healCreature(state, payload)
       return updated
     case c.INCREMENT_GROUP_INITIATIVE_ORDER:
-      updated = f.incrementGroupInitiativeOrder(payload, state)
+      updated = f.incrementGroupInitiativeOrder(state, payload)
       return updated
     case c.REMOVE_CREATURE_FROM_STATE:
       updated = [...state.filter(creature => creature.id !== payload.creature.id)]

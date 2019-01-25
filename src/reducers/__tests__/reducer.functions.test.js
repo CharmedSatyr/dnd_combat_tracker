@@ -313,7 +313,7 @@ describe('`decrementGroupInitiativeOrder` reducer function', () => {
       },
       { name: 'cam', modifier: 0, advantage: false, groupID: 'c', order: 3 },
     ]
-    expect(Array.isArray(f.decrementGroupInitiativeOrder(payload, creatures))).toBeTruthy()
+    expect(Array.isArray(f.decrementGroupInitiativeOrder(creatures, payload))).toBeTruthy()
   })
   it('should return an array of the same length as its argument', () => {
     const payload = { groupID: 'c' }
@@ -336,7 +336,7 @@ describe('`decrementGroupInitiativeOrder` reducer function', () => {
       { name: 'cam', modifier: 0, advantage: false, groupID: 'c', order: 3 },
     ]
 
-    expect(f.decrementGroupInitiativeOrder(payload, creatures).length).toBe(creatures.length)
+    expect(f.decrementGroupInitiativeOrder(creatures, payload).length).toBe(creatures.length)
   })
   it("should not change anything if the target creature's order is 1", () => {
     const payload = { groupID: 'a' }
@@ -346,7 +346,7 @@ describe('`decrementGroupInitiativeOrder` reducer function', () => {
       { groupID: 'b', order: 2 },
       { groupID: 'c', order: 3 },
     ]
-    expect(f.decrementGroupInitiativeOrder(payload, creatures)).toEqual(creatures)
+    expect(f.decrementGroupInitiativeOrder(creatures, payload)).toEqual(creatures)
   })
   it("should decrement the target creature's order by 1 otherwise", () => {
     const payload = { groupID: 'c' }
@@ -370,7 +370,7 @@ describe('`decrementGroupInitiativeOrder` reducer function', () => {
       { name: 'cam', modifier: 0, advantage: false, groupID: 'c', order: targetCreaturesOrder },
     ]
 
-    const result = f.decrementGroupInitiativeOrder(payload, creatures)
+    const result = f.decrementGroupInitiativeOrder(creatures, payload)
     const updatedTargetCreaturesGroup = result.filter(c => c.groupID === payload.groupID)
     const newOrder = targetCreaturesOrder - 1
     updatedTargetCreaturesGroup.forEach(p => {
@@ -399,7 +399,7 @@ describe('`decrementGroupInitiativeOrder` reducer function', () => {
       { name: 'cam', modifier: 0, advantage: false, groupID: 'c', order: 3 },
     ]
 
-    const result = f.decrementGroupInitiativeOrder(payload, creatures)
+    const result = f.decrementGroupInitiativeOrder(creatures, payload)
     const formerlyPreceedingCreatureGroup = result.filter(c => c.groupID === 'b')
     const newOrder = preceedingCreaturesGroupOrder + 1
     formerlyPreceedingCreatureGroup.forEach(p => {
@@ -430,7 +430,7 @@ describe('`incrementGroupInitiativeOrder` reducer function', () => {
       },
       { name: 'cam', modifier: 0, advantage: false, groupID: 'c', order: 3 },
     ]
-    expect(Array.isArray(f.incrementGroupInitiativeOrder(payload, creatures))).toBeTruthy()
+    expect(Array.isArray(f.incrementGroupInitiativeOrder(creatures, payload))).toBeTruthy()
   })
   it('should return an array of the same length as its argument', () => {
     const payload = { groupID: 'c' }
@@ -453,7 +453,7 @@ describe('`incrementGroupInitiativeOrder` reducer function', () => {
       { name: 'cam', modifier: 0, advantage: false, groupID: 'c', order: 3 },
     ]
 
-    expect(f.incrementGroupInitiativeOrder(payload, creatures).length).toBe(creatures.length)
+    expect(f.incrementGroupInitiativeOrder(creatures, payload).length).toBe(creatures.length)
   })
   it("should not change anything if the target creature's order is final", () => {
     const payload = { groupID: 'c' }
@@ -463,7 +463,7 @@ describe('`incrementGroupInitiativeOrder` reducer function', () => {
       { groupID: 'b', order: 1 },
       { groupID: 'c', order: 2 },
     ]
-    expect(f.incrementGroupInitiativeOrder(payload, creatures)).toEqual(creatures)
+    expect(f.incrementGroupInitiativeOrder(creatures, payload)).toEqual(creatures)
   })
   it("should increment the target creatures' order by 1 otherwise", () => {
     const payload = { groupID: 'a' }
@@ -487,7 +487,7 @@ describe('`incrementGroupInitiativeOrder` reducer function', () => {
       { name: 'cam', modifier: 0, advantage: false, groupID: 'c', order: 3 },
     ]
 
-    const result = f.incrementGroupInitiativeOrder(payload, creatures)
+    const result = f.incrementGroupInitiativeOrder(creatures, payload)
     const updatedTargetCreaturesGroup = result.filter(c => c.groupID === payload.groupID)
     const newOrder = targetCreaturesOrder + 1
     updatedTargetCreaturesGroup.forEach(p => {
@@ -516,7 +516,7 @@ describe('`incrementGroupInitiativeOrder` reducer function', () => {
       { name: 'cam', modifier: 0, advantage: false, groupID: 'c', order: 3 },
     ]
 
-    const result = f.incrementGroupInitiativeOrder(payload, creatures)
+    const result = f.incrementGroupInitiativeOrder(creatures, payload)
     const formerlySucceedingCreatureGroup = result.filter(c => c.groupID === 'b')
     const newOrder = succeedingCreaturesGroupOrder - 1
     formerlySucceedingCreatureGroup.forEach(p => {
