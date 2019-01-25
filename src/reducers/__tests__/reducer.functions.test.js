@@ -1,4 +1,5 @@
 import * as f from '../reducer.functions'
+import * as c from '../../constants/index'
 
 // createLairActions
 describe('`createLairActions` reducer function', () => {
@@ -589,6 +590,31 @@ describe('`assignOrder` reducer function', () => {
       { groupID: 'b', initiative: 8, order: 2 },
     ]
     expect(f.assignOrder(creatures, initiativeOrder)).toEqual(reordered)
+  })
+})
+
+// damageCreature
+describe('`damageCreature` reducer function', () => {
+  let creature, state, payload, updated
+  beforeEach(() => {
+    creature = { id: 100, hp: { current: 8, max: 10 } }
+    state = [creature]
+    payload = { creature, damage: 2, type: c.DAMAGE_CREATURE }
+    updated = [{ id: 100, hp: { current: 6, max: 10 } }]
+  })
+  it('should return an array', () => {
+    expect(Array.isArray(f.damageCreature(state, payload))).toBeTruthy()
+  })
+  it('should return an array of the same length as the `creatures` argument', () => {
+    expect(f.damageCreature(state, payload).length).toBe(updated.length)
+  })
+  it('should reduce the `hp.current` of the creature with the same `id` as the `creature` argument by `damage` amount', () => {
+    expect(f.damageCreature(state, payload)).toEqual(updated)
+  })
+  it('should not reduce `hp.current` values below 0', () => {
+    const deadlyPayload = { creature, damage: 12, type: c.DAMAGE_CREATURE }
+    const dead = [{ id: 100, hp: { current: 0, max: 10 } }]
+    expect(f.damageCreature(state, deadlyPayload)).toEqual(dead)
   })
 })
 

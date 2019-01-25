@@ -2,6 +2,8 @@ import * as c from '../constants/index'
 
 export const addCreatures = creatures => ({ creatures, type: c.ADD_CREATURES_TO_STATE })
 
+export const damageCreature = (creature, damage) => ({ creature, damage, type: c.DAMAGE_CREATURE })
+
 export const decrementGroupInitiativeOrder = groupID => ({
   groupID,
   type: c.DECREMENT_GROUP_INITIATIVE_ORDER,
