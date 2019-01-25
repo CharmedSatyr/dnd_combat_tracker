@@ -7,8 +7,8 @@ describe('`PlayerListGroupItem` component', () => {
     const props = {
       player: {
         advantage: false,
-        groupID: '10202',
-        id: '12',
+        groupID: 10202,
+        id: 12,
         modifier: 0,
         name: 'A',
         type: 'player',

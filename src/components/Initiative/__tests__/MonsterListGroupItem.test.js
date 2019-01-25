@@ -8,9 +8,12 @@ describe('`MonsterListGroupItem` component', () => {
       monster: {
         ac: 10,
         advantage: false,
-        groupID: '120',
-        hp: 20,
-        id: '100',
+        groupID: 120,
+        hp: {
+          current: 20,
+          max: 25,
+        },
+        id: 100,
         modifier: 0,
         name: 'A',
         type: 'monster',

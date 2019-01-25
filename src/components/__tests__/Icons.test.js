@@ -9,8 +9,8 @@ describe('`RemoveIcon` component', () => {
         name: 'a',
         modifier: 1,
         advantage: false,
-        id: 'Leonidas',
-        groupID: '300',
+        id: 100,
+        groupID: 300,
       },
       removeCreature: jest.fn(),
     }
