@@ -14,6 +14,9 @@ export default (state = [], payload) => {
     case c.DAMAGE_CREATURE:
       updated = f.damageCreature(state, payload)
       return updated
+    case c.HEAL_CREATURE:
+      updated = f.healCreature(state, payload)
+      return updated
     case c.INCREMENT_GROUP_INITIATIVE_ORDER:
       updated = f.incrementGroupInitiativeOrder(payload, state)
       return updated

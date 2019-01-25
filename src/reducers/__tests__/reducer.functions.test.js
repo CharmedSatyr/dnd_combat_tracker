@@ -595,11 +595,11 @@ describe('`assignOrder` reducer function', () => {
 
 // damageCreature
 describe('`damageCreature` reducer function', () => {
-  let creature, state, payload, updated
+  let creature, payload, state, updated
   beforeEach(() => {
     creature = { id: 100, hp: { current: 8, max: 10 } }
-    state = [creature]
     payload = { creature, damage: 2, type: c.DAMAGE_CREATURE }
+    state = [creature]
     updated = [{ id: 100, hp: { current: 6, max: 10 } }]
   })
   it('should return an array', () => {
@@ -615,6 +615,28 @@ describe('`damageCreature` reducer function', () => {
     const deadlyPayload = { creature, damage: 12, type: c.DAMAGE_CREATURE }
     const dead = [{ id: 100, hp: { current: 0, max: 10 } }]
     expect(f.damageCreature(state, deadlyPayload)).toEqual(dead)
+  })
+})
+
+// healCreature
+describe('`healCreature` reducer function', () => {
+  const creature = { id: 100, hp: { current: 8, max: 10 } }
+  const state = [creature]
+  const payload = { creature, healing: 2, type: c.HEAL_CREATURE }
+  const updated = [{ id: 100, hp: { current: 10, max: 10 } }]
+  it('should return an array', () => {
+    expect(Array.isArray(f.healCreature(state, payload))).toBeTruthy()
+  })
+  it('should return an array of the same length as the `creatures` argument', () => {
+    expect(f.healCreature(state, payload).length).toBe(updated.length)
+  })
+  it('should increase the `hp.current` of the creature with the same `id` as the `creature` argument by `healing` amount', () => {
+    expect(f.healCreature(state, payload)).toEqual(updated)
+  })
+  it('should not raise `hp.current` values above `hp.max`', () => {
+    const lovelyPayload = { creature, healing: 12, type: c.HEAL_CREATURE }
+    const maxed = [{ id: 100, hp: { current: 10, max: 10 } }]
+    expect(f.healCreature(state, lovelyPayload)).toEqual(maxed)
   })
 })
 

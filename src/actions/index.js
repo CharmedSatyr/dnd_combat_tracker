@@ -9,6 +9,8 @@ export const decrementGroupInitiativeOrder = groupID => ({
   type: c.DECREMENT_GROUP_INITIATIVE_ORDER,
 })
 
+export const healCreature = (creature, healing) => ({ creature, healing, type: c.HEAL_CREATURE })
+
 export const incrementGroupInitiativeOrder = groupID => ({
   groupID,
   type: c.INCREMENT_GROUP_INITIATIVE_ORDER,

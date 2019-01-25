@@ -262,7 +262,7 @@ export const decrementGroupInitiativeOrder = (payload, creatures) => {
   return creatures
 }
 
-// Damage Creature
+// damageCreature
 export const damageCreature = (state, payload) => {
   const creatures = [...state]
   const { id } = payload.creature
@@ -270,6 +270,21 @@ export const damageCreature = (state, payload) => {
   const index = creatures.findIndex(c => id === c.id)
   const { damage } = payload
   creature.hp.current = creature.hp.current - damage >= 0 ? creature.hp.current - damage : 0
+  creatures.splice(index, 1, creature)
+  return creatures
+}
+
+// healCreature
+export const healCreature = (state, payload) => {
+  const creatures = [...state]
+  const { id } = payload.creature
+  const creature = creatures.find(c => id === c.id)
+  const index = creatures.findIndex(c => id === c.id)
+  const { healing } = payload
+  creature.hp.current =
+    creature.hp.current + healing <= creature.hp.max
+      ? creature.hp.current + healing
+      : creature.hp.max
   creatures.splice(index, 1, creature)
   return creatures
 }
