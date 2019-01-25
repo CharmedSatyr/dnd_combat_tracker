@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { creaturePropTypes } from '../constants/propTypes'
 
 import { removeCreatureFromLocalStorage } from './localStorage.functions'
 
@@ -62,19 +63,6 @@ export class RemoveIcon extends Component {
 }
 
 RemoveIcon.propTypes = {
-  creature: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    modifier: PropTypes.number.isRequired,
-    advantage: PropTypes.bool.isRequired,
-    ac: PropTypes.number,
-    hp: PropTypes.number,
-    xp: PropTypes.number,
-    initiative: PropTypes.number,
-    id: PropTypes.string.isRequired,
-    groupID: PropTypes.string.isRequired,
-    tag: PropTypes.string,
-    number: PropTypes.number,
-    order: PropTypes.number,
-  }).isRequired,
+  ...creaturePropTypes,
   removeCreature: PropTypes.func.isRequired,
 }
