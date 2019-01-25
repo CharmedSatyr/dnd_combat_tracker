@@ -3,8 +3,8 @@ import PropTypes from 'prop-types'
 // Base Creature class
 export const creaturePropTypes = {
   creature: PropTypes.shape({
-    groupID: PropTypes.string.isRequired,
-    id: PropTypes.string.isRequired,
+    groupID: PropTypes.number.isRequired,
+    id: PropTypes.number.isRequired,
     initiative: PropTypes.number,
     name: PropTypes.string.isRequired,
     order: PropTypes.number,
@@ -20,8 +20,8 @@ export const creaturesPropTypes = {
 export const playerPropTypes = {
   player: PropTypes.shape({
     advantage: PropTypes.bool.isRequired,
-    groupID: PropTypes.string.isRequired,
-    id: PropTypes.string.isRequired,
+    groupID: PropTypes.number.isRequired,
+    id: PropTypes.number.isRequired,
     initiative: PropTypes.number,
     modifier: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
@@ -35,9 +35,12 @@ export const monsterPropTypes = {
   monster: PropTypes.shape({
     ac: PropTypes.number.isRequired,
     advantage: PropTypes.bool.isRequired,
-    groupID: PropTypes.string.isRequired,
-    hp: PropTypes.number.isRequired,
-    id: PropTypes.string.isRequired,
+    groupID: PropTypes.number.isRequired,
+    hp: PropTypes.shape({
+      current: PropTypes.number.isRequired,
+      max: PropTypes.number.isRequired,
+    }).isRequired,
+    id: PropTypes.number.isRequired,
     initiative: PropTypes.number,
     lair: PropTypes.number,
     legendary: PropTypes.number,
@@ -54,8 +57,8 @@ export const monsterPropTypes = {
 // Lair Action class
 export const lairActionPropTypes = {
   lairAction: PropTypes.shape({
-    groupID: PropTypes.string.isRequired,
-    id: PropTypes.string.isRequired,
+    groupID: PropTypes.number.isRequired,
+    id: PropTypes.number.isRequired,
     initiative: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
     order: PropTypes.number.isRequired,

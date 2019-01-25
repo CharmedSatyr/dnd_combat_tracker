@@ -1,7 +1,9 @@
 export const setId = () =>
-  Math.random()
-    .toString()
-    .slice(2)
+  parseInt(
+    Math.random()
+      .toString()
+      .slice(2)
+  )
 
 class Creature {
   constructor(stats) {
@@ -26,7 +28,7 @@ export class Monster extends Creature {
     super(stats)
     this.ac = parseInt(stats.ac) // Armor Class
     this.groupID = stats.groupID // initiative and order are shared by group. groupID used for inc/dec order
-    this.hp = parseInt(stats.hp) // Normal Maximum Hit Points
+    this.hp = { current: parseInt(stats.hp), max: parseInt(stats.hp) } // Current hit points = Maximum hit points on creation
     this.lair = parseInt(stats.lair) // Optional fixed initiative count for lair action
     this.legendary = parseInt(stats.legendary) // Optional number of legendary actions
     this.number = parseInt(stats.number) // Optional number label

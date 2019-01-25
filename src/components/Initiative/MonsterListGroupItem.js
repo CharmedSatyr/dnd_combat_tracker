@@ -51,7 +51,7 @@ const MonsterListGroupItem = ({ monster, removeCreature }) => (
         </span>{' '}
         <span>
           <span style={{ color: '#555' }}>HP:&nbsp;</span>
-          <strong>{monster.hp}</strong>
+          <strong>{monster.hp.max}</strong>
         </span>{' '}
         <span>
           <span style={{ color: '#555' }}>XP:&nbsp;</span>
