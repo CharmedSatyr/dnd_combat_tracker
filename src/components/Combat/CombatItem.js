@@ -5,14 +5,27 @@ import { creaturePropTypes } from '../../constants/propTypes'
 import { Label } from 'react-bootstrap'
 import DamageHealForm from './DamageHealForm'
 
+const Conditions = ({ monster }) => {
+  const list = []
+  for (let val in monster.conditions) {
+    const { level } = monster.conditions.exhaustion
+    if (val === 'custom') {
+      monster.conditions[val].forEach(c => list.push(<li key={c}>{c}</li>))
+    } else if (val === 'exhaustion') {
+      level > 0 && list.push(<li key={level}>Exhaustion (Level {level})</li>)
+    } else if (monster.conditions[val]) {
+      list.push(<li key={val}>{val}</li>)
+    }
+  }
+  return <ul>{list}</ul>
+}
+
+Conditions.propTypes = { ...creaturePropTypes }
+
 const CombatItem = ({ monster }) => (
   <div
     className="list-group-item"
-    style={{
-      display: 'flex',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-    }}
+    style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
   >
     {/* CENTER */}
     <div style={{ width: '65%' }}>
@@ -49,6 +62,7 @@ const CombatItem = ({ monster }) => (
           </span>
         </div>
       )}
+      <Conditions monster={monster} />
     </div>
     <div>
       <DamageHealForm monster={monster} />
@@ -63,21 +77,3 @@ const CombatItem = ({ monster }) => (
 export default CombatItem
 
 CombatItem.propTypes = { ...creaturePropTypes }
-
-/* Blinded
- * Charmed
- * Concentrating
- * Deafened
- * Frightened
- * Grappled
- * Incapacitated
- * Invisible
- * Paralyzed
- * Petrified
- * Poisoned
- * Prone
- * Restrained
- * Stunned
- * Unconscious
- * Exhaustion
- */
