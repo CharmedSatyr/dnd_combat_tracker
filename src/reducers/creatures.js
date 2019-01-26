@@ -31,6 +31,18 @@ export default (state = [], payload) => {
       updated = f.rollInitiative(updated)
       updated = f.sortCreaturesArray(updated)
       return updated
+    case c.ADD_CUSTOM_CONDITION:
+      updated = f.addCustomCondition(state, payload)
+      return updated
+    case c.REMOVE_CUSTOM_CONDITION:
+      updated = f.removeCustomCondition(state, payload)
+      return updated
+    case c.SET_EXHAUSTION_LEVEL:
+      updated = f.setExhaustionLevel(state, payload)
+      return updated
+    case c.TOGGLE_CONDITION:
+      updated = f.toggleCondition(state, payload)
+      return updated
     default:
       return state
   }

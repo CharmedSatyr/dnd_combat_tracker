@@ -605,8 +605,8 @@ describe('`damageCreature` reducer function', () => {
   it('should return an array', () => {
     expect(Array.isArray(f.damageCreature(state, payload))).toBeTruthy()
   })
-  it('should return an array of the same length as the `creatures` argument', () => {
-    expect(f.damageCreature(state, payload).length).toBe(updated.length)
+  it('should return an array of the same length as the `state` argument', () => {
+    expect(f.damageCreature(state, payload).length).toBe(state.length)
   })
   it('should reduce the `hp.current` of the creature with the same `id` as the `creature` argument by `damage` amount', () => {
     expect(f.damageCreature(state, payload)).toEqual(updated)
@@ -627,8 +627,8 @@ describe('`healCreature` reducer function', () => {
   it('should return an array', () => {
     expect(Array.isArray(f.healCreature(state, payload))).toBeTruthy()
   })
-  it('should return an array of the same length as the `creatures` argument', () => {
-    expect(f.healCreature(state, payload).length).toBe(updated.length)
+  it('should return an array of the same length as the `state` argument', () => {
+    expect(f.healCreature(state, payload).length).toBe(state.length)
   })
   it('should increase the `hp.current` of the creature with the same `id` as the `creature` argument by `healing` amount', () => {
     expect(f.healCreature(state, payload)).toEqual(updated)
@@ -637,6 +637,127 @@ describe('`healCreature` reducer function', () => {
     const lovelyPayload = { creature, healing: 12, type: c.HEAL_CREATURE }
     const maxed = [{ id: 100, hp: { current: 10, max: 10 } }]
     expect(f.healCreature(state, lovelyPayload)).toEqual(maxed)
+  })
+})
+
+// addCustomCondition
+describe('`addCustomCondition` reducer function', () => {
+  let creature, state, payload, updatedCreature
+  beforeEach(() => {
+    creature = { id: 100, conditions: { custom: [] } }
+    state = [creature]
+    payload = {
+      creature,
+      condition: 'Takes 1d6 fire damage/turn',
+      type: c.ADD_CUSTOM_CONDITION,
+    }
+    updatedCreature = { id: 100, conditions: { custom: ['Takes 1d6 fire damage/turn'] } }
+  })
+
+  it('should return an array', () => {
+    expect(Array.isArray(f.addCustomCondition(state, payload))).toBeTruthy()
+  })
+  it('should return an array of the same length as the `state` argument', () => {
+    expect(f.addCustomCondition(state, payload).length).toBe(state.length)
+  })
+  it("should not change target's `conditions.custom` type from array", () => {
+    expect(Array.isArray(f.addCustomCondition(state, payload)[0].conditions.custom)).toBeTruthy()
+  })
+  it("should increase target's `conditions.custom` array length by 1", () => {
+    expect(f.addCustomCondition(state, payload)[0].conditions.custom.length).toBe(
+      updatedCreature.conditions.custom.length
+    )
+  })
+  it("should add the `condition` argument to the creature's custom conditions array", () => {
+    expect(f.addCustomCondition(state, payload)[0].conditions.custom).toEqual(
+      expect.arrayContaining([payload.condition])
+    )
+  })
+})
+
+// removeCustomCondition
+describe('`removeCustomCondition` reducer function', () => {
+  let creature, state, payload, updatedCreature
+  beforeEach(() => {
+    creature = { id: 100, conditions: { custom: ['Takes 1d6 fire damage/turn'] } }
+    state = [creature]
+    payload = {
+      creature,
+      condition: 'Takes 1d6 fire damage/turn',
+      type: c.REMOVE_CUSTOM_CONDITION,
+    }
+    updatedCreature = { id: 100, conditions: { custom: [] } }
+  })
+
+  it('should return an array', () => {
+    expect(Array.isArray(f.removeCustomCondition(state, payload))).toBeTruthy()
+  })
+  it('should return an array of the same length as the `state` argument', () => {
+    expect(f.removeCustomCondition(state, payload).length).toBe(state.length)
+  })
+  it("should not change target's `conditions.custom` type from array", () => {
+    expect(Array.isArray(f.removeCustomCondition(state, payload)[0].conditions.custom)).toBeTruthy()
+  })
+  it("should decrease target's `conditions.custom` array length by 1", () => {
+    expect(f.removeCustomCondition(state, payload)[0].conditions.custom.length).toBe(
+      updatedCreature.conditions.custom.length
+    )
+  })
+  it("should remove the `condition` argument from the creature's custom conditions array", () => {
+    expect(f.removeCustomCondition(state, payload)[0].conditions.custom).toEqual(
+      expect.not.arrayContaining([payload.condition])
+    )
+  })
+})
+
+// setExhaustionLevel
+describe('`setExhaustionLevel` reducer function', () => {
+  let creature, state, payload
+  beforeEach(() => {
+    creature = { id: 100, conditions: { exhaustion: { level: 0 } } }
+    state = [creature]
+    payload = { creature, level: 2, type: c.SET_EXHAUSTION_LEVEL }
+  })
+
+  it('should return an array', () => {
+    expect(Array.isArray(f.setExhaustionLevel(state, payload))).toBeTruthy()
+  })
+  it('should return an array of the same length as the `state` argument', () => {
+    expect(f.setExhaustionLevel(state, payload).length).toBe(state.length)
+  })
+  it("should not change target's `conditions.exhaustion.level` type from number", () => {
+    const result = f.setExhaustionLevel(state, payload)
+    expect(typeof result[0].conditions.exhaustion.level).toBe('number')
+  })
+  it("should update the target's `conditions.exhaustion.level` to the value of the `level` argument", () => {
+    const result = f.setExhaustionLevel(state, payload)
+    const { level } = result[0].conditions.exhaustion
+    expect(level).toBe(payload.level)
+  })
+})
+
+// toggleCondition
+describe('`toggleCondition` reducer function', () => {
+  let creature, state, payload
+  beforeEach(() => {
+    creature = { id: 100, conditions: { petrified: false } }
+    state = [creature]
+    payload = { creature, condition: 'petrified', type: c.TOGGLE_CONDITION }
+  })
+
+  it('should return an array', () => {
+    expect(Array.isArray(f.toggleCondition(state, payload))).toBeTruthy()
+  })
+  it('should return an array of the same length as the `state` argument', () => {
+    expect(f.toggleCondition(state, payload).length).toBe(state.length)
+  })
+  it("should not change target's `conditions[`condition`]` type from Boolean", () => {
+    const result = f.toggleCondition(state, payload)
+    expect(typeof result[0].conditions[payload.condition]).toBe('boolean')
+  })
+  it("should update the target's `conditions[`condition`]` to the opposite of its previous value", () => {
+    const result = f.toggleCondition(state, payload)
+    expect(result[0].conditions[payload.condition]).toBeTruthy()
   })
 })
 

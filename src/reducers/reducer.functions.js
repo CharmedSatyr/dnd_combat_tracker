@@ -288,3 +288,51 @@ export const healCreature = (state, payload) => {
   creatures.splice(index, 1, creature)
   return creatures
 }
+
+// addCustomCondition
+export const addCustomCondition = (state, payload) => {
+  const creatures = [...state]
+  const { id } = payload.creature
+  const creature = creatures.find(c => id === c.id)
+  const index = creatures.findIndex(c => id === c.id)
+  const { condition } = payload
+  creature.conditions.custom.push(condition)
+  creatures.splice(index, 1, creature)
+  return creatures
+}
+
+// addCustomCondition
+export const removeCustomCondition = (state, payload) => {
+  const creatures = [...state]
+  const { id } = payload.creature
+  const creature = creatures.find(c => id === c.id)
+  const index = creatures.findIndex(c => id === c.id)
+  const { condition } = payload
+  creature.conditions.custom = creature.conditions.custom.filter(c => c !== condition)
+  creatures.splice(index, 1, creature)
+  return creatures
+}
+
+// setExhaustionLevel
+export const setExhaustionLevel = (state, payload) => {
+  const creatures = [...state]
+  const { id } = payload.creature
+  const creature = creatures.find(c => id === c.id)
+  const index = creatures.findIndex(c => id === c.id)
+  const { level } = payload
+  creature.conditions.exhaustion.level = level
+  creatures.splice(index, 1, creature)
+  return creatures
+}
+
+// toggleCondition
+export const toggleCondition = (state, payload) => {
+  const creatures = [...state]
+  const { id } = payload.creature
+  const creature = creatures.find(c => id === c.id)
+  const index = creatures.findIndex(c => id === c.id)
+  const { condition } = payload
+  creature.conditions[condition] = !creature.conditions[condition]
+  creatures.splice(index, 1, creature)
+  return creatures
+}
