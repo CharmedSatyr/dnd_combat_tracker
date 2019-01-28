@@ -19,7 +19,7 @@ class Combat extends Component {
     }
     return (
       creatureList.length > 0 && (
-        <Col xs={12} md={4} className="well">
+        <Col xs={12} md={6} className="well">
           {creatureList && <ListGroup>{creatureList}</ListGroup>}
         </Col>
       )

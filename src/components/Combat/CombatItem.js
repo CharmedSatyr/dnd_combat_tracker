@@ -1,51 +1,72 @@
 import React from 'react'
-import { MonsterIcon } from '../Icons'
 import { setLabel } from '../component.functions'
-import { creaturePropTypes } from '../../constants/propTypes'
+import { monsterPropTypes } from '../../constants/propTypes'
 import { Label } from 'react-bootstrap'
 import DamageHealForm from './DamageHealForm'
+import { MonsterIcon } from '../Icons'
+import ConditionsModal from './ConditionsModal'
+import ConditionsList from './ConditionsList'
 
-const Conditions = ({ monster }) => {
-  const list = []
-  for (let val in monster.conditions) {
-    const { level } = monster.conditions.exhaustion
-    if (val === 'custom') {
-      monster.conditions[val].forEach(c => list.push(<li key={c}>{c}</li>))
-    } else if (val === 'exhaustion') {
-      level > 0 && list.push(<li key={level}>Exhaustion (Level {level})</li>)
-    } else if (monster.conditions[val]) {
-      list.push(<li key={val}>{val}</li>)
-    }
-  }
-  return <ul>{list}</ul>
-}
+const MonsterStats = ({ monster }) => (
+  <div>
+    <MonsterIcon />
+    <strong>{monster.name}</strong>&nbsp;<Label>{setLabel(monster.tag, monster.number)}</Label>
+    <br />
+    <span style={{ color: '#555' }}>Modifier:&nbsp;</span>
+    <strong>{monster.modifier >= 0 ? `+${monster.modifier}` : `${monster.modifier}`}</strong>
+    <br />
+    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+      <span>
+        <span style={{ color: '#555' }}>AC:&nbsp;</span>
+        <strong>{monster.ac}</strong>
+      </span>
+      <span>
+        <span style={{ color: '#555' }}>XP:&nbsp;</span>
+        <strong>{monster.xp}</strong>
+      </span>
+    </div>
+  </div>
+)
 
-Conditions.propTypes = { ...creaturePropTypes }
+const HitPoints = ({ hp }) => (
+  <div>
+    <span style={{ color: '#555' }}>HIT POINTS&nbsp;</span>
+    <br />
+    <div style={{ textAlign: 'center' }}>
+      <strong>
+        {hp.current}/{hp.max}
+      </strong>
+    </div>
+  </div>
+)
 
 const CombatItem = ({ monster }) => (
   <div
     className="list-group-item"
-    style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
+    style={{
+      display: 'grid',
+      gridTemplateColumns: '2fr 1fr 1fr',
+      gridTemplateRows: 'auto auto auto',
+    }}
   >
-    {/* CENTER */}
-    <div style={{ width: '65%' }}>
-      <MonsterIcon />
-      <strong>{monster.name}</strong>&nbsp;
-      <Label>{setLabel(monster.tag, monster.number)}</Label>
-      <br />
-      <span />
-      {/* MID CENTER */}
-      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-        <span>
-          <span style={{ color: '#555' }}>AC:&nbsp;</span>
-          <strong>{monster.ac}</strong>
-        </span>{' '}
-        <span>
-          <span style={{ color: '#555' }}>XP:&nbsp;</span>
-          <strong>{monster.xp}</strong>
-        </span>
-      </div>
-      {/* LOW CENTER */}
+    {/* TOP LEFT */}
+    <div style={{ placeSelf: 'center center' }}>
+      <MonsterStats monster={monster} />
+    </div>
+    {/* TOP CENTER */}
+    <div style={{ placeSelf: 'center center' }}>
+      <DamageHealForm monster={monster} />
+    </div>
+    {/* TOP RIGHT */}
+    <div style={{ placeSelf: 'center center' }}>
+      <HitPoints hp={monster.hp} />
+    </div>
+    {/* MIDDLE */}
+    <div style={{ gridColumn: '1 / span 3' }}>
+      <hr />
+    </div>
+    {/* BOTTOM LEFT */}
+    <div style={{ placeSelf: 'center center' }}>
       {monster.legendary && (
         <div>
           <span>
@@ -62,18 +83,16 @@ const CombatItem = ({ monster }) => (
           </span>
         </div>
       )}
-      <Conditions monster={monster} />
     </div>
-    <div>
-      <DamageHealForm monster={monster} />
-      <span style={{ color: '#555' }}>HP:&nbsp;</span>
-      <strong>
-        {monster.hp.current}/{monster.hp.max}
-      </strong>
+    {/* BOTTOM CENTER/RIGHT */}
+    <div style={{ placeSelf: 'center center', gridColumn: '2 / span 2' }}>
+      <span style={{ color: '#555' }}>CURRENT CONDITIONS</span>
+      <ConditionsModal monster={monster} />
+      {/* <ConditionsList monster={monster} /> */}
     </div>
   </div>
 )
 
 export default CombatItem
 
-CombatItem.propTypes = { ...creaturePropTypes }
+CombatItem.propTypes = { ...monsterPropTypes }

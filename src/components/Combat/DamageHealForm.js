@@ -17,7 +17,11 @@ class DamageHealForm extends Component {
     this.setState({ number: '' })
   }
   getNumber(e) {
-    this.setState({ number: parseInt(e.target.value) })
+    if (!isNaN(parseInt(e.target.value))) {
+      this.setState({ number: parseInt(e.target.value) })
+    } else {
+      this.setState({ validation: 'error' })
+    }
   }
   heal() {
     const { healCreature, monster } = this.props
@@ -27,32 +31,29 @@ class DamageHealForm extends Component {
   render() {
     const { number, validation } = this.state
     return (
-      <Form>
-        <div
-          style={{
-            alignItems: 'center',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-between',
-          }}
-        >
-          <FormGroup>
-            <Button bsSize="xsmall" className="btn btn-success" onClick={this.heal}>
-              Heal
-            </Button>
-          </FormGroup>
+      <div>
+        <Form>
+          <Button
+            bsSize="xsmall"
+            className="btn btn-success"
+            onClick={this.heal}
+            style={{ width: '100%' }}
+          >
+            HEAL
+          </Button>
           {/* Number to Damage or Heal*/}
-          <FormGroup controlId="number" validationState={validation}>
-            <FormControl onChange={this.getNumber} placeholder="0" type="number" value={number} />
-            <FormControl.Feedback />
-          </FormGroup>
-          <FormGroup>
-            <Button bsSize="xsmall" className="btn btn-danger" onClick={this.damage}>
-              Damage
-            </Button>
-          </FormGroup>
-        </div>
-      </Form>
+          <FormControl onChange={this.getNumber} placeholder="0" type="number" value={number} />
+          <Button
+            bsSize="xsmall"
+            className="btn btn-danger"
+            id="number"
+            onClick={this.damage}
+            style={{ width: '100%' }}
+          >
+            DAMAGE
+          </Button>
+        </Form>
+      </div>
     )
   }
 }
