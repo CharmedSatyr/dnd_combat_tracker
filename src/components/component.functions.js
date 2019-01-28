@@ -1,3 +1,6 @@
+// Capitalize first letter of a string
+export const capitalizeFirstLetter = string => string.charAt(0).toUpperCase() + string.slice(1)
+
 // Generate an random numerical ID
 export const setID = () =>
   parseInt(
