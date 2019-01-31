@@ -5,10 +5,11 @@ import { monsterPropTypes } from '../../constants/propTypes'
 const ConditionsList = ({ monster }) => {
   const list = []
   for (let val in monster.conditions) {
-    const { level } = monster.conditions.exhaustion
+    console.log('monster.conditions:', monster.conditions)
     if (val === 'custom') {
       monster.conditions[val].forEach(c => list.push(<li key={c}>{c}</li>))
     } else if (val === 'exhaustion') {
+      const { level } = monster.conditions.exhaustion
       level > 0 && list.push(<li key={level}>Exhaustion (Level {level})</li>)
     } else if (monster.conditions[val]) {
       list.push(<li key={val}>{capitalizeFirstLetter(val)},</li>)
