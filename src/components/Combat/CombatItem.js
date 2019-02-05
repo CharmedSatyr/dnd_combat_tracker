@@ -5,7 +5,6 @@ import { Label } from 'react-bootstrap'
 import DamageHealForm from './DamageHealForm'
 import { MonsterIcon } from '../Icons'
 import ConditionsModal from './ConditionsModal'
-import ConditionsList from './ConditionsList'
 
 const MonsterStats = ({ monster }) => (
   <div>
@@ -88,7 +87,6 @@ const CombatItem = ({ monster }) => (
     <div style={{ placeSelf: 'center center', gridColumn: '2 / span 2' }}>
       <span style={{ color: '#555' }}>CURRENT CONDITIONS</span>
       <ConditionsModal monster={monster} />
-      {/* <ConditionsList monster={monster} /> */}
     </div>
   </div>
 )
