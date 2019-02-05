@@ -1,20 +1,30 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import PropTypes from 'prop-types'
 import { /* ControlLabel, FormGroup, */ Modal } from 'react-bootstrap'
-import * as a from '../../actions/'
-import Conditions from '../../constants/conditions'
-import ConditionsList from './ConditionsList'
+import ConditionsMenu from './ConditionsMenu'
 import { monsterPropTypes } from '../../constants/propTypes'
-// import { capitalizeFirstLetter } from '../component.functions'
+import { capitalizeFirstLetter } from '../component.functions'
 
-class ConditionsModal extends Component {
+const showCurrentConditions = monster => {
+  const currentConditions = []
+  for (let val in monster.conditions) {
+    if (val === 'custom') {
+      monster.conditions.custom.forEach(c => currentConditions.push(c))
+    } else if (val === 'exhaustion') {
+      const { level } = monster.conditions.exhaustion
+      level > 0 && currentConditions.push(`Exhaustion (Level ${level})`)
+    } else if (monster.conditions[val]) {
+      currentConditions.push(`${capitalizeFirstLetter(val)}`)
+    }
+  }
+  return currentConditions.sort().join(', ')
+}
+
+export default class ConditionsModal extends Component {
   constructor(props) {
     super(props)
-    this.state = { conditions: new Conditions(), list: [], show: false }
+    this.state = { currentConditions: '', show: true }
     this.handleClose = this.handleClose.bind(this)
     this.handleShow = this.handleShow.bind(this)
-    this.handleToggle = this.handleToggle.bind(this)
   }
   handleClose() {
     this.setState({ show: false })
@@ -22,23 +32,19 @@ class ConditionsModal extends Component {
   handleShow() {
     this.setState({ show: true })
   }
-  handleToggle(val) {
-    this.props.toggleCondition(this.props.monster, val)
-  }
   render() {
+    const currentConditions = showCurrentConditions(this.props.monster)
     return (
       <div>
         <div style={{ height: '100%', width: '100%' }} onClick={this.handleShow}>
-          <ConditionsList monster={this.props.monster} />
-          &nbsp;
+          {currentConditions}&nbsp;
         </div>
         <Modal show={this.state.show} onHide={this.handleClose}>
           <Modal.Header closeButton>
-            <Modal.Title>Update Conditions</Modal.Title>
+            <Modal.Title>Update Creature Conditions</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <h4>Conditions:</h4>
-            <ul>{}</ul>
+            <ConditionsMenu monster={this.props.monster} />
           </Modal.Body>
         </Modal>
       </div>
@@ -46,23 +52,4 @@ class ConditionsModal extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-  addCustomCondition: (creature, condition) => dispatch(a.addCustomCondition(creature, condition)),
-  removeCustomCondition: (creature, condition) =>
-    dispatch(a.removeCustomCondition(creature, condition)),
-  setExhaustionLevel: (creature, level) => dispatch(a.setExhaustionLevel(creature, level)),
-  toggleCondition: (creature, condition) => dispatch(a.toggleCondition(creature, condition)),
-})
-
-export default connect(
-  null,
-  mapDispatchToProps
-)(ConditionsModal)
-
-ConditionsModal.propTypes = {
-  ...monsterPropTypes,
-  addCustomCondition: PropTypes.func.isRequired,
-  removeCustomCondition: PropTypes.func.isRequired,
-  setExhaustionLevel: PropTypes.func.isRequired,
-  toggleCondition: PropTypes.func.isRequired,
-}
+ConditionsModal.propTypes = { ...monsterPropTypes }
