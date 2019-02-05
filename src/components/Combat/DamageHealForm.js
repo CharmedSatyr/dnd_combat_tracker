@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import * as a from '../../actions'
-import { Button, Form, FormControl, FormGroup } from 'react-bootstrap'
+import { Button, Form, FormControl } from 'react-bootstrap'
 
 class DamageHealForm extends Component {
   constructor(props) {
@@ -9,7 +9,7 @@ class DamageHealForm extends Component {
     this.damage = this.damage.bind(this)
     this.getNumber = this.getNumber.bind(this)
     this.heal = this.heal.bind(this)
-    this.state = { number: '', validation: null }
+    this.state = { number: '' }
   }
   damage() {
     const { damageCreature, monster } = this.props
@@ -19,8 +19,6 @@ class DamageHealForm extends Component {
   getNumber(e) {
     if (!isNaN(parseInt(e.target.value))) {
       this.setState({ number: parseInt(e.target.value) })
-    } else {
-      this.setState({ validation: 'error' })
     }
   }
   heal() {
@@ -29,31 +27,29 @@ class DamageHealForm extends Component {
     this.setState({ number: '' })
   }
   render() {
-    const { number, validation } = this.state
+    const { number } = this.state
     return (
-      <div>
-        <Form>
-          <Button
-            bsSize="xsmall"
-            className="btn btn-success"
-            onClick={this.heal}
-            style={{ width: '100%' }}
-          >
-            HEAL
-          </Button>
-          {/* Number to Damage or Heal*/}
-          <FormControl onChange={this.getNumber} placeholder="0" type="number" value={number} />
-          <Button
-            bsSize="xsmall"
-            className="btn btn-danger"
-            id="number"
-            onClick={this.damage}
-            style={{ width: '100%' }}
-          >
-            DAMAGE
-          </Button>
-        </Form>
-      </div>
+      <Form>
+        <Button
+          bsSize="xsmall"
+          className="btn btn-success"
+          onClick={this.heal}
+          style={{ width: '100%' }}
+        >
+          HEAL
+        </Button>
+        {/* Number to Damage or Heal*/}
+        <FormControl onChange={this.getNumber} placeholder="0" type="number" value={number} />
+        <Button
+          bsSize="xsmall"
+          className="btn btn-danger"
+          id="number"
+          onClick={this.damage}
+          style={{ width: '100%' }}
+        >
+          DAMAGE
+        </Button>
+      </Form>
     )
   }
 }
