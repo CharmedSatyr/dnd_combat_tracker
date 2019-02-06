@@ -34,20 +34,26 @@ class DamageHealForm extends Component {
           bsSize="xsmall"
           className="btn btn-success"
           onClick={this.heal}
-          style={{ width: '100%' }}
+          style={{ fontVariant: 'small-caps', width: '100%' }}
         >
-          HEAL
+          heal
         </Button>
         {/* Number to Damage or Heal*/}
-        <FormControl onChange={this.getNumber} placeholder="0" type="number" value={number} />
+        <FormControl
+          bsSize="small"
+          onChange={this.getNumber}
+          placeholder="0"
+          type="number"
+          value={number}
+        />
         <Button
           bsSize="xsmall"
           className="btn btn-danger"
           id="number"
           onClick={this.damage}
-          style={{ width: '100%' }}
+          style={{ fontVariant: 'small-caps', width: '100%' }}
         >
-          DAMAGE
+          damage
         </Button>
       </Form>
     )
