@@ -7,7 +7,7 @@ import Combat from './Combat'
 import { Grid, PageHeader, Row } from 'react-bootstrap'
 
 const App = () => (
-  <Grid>
+  <Grid style={{ fontFamily: 'Roboto, Helvetica, sans-serif', fontSize: 13 }}>
     <PageHeader>D&amp;D Initiative &amp; Combat Tracker</PageHeader>
     <Row className="show-grid">
       <Combat />

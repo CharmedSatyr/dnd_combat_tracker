@@ -6,6 +6,7 @@ import * as serviceWorker from './serviceWorker'
 import { Provider } from 'react-redux'
 import Store from './store'
 
+import 'roboto-fontface/css/roboto/roboto-fontface.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 ReactDOM.render(
