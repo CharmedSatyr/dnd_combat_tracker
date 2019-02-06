@@ -29,13 +29,12 @@ const MonsterStats = ({ monster }) => (
 
 const HitPoints = ({ hp }) => (
   <div>
-    <span style={{ color: '#555' }}>HIT POINTS&nbsp;</span>
-    <br />
-    <div style={{ textAlign: 'center' }}>
+    <div style={{ color: '#555', fontVariant: 'small-caps', textAlign: 'center' }}>hit points</div>
+    <span style={{ fontSize: '175%' }}>
       <strong>
         {hp.current}/{hp.max}
       </strong>
-    </div>
+    </span>
   </div>
 )
 
@@ -44,36 +43,56 @@ const CombatListGroupItem = ({ monster }) => (
     className="list-group-item"
     style={{
       display: 'grid',
-      gridTemplateColumns: '2fr 1fr 1fr',
-      gridTemplateRows: 'auto auto auto',
+      gridTemplateColumns: '1fr 2fr 1fr 1fr 1fr',
+      gridTemplateRows: 'auto auto',
     }}
   >
+    {/* LEFT */}
+    <div
+      style={{
+        border: '0.5px solid #555',
+        fontVariant: 'small-caps',
+        gridRow: '1 / span 2',
+      }}
+    >
+      order
+    </div>
     {/* TOP LEFT */}
-    <div style={{ placeSelf: 'center center' }}>
+    <div style={{ border: '0.5px solid #555', placeSelf: 'stretch stretch' }}>
       <MonsterStats monster={monster} />
     </div>
     {/* TOP CENTER */}
-    <div style={{ placeSelf: 'center center' }}>
+    <div
+      style={{
+        border: '0.5px solid #555',
+        placeSelf: 'stretch center',
+      }}
+    >
       <DamageHealForm monster={monster} />
     </div>
     {/* TOP RIGHT */}
-    <div style={{ placeSelf: 'center center' }}>
+    <div style={{ border: '0.5px solid #555', placeSelf: 'stretch center' }}>
       <HitPoints hp={monster.hp} />
     </div>
-    {/* MIDDLE */}
-    <div style={{ gridColumn: '1 / span 3' }}>
-      <hr />
+    {/* RIGHT */}
+    <div
+      style={{
+        border: '0.5px solid #555',
+        gridColumn: '5',
+        gridRow: '1 / span 2',
+        placeSelf: 'stretch stretch',
+      }}
+    >
+      <span style={{ fontVariant: 'small-caps' }}>initiative</span>
     </div>
     {/* BOTTOM LEFT */}
-    <div style={{ placeSelf: 'center center' }}>
-      {monster.legendary && (
-        <div>
-          <span>
-            <span style={{ color: '#555' }}>Legendary Actions:&nbsp;</span>
-            <strong>{monster.legendary}</strong>
-          </span>
-        </div>
-      )}
+    <div
+      style={{
+        border: '0.5px solid #555',
+        placeSelf: 'stretch stretch',
+      }}
+    >
+      <span style={{ color: '#555', fontVariant: 'small-caps' }}>special</span>
       {monster.lair && (
         <div>
           <span>
@@ -82,10 +101,24 @@ const CombatListGroupItem = ({ monster }) => (
           </span>
         </div>
       )}
+      {monster.legendary && (
+        <div>
+          <span>
+            <span style={{ color: '#555' }}>Legendary Actions:&nbsp;</span>
+            <strong>{monster.legendary}</strong>
+          </span>
+        </div>
+      )}
     </div>
     {/* BOTTOM CENTER/RIGHT */}
-    <div style={{ placeSelf: 'center center', gridColumn: '2 / span 2' }}>
-      <span style={{ color: '#555' }}>CURRENT CONDITIONS</span>
+    <div
+      style={{
+        border: '0.5px solid #555',
+        placeSelf: 'stretch stretch',
+        gridColumn: '3 / span 2',
+      }}
+    >
+      <span style={{ color: '#555', fontVariant: 'small-caps' }}>current conditions</span>
       <ConditionsModal monster={monster} />
     </div>
   </ListGroupItem>
@@ -93,4 +126,4 @@ const CombatListGroupItem = ({ monster }) => (
 
 export default CombatListGroupItem
 
-CombatListGroupItem.propTypes = { ...monsterPropTypes }
+CombatListGroupItem.propTypes = monsterPropTypes
