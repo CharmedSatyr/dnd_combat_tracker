@@ -1,7 +1,7 @@
 import React from 'react'
 import { setLabel } from '../component.functions'
 import { monsterPropTypes } from '../../constants/propTypes'
-import { Label } from 'react-bootstrap'
+import { Label, ListGroupItem } from 'react-bootstrap'
 import DamageHealForm from './DamageHealForm'
 import { MonsterIcon } from '../Icons'
 import ConditionsModal from './ConditionsModal'
@@ -39,8 +39,8 @@ const HitPoints = ({ hp }) => (
   </div>
 )
 
-const CombatItem = ({ monster }) => (
-  <div
+const CombatListGroupItem = ({ monster }) => (
+  <ListGroupItem
     className="list-group-item"
     style={{
       display: 'grid',
@@ -88,9 +88,9 @@ const CombatItem = ({ monster }) => (
       <span style={{ color: '#555' }}>CURRENT CONDITIONS</span>
       <ConditionsModal monster={monster} />
     </div>
-  </div>
+  </ListGroupItem>
 )
 
-export default CombatItem
+export default CombatListGroupItem
 
-CombatItem.propTypes = { ...monsterPropTypes }
+CombatListGroupItem.propTypes = { ...monsterPropTypes }

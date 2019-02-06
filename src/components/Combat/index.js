@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Col, ListGroup } from 'react-bootstrap'
 import { creaturesPropTypes } from '../../constants/propTypes'
-import CombatItem from './CombatItem'
+import CombatListGroupItem from './CombatListGroupItem'
 
 class Combat extends Component {
   render() {
@@ -11,7 +11,7 @@ class Combat extends Component {
     if (creatures) {
       creatureList = creatures.map((c, i) => {
         if (c.type === 'monster') {
-          return <CombatItem key={i} monster={c} />
+          return <CombatListGroupItem key={i} monster={c} />
         } else {
           return null
         }
