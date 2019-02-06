@@ -22,7 +22,7 @@ const showCurrentConditions = monster => {
 export default class ConditionsModal extends Component {
   constructor(props) {
     super(props)
-    this.state = { currentConditions: '', show: true }
+    this.state = { currentConditions: '', show: false }
     this.handleClose = this.handleClose.bind(this)
     this.handleShow = this.handleShow.bind(this)
   }
