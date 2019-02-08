@@ -24,7 +24,6 @@ export const HourglassIcon = () => <Glyphicon glyph="hourglass" style={{ color: 
 
 export const MonsterIcon = () => (
   <span>
-    &nbsp;
     <Glyphicon glyph="screenshot" style={{ color: '#555' }} />
     &nbsp;
   </span>
