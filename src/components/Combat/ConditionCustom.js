@@ -49,11 +49,12 @@ class ConditionCustom extends Component {
           {/* Label */}
           <div>Custom Conditions</div>
           {/* Input to add new custom condition */}
-          <div style={{ width: '32%' }}>
+          <div style={{ width: '43%' }}>
             <InputGroup>
               <FormControl
                 onChange={this.handleInput}
-                placeholder="On fire!"
+                placeholder="Takes 1d6 fire damage/turn"
+                style={{ fontSize: 11 }}
                 type="text"
                 value={this.state.input}
               />
