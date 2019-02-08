@@ -43,38 +43,6 @@ const MonsterListGroupItem = ({ monster, removeCreature }) => (
         <strong>{monster.modifier >= 0 ? `+${monster.modifier}` : `${monster.modifier}`}</strong>
         {monster.advantage && <AdvantageIcon />}
       </span>
-      {/* MID CENTER */}
-      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-        <span>
-          <span style={{ color: '#555' }}>AC:&nbsp;</span>
-          <strong>{monster.ac}</strong>
-        </span>{' '}
-        <span>
-          <span style={{ color: '#555' }}>HP:&nbsp;</span>
-          <strong>{monster.hp.max}</strong>
-        </span>{' '}
-        <span>
-          <span style={{ color: '#555' }}>XP:&nbsp;</span>
-          <strong>{monster.xp}</strong>
-        </span>
-      </div>
-      {/* LOW CENTER */}
-      {monster.legendary > 0 && (
-        <div>
-          <span>
-            <span style={{ color: '#555' }}>Legendary Actions:&nbsp;</span>
-            <strong>{monster.legendary}</strong>
-          </span>
-        </div>
-      )}
-      {monster.lair > 0 && (
-        <div>
-          <span>
-            <span style={{ color: '#555' }}>Lair Action Initiative Count:&nbsp;</span>
-            <strong>{monster.lair}</strong>
-          </span>
-        </div>
-      )}
     </div>
     {/* RIGHT */}
     <div style={{ fontSize: '200%', width: 'auto' }}>
