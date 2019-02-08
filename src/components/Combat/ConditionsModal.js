@@ -16,7 +16,11 @@ const showCurrentConditions = monster => {
       currentConditions.push(`${capitalizeFirstLetter(val)}`)
     }
   }
-  return currentConditions.sort().join(', ')
+  return currentConditions.length ? (
+    currentConditions.sort().join(', ')
+  ) : (
+    <span style={{ fontSize: 11, color: '#555' }}>Add Active Conditions</span>
+  )
 }
 
 export default class ConditionsModal extends Component {
@@ -35,8 +39,11 @@ export default class ConditionsModal extends Component {
   render() {
     const currentConditions = showCurrentConditions(this.props.monster)
     return (
-      <div>
-        <div style={{ height: '100%', width: '100%' }} onClick={this.handleShow}>
+      <div style={{ height: '80%' }}>
+        <div
+          style={{ cursor: 'pointer', fontSize: 11, height: '100%', width: '100%' }}
+          onClick={this.handleShow}
+        >
           {currentConditions}&nbsp;
         </div>
         <Modal show={this.state.show} onHide={this.handleClose}>
