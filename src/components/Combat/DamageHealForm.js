@@ -34,7 +34,7 @@ class DamageHealForm extends Component {
           bsSize="xsmall"
           className="btn btn-success"
           onClick={this.heal}
-          style={{ fontVariant: 'small-caps', width: '100%' }}
+          style={{ borderRadius: 0, fontSize: 11, fontVariant: 'small-caps', width: '100%' }}
         >
           heal
         </Button>
@@ -43,6 +43,7 @@ class DamageHealForm extends Component {
           bsSize="small"
           onChange={this.getNumber}
           placeholder="0"
+          style={{ borderRadius: 0 }}
           type="number"
           value={number}
         />
@@ -51,7 +52,7 @@ class DamageHealForm extends Component {
           className="btn btn-danger"
           id="number"
           onClick={this.damage}
-          style={{ fontVariant: 'small-caps', width: '100%' }}
+          style={{ borderRadius: 0, fontSize: 11, fontVariant: 'small-caps', width: '100%' }}
         >
           damage
         </Button>
