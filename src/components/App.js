@@ -4,18 +4,34 @@ import AddCreature from './AddCreature/'
 import Experience from './Experience/'
 import Combat from './Combat'
 
-import { Grid, PageHeader, Row } from 'react-bootstrap'
+import { Grid, Row } from 'react-bootstrap'
+
+const Title = () => (
+  <div style={{ margin: '2%' }}>
+    <div
+      style={{
+        alignItems: 'center',
+        display: 'flex',
+        justifyContent: 'space-between',
+        width: '100%',
+      }}
+    >
+      <h1>D&amp;D Combat Tracker</h1>
+      <Experience />
+    </div>
+    <hr />
+  </div>
+)
 
 const App = () => (
   <Grid style={{ fontFamily: 'Roboto, Helvetica, sans-serif', fontSize: 13 }}>
-    <PageHeader>D&amp;D Initiative &amp; Combat Tracker</PageHeader>
+    <Title />
     <Row className="show-grid">
       <Combat />
     </Row>
     <Row className="show-grid">
       <AddCreature />
       <Initiative />
-      <Experience />
     </Row>
   </Grid>
 )
