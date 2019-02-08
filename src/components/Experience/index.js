@@ -2,20 +2,18 @@ import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
-import { Col } from 'react-bootstrap'
-
 const Experience = ({ playerCount, totalXP, xpPerPlayer }) => (
-  <span>
+  <div style={{ fontSize: 13 }}>
     {totalXP > 0 && (
-      <Col xs={12} md={4} className="well">
-        <strong>Players:</strong> {playerCount}
+      <span>
+        Players:&nbsp;<strong>{playerCount}</strong>
         <br />
-        <strong>Total Experience:</strong> {totalXP}
+        Total Experience:&nbsp;<strong>{totalXP}</strong>
         <br />
-        <strong>Experience/Player:</strong> {xpPerPlayer}
-      </Col>
+        Experience/Player:&nbsp;<strong>{xpPerPlayer}</strong>
+      </span>
     )}
-  </span>
+  </div>
 )
 
 const mapStateToProps = (state, props) => ({
