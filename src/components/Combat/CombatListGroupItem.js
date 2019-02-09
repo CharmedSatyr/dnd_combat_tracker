@@ -97,7 +97,7 @@ const CombatListGroupItem = ({ monster, removeCreature }) => (
       style={{
         borderLeft: '1px solid #ddd',
         borderTop: '1px solid #ddd',
-        placeSelf: 'stretch center',
+        placeSelf: 'stretch stretch',
       }}
     >
       <HitPoints hp={monster.hp} />
@@ -134,7 +134,7 @@ const CombatListGroupItem = ({ monster, removeCreature }) => (
       }}
     >
       <span style={{ color: '#555', fontVariant: 'small-caps' }}>special</span>
-      {monster.lair && (
+      {monster.lair > 0 && (
         <div style={{ fontSize: 11 }}>
           <span>
             <span style={{ color: '#555' }}>Lair Action Initiative:&nbsp;</span>
@@ -142,7 +142,7 @@ const CombatListGroupItem = ({ monster, removeCreature }) => (
           </span>
         </div>
       )}
-      {monster.legendary && (
+      {monster.legendary > 0 && (
         <div style={{ fontSize: 11 }}>
           <span>
             <span style={{ color: '#555' }}>Legendary Actions:&nbsp;</span>
