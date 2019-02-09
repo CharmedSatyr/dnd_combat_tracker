@@ -9,7 +9,6 @@ export const sortCreaturesArray = array => {
         '`sortCreaturesArray` Error: Every creature must have a `name` property that is a string.'
       )
     }
-
     if (typeof creature.modifier !== 'number') {
       throw new Error(
         '`sortCreaturesArray` Error: Every creature must have a `modifier` property that is a number.'
@@ -153,17 +152,23 @@ export const assignOrder = (creatures, orderedGroupIdArray) => {
   if (!orderedGroupIdArray) {
     throw new Error('`assignOrder` Error: Missing `orderedGroupIdArray` argument')
   }
-  return creatures.map(cr =>
-    Object.assign({}, cr, { order: orderedGroupIdArray.indexOf(cr.groupID) + 1 })
-  )
+  return creatures.map(cr => {
+    console.log('cr.groupID:', cr.groupID)
+    console.log('orderedGroupIdArray:', orderedGroupIdArray)
+    const updated = Object.assign({}, cr, { order: orderedGroupIdArray.indexOf(cr.groupID) + 1 })
+    console.log('order:', orderedGroupIdArray.indexOf(cr.groupID) + 1)
+    return updated
+  })
 }
 
 // Given an object of groupID keys and number values,
 // return an array of groupIDs where a lower index corresponds to a higher value
-export const orderInitiativeGroups = groupIDs =>
-  []
+export const orderInitiativeGroups = groupIDs => {
+  return []
     .concat(...Object.entries(groupIDs).sort((a, b) => b[1] - a[1]))
     .filter(o => typeof o === 'string')
+    .map(c => parseInt(c))
+}
 
 // Roll initiative
 export const rollInitiative = creaturesArray => {
@@ -174,6 +179,7 @@ export const rollInitiative = creaturesArray => {
 
   // Get an array of all the groupIDs in initiative order
   const initiativeOrder = orderInitiativeGroups(initiativeByGroup)
+  console.log('initiativeOrder:', initiativeOrder)
 
   // Give each creature object an order property based on that
   return assignOrder(creatures, initiativeOrder)

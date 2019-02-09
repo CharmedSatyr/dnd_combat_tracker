@@ -230,8 +230,8 @@ describe('`orderInitiativeGroups` reducer function', () => {
     expect(Array.isArray(f.orderInitiativeGroups(groupIDs))).toBeTruthy()
   })
   it('should put the argument keys into order based on descending values', () => {
-    const groupIDs = { a: 23, b: 1, c: 13 }
-    expect(f.orderInitiativeGroups(groupIDs)).toEqual(['a', 'c', 'b'])
+    const groupIDs = { 7: 23, 1: 1, 2: 13 }
+    expect(f.orderInitiativeGroups(groupIDs)).toEqual([7, 2, 1])
   })
 })
 
