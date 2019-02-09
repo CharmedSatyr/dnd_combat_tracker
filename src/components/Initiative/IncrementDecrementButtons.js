@@ -40,6 +40,6 @@ export default connect(
 
 IncrementDecrementButtons.propTypes = {
   decrementGroupInitiativeOrder: PropTypes.func.isRequired,
-  groupID: PropTypes.string.isRequired,
+  groupID: PropTypes.number.isRequired,
   incrementGroupInitiativeOrder: PropTypes.func.isRequired,
 }
