@@ -1,6 +1,6 @@
 import Conditions from './conditions'
 
-export const setId = () =>
+export const setID = () =>
   parseInt(
     Math.random()
       .toString()
@@ -10,17 +10,18 @@ export const setId = () =>
 class Creature {
   constructor(stats) {
     this.advantage = stats.advantage // Whether the creature has advantage on initiative rolls
-    this.id = setId() // Unique identifier per creature, used to delete creatures
+    this.id = setID() // Unique identifier per creature, used to delete creatures
     this.initiative = null
     this.modifier = parseInt(stats.modifier) // The creature's initiative modifier
     this.name = stats.name // What the creature is called
+    this.order = null // The creature's group's initiative order
   }
 }
 
 export class Player extends Creature {
   constructor(stats) {
     super(stats)
-    this.groupID = setId() // groupID used for inc/dec order
+    this.groupID = setID() // groupID used for inc/dec order
     this.type = 'player'
   }
 }
