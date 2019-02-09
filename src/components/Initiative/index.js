@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { creaturesPropTypes } from '../../constants/propTypes'
 
-import { Col, ListGroup } from 'react-bootstrap'
+import { ListGroup } from 'react-bootstrap'
 
 import * as a from '../../actions'
 
@@ -44,7 +44,7 @@ class Initiative extends Component {
 
     return (
       creatureList.length > 0 && (
-        <Col xs={12} md={4} className="well">
+        <div>
           {creatureList && <ListGroup>{creatureList}</ListGroup>}
 
           <RollButton rollFunction={rollInitiative} />
@@ -54,7 +54,7 @@ class Initiative extends Component {
             removeCreature={removeCreature}
             removeLocal={removeCreatureFromLocalStorage}
           />
-        </Col>
+        </div>
       )
     )
   }

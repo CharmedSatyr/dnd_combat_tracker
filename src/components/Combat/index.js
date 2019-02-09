@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Col, ListGroup } from 'react-bootstrap'
+import { ListGroup } from 'react-bootstrap'
 import { creaturesPropTypes } from '../../constants/propTypes'
 import CombatListGroupItem from './CombatListGroupItem'
 
@@ -18,11 +18,7 @@ class Combat extends Component {
       })
     }
     return (
-      creatureList.length > 0 && (
-        <Col xs={12} md={6} className="well">
-          {creatureList && <ListGroup>{creatureList}</ListGroup>}
-        </Col>
-      )
+      creatureList.length > 0 && <div>{creatureList && <ListGroup>{creatureList}</ListGroup>}</div>
     )
   }
 }
