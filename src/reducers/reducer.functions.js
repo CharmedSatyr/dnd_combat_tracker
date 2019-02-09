@@ -153,10 +153,7 @@ export const assignOrder = (creatures, orderedGroupIdArray) => {
     throw new Error('`assignOrder` Error: Missing `orderedGroupIdArray` argument')
   }
   return creatures.map(cr => {
-    console.log('cr.groupID:', cr.groupID)
-    console.log('orderedGroupIdArray:', orderedGroupIdArray)
     const updated = Object.assign({}, cr, { order: orderedGroupIdArray.indexOf(cr.groupID) + 1 })
-    console.log('order:', orderedGroupIdArray.indexOf(cr.groupID) + 1)
     return updated
   })
 }
@@ -179,7 +176,6 @@ export const rollInitiative = creaturesArray => {
 
   // Get an array of all the groupIDs in initiative order
   const initiativeOrder = orderInitiativeGroups(initiativeByGroup)
-  console.log('initiativeOrder:', initiativeOrder)
 
   // Give each creature object an order property based on that
   return assignOrder(creatures, initiativeOrder)
