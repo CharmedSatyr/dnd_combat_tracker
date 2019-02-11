@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import * as a from '../../actions/'
 import { Button, Glyphicon, FormControl, InputGroup, ListGroupItem } from 'react-bootstrap'
+import { updateCreaturesInLocalStorage } from '../localStorage.functions'
 
 class ConditionCustom extends Component {
   constructor(props) {
@@ -12,9 +13,11 @@ class ConditionCustom extends Component {
     this.handleRemove = this.handleRemove.bind(this)
   }
   handleAdd() {
-    this.props.addCustomCondition(this.props.monster, this.state.input)
-    this.setState({ input: '' })
-    this.updateConditions()
+    if (this.state.input) {
+      this.props.addCustomCondition(this.props.monster, this.state.input)
+      this.setState({ input: '' })
+      this.updateConditions()
+    }
   }
   handleRemove(condition) {
     this.props.removeCustomCondition(this.props.monster, condition)
@@ -23,8 +26,8 @@ class ConditionCustom extends Component {
   handleInput(e) {
     this.setState({ input: e.target.value })
   }
-  updateConditions() {
-    const custom = this.props.monster.conditions.custom.map(c => {
+  async updateConditions() {
+    const custom = await this.props.monster.conditions.custom.map(c => {
       return (
         <Button bsSize="xsmall" key={c} onClick={() => this.handleRemove(c)}>
           <Glyphicon glyph="remove" style={{ color: '#a94442' }} title="Remove custom condition" />
@@ -38,6 +41,7 @@ class ConditionCustom extends Component {
     } else {
       this.setState({ custom: 'No custom conditions.' })
     }
+    updateCreaturesInLocalStorage(this.props.creatures)
   }
   componentWillMount() {
     this.updateConditions()
@@ -81,6 +85,8 @@ class ConditionCustom extends Component {
   }
 }
 
+const mapStateToProps = state => ({ creatures: state.creatures })
+
 const mapDispatchToProps = dispatch => ({
   addCustomCondition: (creature, condition) => dispatch(a.addCustomCondition(creature, condition)),
   removeCustomCondition: (creature, condition) =>
@@ -88,6 +94,6 @@ const mapDispatchToProps = dispatch => ({
 })
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(ConditionCustom)
