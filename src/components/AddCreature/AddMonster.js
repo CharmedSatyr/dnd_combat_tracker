@@ -7,8 +7,8 @@ import { setID } from '../component.functions'
 import { Monster } from '../../constants/creature'
 
 import {
-  ControlLabel,
   Button,
+  ControlLabel,
   Form,
   FormControl,
   FormGroup,
@@ -17,28 +17,30 @@ import {
   Label,
 } from 'react-bootstrap'
 
-const defaultState = {
-  numLow: '',
-  numHigh: '',
-  stats: {
-    ac: '',
-    advantage: false,
-    hp: '',
-    lair: '',
-    legendary: '',
-    modifier: '',
-    name: '',
-    tag: '',
-    xp: '',
-  },
-  validation: {
-    ac: null,
-    hp: null,
-    mod: null,
-    name: null,
-    num: null,
-    xp: null,
-  },
+class DefaultState {
+  constructor() {
+    this.numLow = ''
+    this.numHigh = ''
+    this.stats = {
+      ac: '',
+      advantage: false,
+      hp: '',
+      lair: '',
+      legendary: '',
+      modifier: '',
+      name: '',
+      tag: '',
+      xp: '',
+    }
+    this.validation = {
+      ac: null,
+      hp: null,
+      mod: null,
+      name: null,
+      num: null,
+      xp: null,
+    }
+  }
 }
 
 export default class AddMonster extends Component {
@@ -46,7 +48,7 @@ export default class AddMonster extends Component {
     super(props)
     this.getStats = this.getStats.bind(this)
     this.getValidationState = this.getValidationState.bind(this)
-    this.state = defaultState
+    this.state = new DefaultState()
   }
   getStats(e) {
     let { stats } = this.state
@@ -100,7 +102,7 @@ export default class AddMonster extends Component {
   getValidationState(e) {
     e.preventDefault()
     const { ac, hp, modifier, name, xp } = this.state.stats
-    const { numHigh, numLow, validation } = this.state
+    const { numHigh, numLow } = this.state
 
     // If there is no number range, OR both numbers are filled in and are valid
     let validNum = false
@@ -112,6 +114,7 @@ export default class AddMonster extends Component {
     }
 
     // Required inputs
+    const validation = {}
     validation.ac = ac ? 'success' : 'error'
     validation.hp = hp ? 'success' : 'error'
     validation.mod = modifier ? 'success' : 'error'
@@ -135,7 +138,7 @@ export default class AddMonster extends Component {
     }
     this.props.addCreatures(creatures)
     saveCreaturesToLocalStorage(creatures)
-    this.setState(defaultState)
+    this.setState(new DefaultState())
   }
   render() {
     const { stats, validation } = this.state
@@ -286,6 +289,4 @@ export default class AddMonster extends Component {
   }
 }
 
-AddMonster.propTypes = {
-  addCreatures: PropTypes.func.isRequired,
-}
+AddMonster.propTypes = { addCreatures: PropTypes.func.isRequired }
