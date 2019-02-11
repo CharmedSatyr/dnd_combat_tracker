@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import * as a from '../../actions'
 import { Button, Form, FormControl } from 'react-bootstrap'
+import { updateCreaturesInLocalStorage } from '../localStorage.functions'
 
 class DamageHealForm extends Component {
   constructor(props) {
@@ -11,20 +12,22 @@ class DamageHealForm extends Component {
     this.heal = this.heal.bind(this)
     this.state = { number: '' }
   }
-  damage() {
+  async damage() {
     const { damageCreature, monster } = this.props
-    damageCreature(monster, this.state.number)
+    await damageCreature(monster, this.state.number)
     this.setState({ number: '' })
+    updateCreaturesInLocalStorage(this.props.creatures)
   }
   getNumber(e) {
     if (!isNaN(parseInt(e.target.value))) {
       this.setState({ number: parseInt(e.target.value) })
     }
   }
-  heal() {
+  async heal() {
     const { healCreature, monster } = this.props
-    healCreature(monster, this.state.number)
+    await healCreature(monster, this.state.number)
     this.setState({ number: '' })
+    updateCreaturesInLocalStorage(this.props.creatures)
   }
   render() {
     const { number } = this.state
@@ -61,12 +64,14 @@ class DamageHealForm extends Component {
   }
 }
 
+const mapStateToProps = state => ({ creatures: state.creatures })
+
 const mapDispatchToProps = dispatch => ({
   damageCreature: (creature, damage) => dispatch(a.damageCreature(creature, damage)),
   healCreature: (creature, healing) => dispatch(a.healCreature(creature, healing)),
 })
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(DamageHealForm)

@@ -1,10 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import * as a from '../../actions/'
-// Note: Documentation re: ListGroup.Item is wrong.
-// https://react-bootstrap.github.io/components/list-group/#list-group-props
-// Use `ListGroupItem`
 import { Button, ButtonGroup, ListGroupItem } from 'react-bootstrap'
+import { updateCreaturesInLocalStorage } from '../localStorage.functions'
 
 class ConditionExhaustion extends Component {
   constructor(props) {
@@ -12,9 +10,10 @@ class ConditionExhaustion extends Component {
     this.state = { active: 0 }
     this.handleSet = this.handleSet.bind(this)
   }
-  handleSet(newLevel) {
+  async handleSet(newLevel) {
     this.setState({ active: newLevel })
-    this.props.setExhaustionLevel(this.props.monster, newLevel)
+    await this.props.setExhaustionLevel(this.props.monster, newLevel)
+    updateCreaturesInLocalStorage(this.props.creatures)
   }
   componentWillMount() {
     this.setState({ active: this.props.monster.conditions.exhaustion.level })
@@ -41,11 +40,13 @@ class ConditionExhaustion extends Component {
   }
 }
 
+const mapStateToProps = state => ({ creatures: state.creatures })
+
 const mapDispatchToProps = dispatch => ({
   setExhaustionLevel: (creature, level) => dispatch(a.setExhaustionLevel(creature, level)),
 })
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(ConditionExhaustion)

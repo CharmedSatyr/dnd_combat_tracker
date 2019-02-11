@@ -4,18 +4,17 @@ import * as a from '../../actions/'
 import 'react-toggle/style.css'
 import Toggle from 'react-toggle'
 import { capitalizeFirstLetter } from '../component.functions'
-// Note: Documentation re: ListGroup.Item is wrong.
-// https://react-bootstrap.github.io/components/list-group/#list-group-props
-// Use `ListGroupItem`
 import { ListGroupItem } from 'react-bootstrap'
+import { updateCreaturesInLocalStorage } from '../localStorage.functions'
 
 class ConditionStandard extends Component {
   constructor(props) {
     super(props)
     this.handleToggle = this.handleToggle.bind(this)
   }
-  handleToggle() {
-    this.props.toggleCondition(this.props.monster, this.props.val)
+  async handleToggle() {
+    await this.props.toggleCondition(this.props.monster, this.props.val)
+    updateCreaturesInLocalStorage(this.props.creatures)
   }
   render() {
     return (
@@ -32,11 +31,13 @@ class ConditionStandard extends Component {
   }
 }
 
+const mapStateToProps = state => ({ creatures: state.creatures })
+
 const mapDispatchToProps = dispatch => ({
   toggleCondition: (creature, condition) => dispatch(a.toggleCondition(creature, condition)),
 })
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(ConditionStandard)
