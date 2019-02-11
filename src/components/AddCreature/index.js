@@ -10,7 +10,7 @@ import AddPlayer from './AddPlayer'
 import AddMonster from './AddMonster'
 
 const AddCreature = ({ addCreatures }) => (
-  <Col xs={12} md={4} className="well">
+  <Col xs={12} md={4} mdOffset={1} className="well">
     <Tabs defaultActiveKey={2} id="add-creature-tabs">
       <Tab eventKey={1} title="Add Player">
         <AddPlayer addCreatures={addCreatures} />
