@@ -45,3 +45,15 @@ export const findCreaturesInLocalStorage = cb => {
     }
   }
 }
+
+// Update creatures list
+export const updateCreaturesInLocalStorage = updatedArray => {
+  if (localStorage.hasOwnProperty(c.LOCAL_CREATURES)) {
+    try {
+      const update = JSON.stringify(updatedArray)
+      localStorage.setItem(c.LOCAL_CREATURES, update)
+    } catch (err) {
+      console.error('Error:', err)
+    }
+  }
+}
