@@ -1,10 +1,9 @@
 import React from 'react'
-import Initiative from './Initiative/'
 import AddCreature from './AddCreature/'
 import Experience from './Experience/'
-import Combat from './Combat'
 
-import { Col, Grid, Row, Tab, Tabs } from 'react-bootstrap'
+import InfoContainer from './InfoContainer'
+import { Grid, Row } from 'react-bootstrap'
 
 const Title = () => (
   <div style={{ margin: '2%' }}>
@@ -28,16 +27,7 @@ const App = () => (
     <Title />
     <Row className="show-grid">
       <AddCreature />
-      <Col xs={12} md={6} mdOffset={2} className="well">
-        <Tabs defaultActiveKey={1} id="info-tabs">
-          <Tab eventKey={1} title="Initiative">
-            <Initiative />
-          </Tab>
-          <Tab eventKey={2} title="Enemy Conditions">
-            <Combat />
-          </Tab>
-        </Tabs>
-      </Col>
+      <InfoContainer />
     </Row>
   </Grid>
 )
