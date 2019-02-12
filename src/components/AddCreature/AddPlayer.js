@@ -8,22 +8,24 @@ import { Player } from '../../constants/creature'
 
 import { ControlLabel, Button, Form, FormControl, FormGroup, InputGroup } from 'react-bootstrap'
 
-const defaultState = {
-  stats: {
-    advantage: false,
-    modifier: '',
-    name: '',
-  },
-  validation: {
-    mod: null,
-    name: null,
-  },
+class DefaultState {
+  constructor() {
+    this.stats = {
+      advantage: false,
+      modifier: '',
+      name: '',
+    }
+    this.validation = {
+      mod: null,
+      name: null,
+    }
+  }
 }
 
 export default class AddPlayer extends Component {
   constructor(props) {
     super(props)
-    this.state = defaultState
+    this.state = new DefaultState()
     this.getStats = this.getStats.bind(this)
     this.getValidationState = this.getValidationState.bind(this)
   }
@@ -63,7 +65,7 @@ export default class AddPlayer extends Component {
     this.props.addCreatures([player])
     saveCreaturesToLocalStorage([player])
 
-    this.setState(defaultState)
+    this.setState(new DefaultState())
   }
   render() {
     const { stats, validation } = this.state
