@@ -19,7 +19,7 @@ const showCurrentConditions = monster => {
   return currentConditions.length ? (
     currentConditions.sort().join(', ')
   ) : (
-    <span style={{ fontSize: 11, color: '#555' }}>Add Active Conditions</span>
+    <div style={{ color: '#555', height: '100%' }}>Add Active Conditions</div>
   )
 }
 
@@ -41,7 +41,12 @@ export default class ConditionsModal extends Component {
     return (
       <div style={{ height: '80%' }}>
         <div
-          style={{ cursor: 'pointer', fontSize: 11, height: '100%', width: '100%' }}
+          style={{
+            cursor: 'pointer',
+            fontSize: 11,
+            height: '100%',
+            width: '100%',
+          }}
           onClick={this.handleShow}
         >
           {currentConditions}&nbsp;
