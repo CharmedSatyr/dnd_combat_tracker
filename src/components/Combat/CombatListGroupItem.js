@@ -34,11 +34,11 @@ const MonsterStats = ({ monster }) => (
 const HitPoints = ({ hp }) => (
   <div style={{ height: '100%' }}>
     <div style={{ color: '#555', fontVariant: 'small-caps' }}>hit points</div>
-    <span style={{ fontSize: '175%' }}>
+    <div style={{ fontSize: '175%', textAlign: 'center', width: '100%' }}>
       <strong>
         {hp.current}/{hp.max}
       </strong>
-    </span>
+    </div>
   </div>
 )
 
@@ -47,7 +47,7 @@ const CombatListGroupItem = ({ monster, removeCreature }) => (
     className="list-group-item"
     style={{
       display: 'grid',
-      gridTemplateColumns: '1fr 2fr 1fr 1fr 1fr',
+      gridTemplateColumns: '1fr 3fr 2fr 2fr 1fr',
       gridTemplateRows: 'auto auto',
     }}
   >
@@ -136,18 +136,14 @@ const CombatListGroupItem = ({ monster, removeCreature }) => (
       <span style={{ color: '#555', fontVariant: 'small-caps' }}>special</span>
       {monster.lair > 0 && (
         <div style={{ fontSize: 11 }}>
-          <span>
-            <span style={{ color: '#555' }}>Lair Action Initiative:&nbsp;</span>
-            <strong>{monster.lair}</strong>
-          </span>
+          <span style={{ color: '#555' }}>Lair Action Initiative:&nbsp;</span>
+          <strong>{monster.lair}</strong>
         </div>
       )}
       {monster.legendary > 0 && (
         <div style={{ fontSize: 11 }}>
-          <span>
-            <span style={{ color: '#555' }}>Legendary Actions:&nbsp;</span>
-            <strong>{monster.legendary}</strong>
-          </span>
+          <span style={{ color: '#555' }}>Legendary Actions:&nbsp;</span>
+          <strong>{monster.legendary}</strong>
         </div>
       )}
     </div>
