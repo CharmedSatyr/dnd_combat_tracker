@@ -1,7 +1,7 @@
 self.__precacheManifest = [
   {
-    "revision": "b4014d34a3c798d3cbaf",
-    "url": "/dnd_combat_tracker/static/js/main.b4014d34.chunk.js"
+    "revision": "a83a7a58cbb746e009da",
+    "url": "/dnd_combat_tracker/static/js/main.a83a7a58.chunk.js"
   },
   {
     "revision": "df08542399c21531937a",
@@ -20,12 +20,12 @@ self.__precacheManifest = [
     "url": "/dnd_combat_tracker/static/media/Roboto-Thin.ad538a69.woff2"
   },
   {
-    "revision": "73f0a88bbca1bec19fb1303c689d04c6",
-    "url": "/dnd_combat_tracker/static/media/Roboto-Regular.73f0a88b.woff2"
-  },
-  {
     "revision": "d26871e8149b5759f814fd3c7a4f784b",
     "url": "/dnd_combat_tracker/static/media/Roboto-Light.d26871e8.woff2"
+  },
+  {
+    "revision": "73f0a88bbca1bec19fb1303c689d04c6",
+    "url": "/dnd_combat_tracker/static/media/Roboto-Regular.73f0a88b.woff2"
   },
   {
     "revision": "90d1676003d9c28c04994c18bfd8b558",
@@ -40,12 +40,12 @@ self.__precacheManifest = [
     "url": "/dnd_combat_tracker/static/media/Roboto-Black.59eb3601.woff2"
   },
   {
-    "revision": "e8eaae902c3a4dacb9a5062667e10576",
-    "url": "/dnd_combat_tracker/static/media/Roboto-LightItalic.e8eaae90.woff2"
-  },
-  {
     "revision": "5b4a33e176ff736a74f0ca2dd9e6b396",
     "url": "/dnd_combat_tracker/static/media/Roboto-ThinItalic.5b4a33e1.woff2"
+  },
+  {
+    "revision": "e8eaae902c3a4dacb9a5062667e10576",
+    "url": "/dnd_combat_tracker/static/media/Roboto-LightItalic.e8eaae90.woff2"
   },
   {
     "revision": "4357beb823a5f8d65c260f045d9e019a",
@@ -112,12 +112,12 @@ self.__precacheManifest = [
     "url": "/dnd_combat_tracker/static/media/Roboto-BlackItalic.cc2fadc3.woff"
   },
   {
-    "revision": "f4769f9bdb7466be65088239c12046d1",
-    "url": "/dnd_combat_tracker/static/media/glyphicons-halflings-regular.f4769f9b.eot"
-  },
-  {
     "revision": "448c34a56d699c29117adc64c43affeb",
     "url": "/dnd_combat_tracker/static/media/glyphicons-halflings-regular.448c34a5.woff2"
+  },
+  {
+    "revision": "f4769f9bdb7466be65088239c12046d1",
+    "url": "/dnd_combat_tracker/static/media/glyphicons-halflings-regular.f4769f9b.eot"
   },
   {
     "revision": "fa2772327f55d8198301fdb8bcfc8158",
@@ -132,7 +132,7 @@ self.__precacheManifest = [
     "url": "/dnd_combat_tracker/static/media/glyphicons-halflings-regular.89889688.svg"
   },
   {
-    "revision": "b1a54be3c89134fdd72798615d216ae3",
+    "revision": "2893c2d612692b47e861a30043f0bfa1",
     "url": "/dnd_combat_tracker/index.html"
   }
 ];

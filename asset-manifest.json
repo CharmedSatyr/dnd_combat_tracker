@@ -1,6 +1,6 @@
 {
-  "main.js": "/dnd_combat_tracker/static/js/main.b4014d34.chunk.js",
-  "main.js.map": "/dnd_combat_tracker/static/js/main.b4014d34.chunk.js.map",
+  "main.js": "/dnd_combat_tracker/static/js/main.a83a7a58.chunk.js",
+  "main.js.map": "/dnd_combat_tracker/static/js/main.a83a7a58.chunk.js.map",
   "static/css/1.c3b3605d.chunk.css": "/dnd_combat_tracker/static/css/1.c3b3605d.chunk.css",
   "static/js/1.df085423.chunk.js": "/dnd_combat_tracker/static/js/1.df085423.chunk.js",
   "static/js/1.df085423.chunk.js.map": "/dnd_combat_tracker/static/js/1.df085423.chunk.js.map",
@@ -10,6 +10,6 @@
   "static/media/bootstrap.min.css": "/dnd_combat_tracker/static/media/glyphicons-halflings-regular.89889688.svg",
   "static/css/1.c3b3605d.chunk.css.map": "/dnd_combat_tracker/static/css/1.c3b3605d.chunk.css.map",
   "index.html": "/dnd_combat_tracker/index.html",
-  "precache-manifest.2409bf5dd8168e61c649ae894332ba52.js": "/dnd_combat_tracker/precache-manifest.2409bf5dd8168e61c649ae894332ba52.js",
+  "precache-manifest.1e7ce2fd34976476a1d12df7bbbb53e2.js": "/dnd_combat_tracker/precache-manifest.1e7ce2fd34976476a1d12df7bbbb53e2.js",
   "service-worker.js": "/dnd_combat_tracker/service-worker.js"
 }
