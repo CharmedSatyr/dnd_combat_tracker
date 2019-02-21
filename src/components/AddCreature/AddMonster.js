@@ -130,8 +130,9 @@ export default class AddMonster extends Component {
   addMonsters() {
     const { numHigh, numLow, stats } = this.state
     const creatures = []
+    const groupID = setID()
     for (let i = numLow || 0; i <= (numHigh || 0); i++) {
-      stats.groupID = setID()
+      stats.groupID = groupID
       stats.number = i
       const monster = new Monster(stats)
       creatures.push(monster)
